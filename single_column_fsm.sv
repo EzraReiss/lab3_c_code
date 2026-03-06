@@ -109,7 +109,6 @@ module single_column_wave_equation #(
  
     state_t state, next_state;
 
-    assign wave_value = u_center;
 
     always_ff @(posedge clk) begin
         if (rst) begin
@@ -138,8 +137,8 @@ module single_column_wave_equation #(
     // ---- Datapath ----
     always_ff @(posedge clk) begin
         if (rst) begin
-            mem_N_we      <= 0;
-            mem_Nm1_we    <= 0;
+            mem_N_we      <= 1;
+            mem_Nm1_we    <= 1;
             mem_N_waddr   <= 0;
             mem_Nm1_waddr <= 0;
             mem_N_raddr   <= 0;
@@ -157,8 +156,6 @@ module single_column_wave_equation #(
             case(state)
                 INIT: begin
                     // write initial triangle wave values to both memories
-                    mem_N_we      <= 1;
-                    mem_Nm1_we    <= 1;
                     mem_N_waddr   <= init_addr;
                     mem_Nm1_waddr <= init_addr;
                     mem_N_wdata   <= triangle_value;
@@ -168,8 +165,6 @@ module single_column_wave_equation #(
 
                 STATE_0: begin
                     // stop writes, start reading from bottom of column
-                    mem_N_we      <= 0;
-                    mem_Nm1_we    <= 0;
                     mem_N_raddr   <= 0;
                     mem_Nm1_raddr <= 0;
                     node_count    <= 0;
@@ -190,8 +185,6 @@ module single_column_wave_equation #(
 
                 STATE_3: begin
                     // N[j+1] now available — latch as u_up (boundary = 0 for top node)
-                    mem_N_we      <= 0;
-                    mem_Nm1_we    <= 0;
                     mem_N_raddr   <= next_N_raddr;
                     mem_Nm1_raddr <= next_Nm1_raddr;
                     u_up          <= mem_N_rdata;
@@ -209,8 +202,6 @@ module single_column_wave_equation #(
 
                 STATE_5: begin
                     // write compute result to mem_N, old u_center to mem_Nm1
-                    mem_N_we      <= 1;
-                    mem_Nm1_we    <= 1;
                     mem_N_waddr   <= node_count;
                     mem_Nm1_waddr <= node_count;
                     mem_N_wdata   <= compute_out;        // u_next  -> new N[j]
@@ -218,14 +209,10 @@ module single_column_wave_equation #(
                 end
 
                 STATE_6: begin
-                    mem_N_we  <= 0;
-                    mem_Nm1_we <= 0;
                     done      <= 1;
                 end
 
                 default: begin
-                    mem_N_we  <= 0;
-                    mem_Nm1_we <= 0;
                 end
             endcase
         end
