@@ -16,6 +16,7 @@ module single_column_wave_equation #(
     input logic signed [17:0] rho_eff, 
     input logic signed [17:0] G_tension,
     input logic signed [17:0] initial_value,
+    input logic next_sample,
     output logic signed [17:0] wave_value,
     output logic done
 );
@@ -129,7 +130,7 @@ module single_column_wave_equation #(
             STATE_3: next_state = STATE_4;
             STATE_4: next_state = (node_count == `COLUMN_DEPTH-1) ? STATE_5 : STATE_3;
             STATE_5: next_state = STATE_6;
-            STATE_6: next_state = STATE_6; // hold in done state
+            STATE_6: next_state = (next_sample) ? STATE_0 : STATE_6; // hold in done state
             default: next_state = INIT;
         endcase
     end
