@@ -1,0 +1,12 @@
+*
+!.gitignore
+!*/
+!**/*.c
+!**/*.v
+!**/*.sv
+!**/*.py
+!**/*sim_full_mandelbrot.tcl
+!**/*.png
+!**/*.ppm
+!**/*.md
+!**/*.zip
