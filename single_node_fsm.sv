@@ -7,6 +7,8 @@ module single_node_wave_equation #(
     input logic signed [17:0] rho_eff, 
     input logic signed [17:0] G_tension,
     input logic signed [17:0] initial_value,
+    input logic signed [17:0] u_up,
+    input logic signed [17:0] u_down,
     output logic signed [17:0] wave_value
 );
     
@@ -27,7 +29,7 @@ module single_node_wave_equation #(
 
 
     // rho_eff * (neighbors - 4*u_curr)  — all neighbors = 0 for single node
-    wire signed [17:0] product = mult_1p17(rho_eff_reg, -(u_curr <<< 2));
+    wire signed [17:0] product = mult_1p17(rho_eff_reg, u_up + u_down -(u_curr <<< 2));
 
     // product + 2*u_curr - (1 - eta*dt/2)*u_prev
     wire signed [17:0] sum = product + (u_curr <<< 1) - u_prev + (u_prev >>> ETA_SHIFT);
