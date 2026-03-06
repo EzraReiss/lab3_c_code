@@ -168,6 +168,7 @@ module single_column_wave_equation #(
                     mem_N_raddr   <= 0;
                     mem_Nm1_raddr <= 0;
                     node_count    <= 0;
+                    done          <= 0;
                 end
 
                 STATE_1: begin
@@ -198,6 +199,9 @@ module single_column_wave_equation #(
                     u_center      <= u_up;
                     u_center_prev <= mem_Nm1_rdata;
                     u_down        <= u_center;
+                    if (node_count != `COLUMN_DEPTH-1) begin
+                        node_count <= node_count + 1;
+                    end
                 end
 
                 STATE_5: begin
