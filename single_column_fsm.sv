@@ -77,8 +77,6 @@ module single_column_wave_equation #(
         .d(mem_Nm1_wdata),
         .write_address(mem_Nm1_waddr),
         .read_address(mem_Nm1_raddr),
-        .write_address(mem_Nm1_waddr),
-        .read_address(mem_Nm1_raddr),
         .we(mem_Nm1_we),
         .clk(clk)
     );
@@ -129,8 +127,8 @@ module single_column_wave_equation #(
             STATE_1: next_state = STATE_2;
             STATE_2: next_state = STATE_3;
             STATE_3: next_state = STATE_4;
-            STATE_4: next_state = STATE_5;
-            STATE_5: next_state = (node_count == `COLUMN_DEPTH-1) ? STATE_6 : STATE_3;
+            STATE_4: next_state = (node_count == `COLUMN_DEPTH-1) ? STATE_5 : STATE_3;
+            STATE_5: next_state = STATE_6;
             STATE_6: next_state = STATE_6; // hold in done state
             default: next_state = INIT;
         endcase
@@ -179,16 +177,14 @@ module single_column_wave_equation #(
                 STATE_1: begin
                     // M10K latency cycle: data for addr 0 in flight
                     mem_N_raddr   <= next_N_raddr;
-                    mem_Nm1_raddr <= next_Nm1_raddr;
+                    mem_Nm1_raddr <= 0;
                 end
 
                 STATE_2: begin
                     // N[0] and Nm1[0] now available on rdata
                     mem_N_raddr   <= next_N_raddr;
                     mem_Nm1_raddr <= next_Nm1_raddr;
-                    u_down        <= 18'sd0;             // boundary below node 0
-                    u_center      <= mem_N_rdata;        // u_curr = N[0]
-                    u_center_prev <= mem_Nm1_rdata;      // u_prev = Nm1[0]
+                    u_up <= mem_N_rdata;
                 end
 
                 STATE_3: begin
@@ -197,7 +193,8 @@ module single_column_wave_equation #(
                     mem_Nm1_we    <= 0;
                     mem_N_raddr   <= next_N_raddr;
                     mem_Nm1_raddr <= next_Nm1_raddr;
-                    u_up          <= (node_count < `COLUMN_DEPTH - 1) ? mem_N_rdata : 18'sd0;
+                    u_up          <= mem_N_rdata;
+                    u_center_prev <= mem_Nm1_rdata;
                 end
 
                 STATE_4: begin
@@ -206,6 +203,7 @@ module single_column_wave_equation #(
                     u_up          <= (mem_N_raddr != COLUMN_DEPTH-1) ? mem_N_rdata : 18'sd0;
                     u_center      <= u_up;
                     u_center_prev <= mem_Nm1_rdata;
+                    u_down        <= u_center;
                 end
 
                 STATE_5: begin
@@ -216,11 +214,6 @@ module single_column_wave_equation #(
                     mem_Nm1_waddr <= node_count;
                     mem_N_wdata   <= compute_out;        // u_next  -> new N[j]
                     mem_Nm1_wdata <= u_center;            // u_curr  -> new Nm1[j]
-                    // advance pipeline for next node
-                    u_down        <= u_center;            // current center becomes next node's down-neighbor
-                    u_center      <= u_up;                // pre-loaded N[j+1] becomes next center
-                    u_center_prev <= mem_Nm1_rdata;       // Nm1[j+1] just arrived from read pipeline
-                    node_count    <= node_count + 1;
                 end
 
                 STATE_6: begin

@@ -19,9 +19,10 @@ module single_node_wave_equation_tb;
     logic signed [17:0] G_tension;
     logic signed [17:0] initial_value;
     logic signed [17:0] wave_value;
+    logic               done;
 
-    // ---- instantiate DUT ----
-    single_node_wave_equation #(
+    // ---- instantiate DUT (column FSM) ----
+    single_column_wave_equation #(
         .ETA_SHIFT (10)
     ) dut (
         .clk           (clk),
@@ -29,7 +30,8 @@ module single_node_wave_equation_tb;
         .rho_eff       (rho_eff),
         .G_tension     (G_tension),
         .initial_value (initial_value),
-        .wave_value    (wave_value)
+        .wave_value    (wave_value),
+        .done          (done)
     );
 
     // ---- clock ----
@@ -48,13 +50,17 @@ module single_node_wave_equation_tb;
         G_tension     = 18'sd0;       // unused for now
         initial_value = INIT_AMP;     // ~1/8 full-scale
 
-        // ---- assert reset (u_n = u_{n-1} = initial_value) ----
+        // ---- assert reset (loads triangle initial conditions into M10Ks) ----
         rst = 1'b1;
         repeat (5) @(posedge clk);
         @(negedge clk);
         rst = 1'b0;
 
-        // ---- run and record ----
+        // ---- wait for INIT to finish, then run and record ----
+        wait (done);
+        @(posedge clk);
+        // Re-trigger by de-asserting done (start new timestep) — 
+        // for continuous operation you'd add a top-level controller here.
         for (int i = 0; i < NUM_CYCLES; i++) begin
             @(posedge clk);
             $fwrite(fout, "%0d %0d\n", i, $signed(wave_value));
