@@ -5,6 +5,8 @@
 `define MAX_HEIGHT 3 // 1/8 to avoid overflow (1 << 3)
 `define STEP_INCREMENT ((18'sd1 <<< 17) / ((1 <<< `MAX_HEIGHT) * `CENTER_NODE))  //(MAX_HEIGHT) / CENTER_NODE
 
+
+
 module single_column_wave_equation #(
     parameter integer ETA_SHIFT = 10
 )
@@ -24,10 +26,33 @@ module single_column_wave_equation #(
     logic signed [17:0] mem_N_rdata, mem_N_wdata;
     
     logic [$clog2(COLUMN_DEPTH)-1:0] mem_N_waddr, mem_N_raddr;
-    logic [$clog2(COLUMN_DEPTH)-1:0] mem_Nm1_write_addr, mem_Nm1_read_addr;
+    logic [$clog2(COLUMN_DEPTH)-1:0] mem_Nm1_waddr, mem_Nm1_raddr;
     
     logic [$clog2(COLUMN_DEPTH)-1:0] next_N_waddr = (mem_N_waddr == COLUMN_DEPTH-1) ? 0 : mem_N_waddr + 1;
-    logic [$clog2(COLUMN_DEPTH)-1:0] next_Nm1_write_addr = (mem_Nm1_write_addr == COLUMN_DEPTH-1) ? 0 : mem_Nm1_write_addr + 1;
+    logic [$clog2(COLUMN_DEPTH)-1:0] next_Nm1_waddr = (mem_Nm1_waddr == COLUMN_DEPTH-1) ? 0 : mem_Nm1_waddr + 1;
+
+
+    //AI generated LUT initialization and use of localparams to reduce logic utilization
+    typedef logic signed [17:0] init_lut_t [0:`COLUMN_DEPTH-1];
+
+    function automatic init_lut_t build_triangle_init_lut();
+        init_lut_t lut;
+        int idx;
+        int center_index;
+        int distance_from_edge;
+        begin
+            center_index = `COLUMN_DEPTH / 2;
+            for (idx = 0; idx < `COLUMN_DEPTH; idx++) begin
+                distance_from_edge = (idx <= center_index) ? idx : (`COLUMN_DEPTH - 1 - idx);
+                lut[idx] = distance_from_edge * `STEP_INCREMENT;
+            end
+            build_triangle_init_lut = lut;
+        end
+    endfunction
+
+    localparam init_lut_t TRIANGLE_INIT_LUT = build_triangle_init_lut();
+
+    
 
     
     
@@ -52,8 +77,8 @@ module single_column_wave_equation #(
     mem_Nm1 (
         .q(mem_Nm1_rdata),
         .d(mem_Nm1_wdata),
-        .write_address(mem_Nm1_write_addr),
-        .read_address(mem_Nm1_read_addr),
+        .write_address(mem_Nm1_waddr),
+        .read_address(mem_Nm1_raddr),
         .we(mem_Nm1_we),
         .clk(clk)
     );
@@ -91,12 +116,21 @@ module single_column_wave_equation #(
  
 
 always_ff @(posedge clk) begin
-    if (reset) begin
+    if (rst) begin
         mem_N_waddr <= 0;
+        mem_Nm1_waddr <= 0;
+        state <= INIT;
     end else begin
+        state <= next_state;
         case(state)
             INIT: begin
-                    write_addr <= next_write_addr;
+                mem_N_we <= 1;
+                mem_Nm1_we <= 1;
+                mem_N_waddr <= next_N_waddr;
+                mem_Nm1_waddr <= next_N_waddr; // during init, both BRAMs are written at the same node
+
+                mem_N_wdata <= TRIANGLE_INIT_LUT[mem_N_waddr]; //initialize N from compile-time triangle LUT
+                mem_Nm1_wdata <= 0; //initialize N-1 to 0 
             end
         endcase
     end
@@ -105,7 +139,7 @@ end
 //combinational next state logic
 always_comb begin
     case (state)
-        INIT: (next_write_address == 0) ? next_state = STATE_0 : next_state = INIT;
+        INIT: (next_N_waddr == 0) ? next_state = STATE_0 : next_state = INIT;
 
     endcase
 end
@@ -153,7 +187,7 @@ always_ff begin
 
         STATE_5: begin
             mem_N_waddr <= next_N_waddr;
-            mem_Nm1_waddr <= next_Nm1_waddr;
+            mem_Nm1_waddr <= next_Nm1_waddr; // outside init, Nm1 advances on its own write pointer so it can lag N
             mem_N_wdata <= compute_out;
             mem_Nm1_wdata <= u_center;
         end
