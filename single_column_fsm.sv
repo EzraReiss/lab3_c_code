@@ -108,6 +108,8 @@ module single_column_wave_equation #(
     } state_t;
  
     state_t state, next_state;
+    
+    assign wave_value = u_center;
 
 
     always_ff @(posedge clk) begin
