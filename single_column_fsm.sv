@@ -199,9 +199,9 @@ module single_column_wave_equation #(
                 end
 
                 STATE_4: begin
-                    mem_N_raddr   <= next_read_N;
-                    mem_Nm1_raddr <= next_read_Nm1;
-                    u_up          <= (mem_N_raddr != COLUMN_DEPTH-1) ? mem_N_rdata : 18'sd0;
+                    mem_N_raddr   <= next_N_raddr;
+                    mem_Nm1_raddr <= next_Nm1_raddr;
+                    u_up          <= (mem_N_raddr != `COLUMN_DEPTH-1) ? mem_N_rdata : 18'sd0;
                     u_center      <= u_up;
                     u_center_prev <= mem_Nm1_rdata;
                     u_down        <= u_center;

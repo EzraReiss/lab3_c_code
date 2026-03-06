@@ -4,6 +4,7 @@ module single_column_wave_equation_tb;
 
     localparam integer CLK_PERIOD   = 20;
     localparam integer MAX_CYCLES   = 250;
+    localparam integer NUM_SWEEPS   = 100;
     localparam integer COLUMN_DEPTH = 29;
     localparam integer CENTER_NODE  = 15;
     localparam signed [17:0] RHO0_VAL      = 18'sd8192;
@@ -18,6 +19,7 @@ module single_column_wave_equation_tb;
     logic signed [17:0] rho_eff;
     logic signed [17:0] G_tension;
     logic signed [17:0] initial_value;
+    logic next_sample;
     logic signed [17:0] wave_value;
     logic done;
 
@@ -25,9 +27,8 @@ module single_column_wave_equation_tb;
     integer snapshot_file;
     integer cycle_count;
     integer sweep_count;
+    integer state_d;
     bit init_dumped;
-    bit done_dumped;
-    bit done_d;
 
     single_column_wave_equation #(
         .ETA_SHIFT(10)
@@ -37,6 +38,7 @@ module single_column_wave_equation_tb;
         .rho_eff(rho_eff),
         .G_tension(G_tension),
         .initial_value(initial_value),
+        .next_sample(next_sample),
         .wave_value(wave_value),
         .done(done)
     );
@@ -96,8 +98,8 @@ module single_column_wave_equation_tb;
     task automatic dump_column_snapshot(input integer sample_cycle);
         integer idx;
         begin
-            $display("COLUMN SNAPSHOT cycle=%0d state=%0d done=%0b init_addr=%0d node_count=%0d",
-                sample_cycle, dut.state, done, dut.init_addr, dut.node_count);
+            $display("COLUMN SNAPSHOT cycle=%0d sweep=%0d state=%0d done=%0b init_addr=%0d node_count=%0d rho_eff=%0d",
+                sample_cycle, sweep_count, dut.state, done, dut.init_addr, dut.node_count, rho_eff);
             for (idx = 0; idx < COLUMN_DEPTH; idx = idx + 1) begin
                 $display("  node[%0d] N=%0d Nm1=%0d",
                     idx,
@@ -147,18 +149,18 @@ module single_column_wave_equation_tb;
         snapshot_file = $fopen("single_column_snapshots.csv", "w");
 
         $fwrite(trace_file,
-            "cycle,state,done,init_addr,node_count,wave_value,rho_eff,mem_N_raddr,mem_Nm1_raddr,mem_N_waddr,mem_Nm1_waddr,mem_N_we,mem_Nm1_we\n");
+            "cycle,sweep,state,done,next_sample,init_addr,node_count,wave_value,rho_eff,mem_N_raddr,mem_Nm1_raddr,mem_N_waddr,mem_Nm1_waddr,mem_N_we,mem_Nm1_we\n");
         $fwrite(snapshot_file, "cycle,node_idx,mem_N,mem_Nm1\n");
 
         rho_eff       = RHO0_VAL;
         G_tension     = G_TENSION_VAL;
         initial_value = INIT_AMP;
+        next_sample   = 1'b0;
         rst           = 1'b1;
         cycle_count   = 0;
         sweep_count   = 0;
+        state_d       = -1;
         init_dumped   = 1'b0;
-        done_dumped   = 1'b0;
-        done_d        = 1'b0;
 
         repeat (4) @(posedge clk);
         rst = 1'b0;
@@ -166,10 +168,14 @@ module single_column_wave_equation_tb;
         repeat (MAX_CYCLES) begin
             @(posedge clk);
 
-            $fwrite(trace_file, "%0d,%0d,%0b,%0d,%0d,%0d,%0d,%0d,%0d,%0d,%0d,%0b,%0b\n",
+            next_sample = 1'b0;
+
+            $fwrite(trace_file, "%0d,%0d,%0d,%0b,%0b,%0d,%0d,%0d,%0d,%0d,%0d,%0d,%0d,%0b,%0b\n",
                 cycle_count,
+                sweep_count,
                 dut.state,
                 done,
+                next_sample,
                 dut.init_addr,
                 dut.node_count,
                 $signed(wave_value),
@@ -188,22 +194,24 @@ module single_column_wave_equation_tb;
                 init_dumped = 1'b1;
             end
 
-            if (done && !done_d) begin
+            if ((dut.state == dut.STATE_6) && (state_d != dut.STATE_6)) begin
                 update_rho_eff_from_column(cycle_count);
-                sweep_count = sweep_count + 1;
-            end
-
-            if (done && !done_dumped) begin
-                $display("--- DONE ASSERTED: FINAL COLUMN DUMP ---");
                 dump_column_snapshot(cycle_count);
-                done_dumped = 1'b1;
-                repeat (5) @(posedge clk);
-                $fclose(trace_file);
-                $fclose(snapshot_file);
-                $finish;
+                sweep_count = sweep_count + 1;
+
+                if (sweep_count < NUM_SWEEPS) begin
+                    next_sample = 1'b1;
+                    $display("ADVANCING TO NEXT SWEEP=%0d at cycle=%0d", sweep_count, cycle_count);
+                end else begin
+                    $display("COMPLETED %0d FULL COLUMN SWEEPS", sweep_count);
+                    repeat (5) @(posedge clk);
+                    $fclose(trace_file);
+                    $fclose(snapshot_file);
+                    $finish;
+                end
             end
 
-            done_d = done;
+            state_d = dut.state;
             cycle_count = cycle_count + 1;
         end
 
