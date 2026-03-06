@@ -3,13 +3,21 @@
 module single_column_wave_equation_tb;
 
     localparam integer CLK_PERIOD   = 20;
+`ifdef TB_MAX_CYCLES
+    localparam integer MAX_CYCLES   = `TB_MAX_CYCLES;
+`else
     localparam integer MAX_CYCLES   = 250;
+`endif
+`ifdef TB_NUM_SWEEPS
+    localparam integer NUM_SWEEPS   = `TB_NUM_SWEEPS;
+`else
     localparam integer NUM_SWEEPS   = 100;
+`endif
     localparam integer COLUMN_DEPTH = 29;
     localparam integer CENTER_NODE  = 15;
-    localparam signed [17:0] RHO0_VAL      = 18'sd8192;
+    localparam signed [17:0] RHO0_VAL      = 18'sd32768; // 0.25 in 1.17
     localparam signed [17:0] RHO_EFF_MAX   = 18'sd64225; // floor(0.49 * 2^17)
-    localparam signed [17:0] G_TENSION_VAL = 18'sd3277;  // about 0.025 in 1.17
+    localparam signed [17:0] G_TENSION_VAL = 18'sd6144;  // 0.046875 in 1.17, between 2^-4 and 2^-5
     localparam signed [17:0] INIT_AMP      = 18'sd16384;
     localparam signed [17:0] STEP_INCREMENT =
         ((18'sd1 <<< 17) / ((1 <<< 3) * CENTER_NODE));
