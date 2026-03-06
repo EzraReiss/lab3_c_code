@@ -5,6 +5,8 @@
 `define MAX_HEIGHT 3 // 1/8 to avoid overflow (1 << 3)
 `define STEP_INCREMENT ((18'sd1 <<< 17) / ((1 <<< `MAX_HEIGHT) * `CENTER_NODE))  //(MAX_HEIGHT) / CENTER_NODE
 
+
+
 module single_column_wave_equation #(
     parameter integer ETA_SHIFT = 10
 )
@@ -73,6 +75,8 @@ module single_column_wave_equation #(
     mem_Nm1 (
         .q(mem_Nm1_rdata),
         .d(mem_Nm1_wdata),
+        .write_address(mem_Nm1_waddr),
+        .read_address(mem_Nm1_raddr),
         .write_address(mem_Nm1_waddr),
         .read_address(mem_Nm1_raddr),
         .we(mem_Nm1_we),
