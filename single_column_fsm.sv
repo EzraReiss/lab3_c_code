@@ -128,7 +128,7 @@ module single_column_wave_equation #(
             STATE_1: next_state = STATE_2;
             STATE_2: next_state = STATE_3;
             STATE_3: next_state = STATE_4;
-            STATE_4: next_state = (node_count == `COLUMN_DEPTH-1) ? STATE_5 : STATE_3;
+            STATE_4: next_state = (node_count == `COLUMN_DEPTH-1) ? STATE_5 : STATE_4;
             STATE_5: next_state = STATE_6;
             STATE_6: next_state = (next_sample) ? STATE_0 : STATE_6; // hold in done state
             default: next_state = INIT;
