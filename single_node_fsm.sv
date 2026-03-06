@@ -1,15 +1,16 @@
+// Purely combinational wave-equation node.
+// State (u_curr, u_prev) is supplied from external memory
+// so one instance can be time-shared across an entire column.
 module single_node_wave_equation #(
     parameter integer ETA_SHIFT = 10  // eta*dt/2 = 2^{-ETA_SHIFT}  (default 2^-10)
 )
 (
-    input logic clk,
-    input logic rst,
     input logic signed [17:0] rho_eff, 
-    input logic signed [17:0] G_tension,
-    input logic signed [17:0] initial_value,
-    input logic signed [17:0] u_up,
-    input logic signed [17:0] u_down,
-    output logic signed [17:0] wave_value
+    input logic signed [17:0] u_curr,   // current value from mem_N
+    input logic signed [17:0] u_prev,   // previous value from mem_Nm1
+    input logic signed [17:0] u_up,     // neighbor above
+    input logic signed [17:0] u_down,   // neighbor below
+    output logic signed [17:0] u_next   // result to write back to mem_N
 );
     
     // 1.17 signed fixed-point multiply
@@ -23,33 +24,13 @@ module single_node_wave_equation #(
         end
     endfunction
 
-    logic signed [17:0] u_curr, u_prev, u_next;
-
-    logic signed [17:0] rho_eff_reg, G_tension_reg;
-
-
-    // rho_eff * (neighbors - 4*u_curr)  — all neighbors = 0 for single node
-    wire signed [17:0] product = mult_1p17(rho_eff_reg, u_up + u_down -(u_curr <<< 2));
+    // rho_eff * (neighbors - 2*u_curr)  (1-D: 2 neighbors)
+    wire signed [17:0] product = mult_1p17(rho_eff, u_up + u_down - (u_curr <<< 1));
 
     // product + 2*u_curr - (1 - eta*dt/2)*u_prev
     wire signed [17:0] sum = product + (u_curr <<< 1) - u_prev + (u_prev >>> ETA_SHIFT);
 
     // [1 + eta*dt/2]^{-1} * sum  ~=  sum - (sum >>> ETA_SHIFT)
-    wire signed [17:0] expression = sum - (sum >>> ETA_SHIFT);
-
-    always_ff @(posedge clk or posedge rst) begin
-        if (rst) begin
-            u_curr <= initial_value;
-            u_prev <= initial_value;
-            rho_eff_reg <= rho_eff;
-            G_tension_reg <= G_tension;
-        end else begin
-            // Update the wave values based on the wave equation    
-            u_prev <= u_curr;
-            u_curr <= expression;
-        end
-    end
-
-    assign wave_value = u_curr;
+    assign u_next = sum - (sum >>> ETA_SHIFT);
 
 endmodule
