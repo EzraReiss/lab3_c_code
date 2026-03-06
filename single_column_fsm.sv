@@ -169,6 +169,8 @@ module single_column_wave_equation #(
                     // stop writes, start reading from bottom of column
                     mem_N_raddr   <= 0;
                     mem_Nm1_raddr <= 0;
+                    mem_N_waddr   <= 0;
+                    mem_Nm1_waddr <= 0;
                     node_count    <= 0;
                     done          <= 0;
                 end
