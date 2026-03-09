@@ -109,10 +109,10 @@ module single_column_wave_equation_tb;
             $display("COLUMN SNAPSHOT cycle=%0d sweep=%0d state=%0d done=%0b init_addr=%0d node_count=%0d rho_eff=%0d",
                 sample_cycle, sweep_count, dut.state, done, dut.init_addr, dut.node_count, rho_eff);
             for (idx = 0; idx < COLUMN_DEPTH; idx = idx + 1) begin
-                $display("  node[%0d] N=%0d Nm1=%0d",
-                    idx,
-                    $signed(dut.mem_N.mem[idx]),
-                    $signed(dut.mem_Nm1.mem[idx]));
+                //$display("  node[%0d] N=%0d Nm1=%0d",
+                //    idx,
+                //    $signed(dut.mem_N.mem[idx]),
+                //    $signed(dut.mem_Nm1.mem[idx]));
                 $fwrite(snapshot_file, "%0d,%0d,%0d,%0d\n",
                     sample_cycle,
                     idx,
@@ -153,6 +153,10 @@ module single_column_wave_equation_tb;
     always #(CLK_PERIOD/2) clk = ~clk;
 
     initial begin
+        // VCD waveform dump (used by iverilog/vvp, viewable in GTKWave)
+        $dumpfile("single_column_wave.vcd");
+        $dumpvars(0, single_column_wave_equation_tb);
+
         trace_file = $fopen("single_column_trace.csv", "w");
         snapshot_file = $fopen("single_column_snapshots.csv", "w");
 
