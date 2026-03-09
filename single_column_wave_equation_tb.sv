@@ -206,7 +206,7 @@ module single_column_wave_equation_tb;
                 init_dumped = 1'b1;
             end
 
-            if ((dut.state == dut.STATE_6) && (state_d != dut.STATE_6)) begin
+            if ((dut.state == dut.STATE_5) && (state_d != dut.STATE_5)) begin
                 update_rho_eff_from_column(cycle_count);
                 dump_column_snapshot(cycle_count);
                 sweep_count = sweep_count + 1;

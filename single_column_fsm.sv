@@ -104,8 +104,7 @@ module single_column_wave_equation #(
         STATE_2,
         STATE_3,
         STATE_4,
-        STATE_5,
-        STATE_6
+        STATE_5
     } state_t;
  
     state_t state, next_state;
@@ -137,10 +136,9 @@ module single_column_wave_equation #(
                 if (node_count == `COLUMN_DEPTH-1) next_state = STATE_5;
                 else                               next_state = STATE_4;
             end
-            STATE_5: next_state = STATE_6;
-            STATE_6: begin
+            STATE_5: begin
                 if (next_sample) next_state = STATE_0;
-                else             next_state = STATE_6;
+                else             next_state = STATE_5;
             end
             default: next_state = INIT;
         endcase
@@ -242,11 +240,6 @@ module single_column_wave_equation #(
                 end
 
                 STATE_5: begin
-                    mem_N_we      <= 0;
-                    mem_Nm1_we    <= 0;
-                end
-
-                STATE_6: begin
                     mem_N_we  <= 0;
                     mem_Nm1_we <= 0;
                     done      <= 1;
