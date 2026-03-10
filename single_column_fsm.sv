@@ -1,7 +1,7 @@
 `include "single_node_fsm.sv"
 `define DATA_WIDTH 18
 `define COLUMN_DEPTH 29
-`define CENTER_NODE 15 // 1/2 of COLUMN_DEPTH
+`define CENTER_NODE ((`COLUMN_DEPTH - 1) / 2) // center index for 0..COLUMN_DEPTH-1
 `define MAX_HEIGHT 3 // 1/8 to avoid overflow (1 << 3)
 `define STEP_INCREMENT ((18'sd1 <<< 17) / ((1 <<< `MAX_HEIGHT) * `CENTER_NODE))  //(MAX_HEIGHT) / CENTER_NODE
 
@@ -133,7 +133,7 @@ module single_column_wave_equation #(
             STATE_2: next_state = STATE_3;
             STATE_3: next_state = STATE_4;
             STATE_4: begin
-                if (node_count == `COLUMN_DEPTH-1) next_state = STATE_5;
+                if (node_count == `COLUMN_DEPTH-2) next_state = STATE_5;
                 else                               next_state = STATE_4;
             end
             STATE_5: begin
@@ -240,9 +240,12 @@ module single_column_wave_equation #(
                 end
 
                 STATE_5: begin
-                    mem_N_we  <= 0;
-                    mem_Nm1_we <= 0;
+                    mem_N_we  <= 1;
+                    mem_Nm1_we <= 1;
                     done      <= 1;
+                    u_down <= u_center;
+                    u_center_prev <= mem_Nm1_rdata;
+                    
                 end
 
                 default: begin
