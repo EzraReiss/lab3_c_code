@@ -14,7 +14,7 @@ module single_column_wave_equation_tb;
     localparam integer NUM_SWEEPS   = 100;
 `endif
     localparam integer COLUMN_DEPTH = 29;
-    localparam integer CENTER_NODE  = 15;
+    localparam integer CENTER_NODE  = (COLUMN_DEPTH - 1) / 2;
     localparam signed [17:0] RHO0_VAL      = 18'sd32768; // 0.25 in 1.17
     localparam signed [17:0] RHO_EFF_MAX   = 18'sd64225; // floor(0.49 * 2^17)
     localparam signed [17:0] G_TENSION_VAL = 18'sd6144;  // 0.046875 in 1.17, between 2^-4 and 2^-5
