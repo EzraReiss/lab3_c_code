@@ -10,7 +10,9 @@ module single_node_wave_equation #(
     input logic signed [17:0] u_prev,   // previous value from mem_Nm1
     input logic signed [17:0] u_up,     // neighbor above
     input logic signed [17:0] u_down,   // neighbor below
-    output logic signed [17:0] u_next   // result to write back to mem_N
+    input logic signed [17:0] u_right,  // neighbor right (for 2D extension)
+    input logic signed [17:0] u_left,   // neighbor left (for 2D extension)
+    output logic signed [17:0] u_next    // result to write back to mem_N
 );
     
     // 1.17 signed fixed-point multiply
@@ -25,12 +27,11 @@ module single_node_wave_equation #(
     endfunction
 
     // rho_eff * (neighbors - 2*u_curr)  (1-D: 2 neighbors)
-    wire signed [17:0] product = mult_1p17(rho_eff, u_up + u_down - (u_curr <<< 1));
+    wire signed [17:0] product = mult_1p17(rho_eff, u_up + u_down + u_right + u_left - (u_curr <<< 1));
 
     // product + 2*u_curr - (1 - eta*dt/2)*u_prev
     wire signed [17:0] sum = product + (u_curr <<< 1) - u_prev + (u_prev >>> ETA_SHIFT);
 
     // [1 + eta*dt/2]^{-1} * sum  ~=  sum - (sum >>> ETA_SHIFT)
     assign u_next = sum - (sum >>> ETA_SHIFT);
-
 endmodule

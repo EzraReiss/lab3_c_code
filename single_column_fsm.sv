@@ -1,14 +1,14 @@
-`include "single_node_fsm.sv"
 `define DATA_WIDTH 18
 `define COLUMN_DEPTH 29
-`define CENTER_NODE 15 // 1/2 of COLUMN_DEPTH
+`define CENTER_NODE 14 // 1/2 of COLUMN_DEPTH
 `define MAX_HEIGHT 3 // 1/8 to avoid overflow (1 << 3)
 `define STEP_INCREMENT ((18'sd1 <<< 17) / ((1 <<< `MAX_HEIGHT) * `CENTER_NODE))  //(MAX_HEIGHT) / CENTER_NODE
 
 
 
 module single_column_wave_equation #(
-    parameter integer ETA_SHIFT = 10
+    parameter integer ETA_SHIFT = 10,
+    parameter COLUMN_DEPTH = `COLUMN_DEPTH
 )
 (
     input logic clk,
@@ -16,8 +16,11 @@ module single_column_wave_equation #(
     input logic signed [17:0] rho_eff, 
     input logic signed [17:0] G_tension,
     input logic signed [17:0] initial_value,
+    input logic signed [17:0] u_right,
+    input logic signed [17:0] u_left,
     input logic next_sample,
     output logic signed [17:0] wave_value,
+    output logic signed [17:0] u_middle_node,
     output logic done
 );
 
@@ -30,35 +33,38 @@ module single_column_wave_equation #(
 
     // memory N (current timestep) signals
     logic signed [17:0] mem_N_rdata, mem_N_wdata;
-    logic [$clog2(`COLUMN_DEPTH)-1:0] mem_N_waddr, mem_N_raddr;
+    logic [$clog2(COLUMN_DEPTH)-1:0] mem_N_waddr, mem_N_raddr;
     logic mem_N_we;
 
     // memory Nm1 (previous timestep) signals
     logic signed [17:0] mem_Nm1_rdata, mem_Nm1_wdata;
-    logic [$clog2(`COLUMN_DEPTH)-1:0] mem_Nm1_waddr, mem_Nm1_raddr;
+    logic [$clog2(COLUMN_DEPTH)-1:0] mem_Nm1_waddr, mem_Nm1_raddr;
     logic mem_Nm1_we;
 
     // init write counter
-    logic [$clog2(`COLUMN_DEPTH)-1:0] init_addr;
+    logic [$clog2(COLUMN_DEPTH)-1:0] init_addr;
 
     // node processing counter
-    logic [$clog2(`COLUMN_DEPTH)-1:0] node_count;
+    logic [$clog2(COLUMN_DEPTH)-1:0] node_count;
 
-    // combinational triangle-wave value for initialization
-    wire signed [17:0] triangle_value = (init_addr <= `CENTER_NODE) ?
-        init_addr * `STEP_INCREMENT :
-        (`COLUMN_DEPTH - 1 - init_addr) * `STEP_INCREMENT;
+    // triangle profile with peak = initial_value at CENTER_NODE
+    wire signed [35:0] init_rise_mult = $signed(initial_value) * $signed({1'b0, init_addr});
+    wire signed [35:0] init_fall_mult = $signed(initial_value) * $signed(COLUMN_DEPTH - 1 - init_addr);
+    wire signed [35:0] triangle_value_wide = (init_addr <= `CENTER_NODE) ?
+        (init_rise_mult / `CENTER_NODE) :
+        (init_fall_mult / `CENTER_NODE);
+    wire signed [17:0] triangle_value = triangle_value_wide[17:0];
 
     // address increment helpers (continuous assignments)
-    wire [$clog2(`COLUMN_DEPTH)-1:0] next_N_raddr   = (mem_N_raddr   == `COLUMN_DEPTH-1) ? '0 : mem_N_raddr   + 1;
-    wire [$clog2(`COLUMN_DEPTH)-1:0] next_Nm1_raddr = (mem_Nm1_raddr == `COLUMN_DEPTH-1) ? '0 : mem_Nm1_raddr + 1;
-    wire [$clog2(`COLUMN_DEPTH)-1:0] next_N_waddr   = (mem_N_waddr   == `COLUMN_DEPTH-1) ? '0 : mem_N_waddr   + 1;
-    wire [$clog2(`COLUMN_DEPTH)-1:0] next_Nm1_waddr = (mem_Nm1_waddr == `COLUMN_DEPTH-1) ? '0 : mem_Nm1_waddr + 1;
+    wire [$clog2(COLUMN_DEPTH)-1:0] next_N_raddr   = (mem_N_raddr   == COLUMN_DEPTH-1) ? '0 : mem_N_raddr   + 1;
+    wire [$clog2(COLUMN_DEPTH)-1:0] next_Nm1_raddr = (mem_Nm1_raddr == COLUMN_DEPTH-1) ? '0 : mem_Nm1_raddr + 1;
+    wire [$clog2(COLUMN_DEPTH)-1:0] next_N_waddr   = (mem_N_waddr   == COLUMN_DEPTH-1) ? '0 : mem_N_waddr   + 1;
+    wire [$clog2(COLUMN_DEPTH)-1:0] next_Nm1_waddr = (mem_Nm1_waddr == COLUMN_DEPTH-1) ? '0 : mem_Nm1_waddr + 1;
 
     // ---- Memory Instances ----
     M10K_COLUMN #(
         .DATA_WIDTH(`DATA_WIDTH),
-        .COLUMN_DEPTH(`COLUMN_DEPTH)
+        .COLUMN_DEPTH(COLUMN_DEPTH)
     )
     mem_N (
         .q(mem_N_rdata),
@@ -71,7 +77,7 @@ module single_column_wave_equation #(
     
     M10K_COLUMN #(
         .DATA_WIDTH(`DATA_WIDTH),
-        .COLUMN_DEPTH(`COLUMN_DEPTH)
+        .COLUMN_DEPTH(COLUMN_DEPTH)
     )
     mem_Nm1 (
         .q(mem_Nm1_rdata),
@@ -91,6 +97,8 @@ module single_column_wave_equation #(
         .u_curr(u_center),       // from mem_N
         .u_prev(u_center_prev),  // from mem_Nm1
         .u_up(u_up),
+        .u_right(u_right),
+        .u_left(u_left),
         .u_down(u_down),
         .u_next(compute_out)
     );
@@ -124,12 +132,12 @@ module single_column_wave_equation #(
     always_comb begin
         next_state = state; // default: hold current state
         case (state)
-            INIT:    next_state = (init_addr == `COLUMN_DEPTH-1) ? STATE_0 : INIT;
+            INIT:    next_state = (init_addr == COLUMN_DEPTH-1) ? STATE_0 : INIT;
             STATE_0: next_state = STATE_1;
             STATE_1: next_state = STATE_2;
             STATE_2: next_state = STATE_3;
             STATE_3: next_state = STATE_4;
-            STATE_4: next_state = (node_count == `COLUMN_DEPTH-1) ? STATE_5 : STATE_4;
+            STATE_4: next_state = (node_count == COLUMN_DEPTH-1) ? STATE_5 : STATE_4;
             STATE_5: next_state = STATE_6;
             STATE_6: next_state = (next_sample) ? STATE_0 : STATE_6; // hold in done state
             default: next_state = INIT;
@@ -199,12 +207,16 @@ module single_column_wave_equation #(
                 STATE_4: begin
                     mem_N_raddr   <= next_N_raddr;
                     mem_Nm1_raddr <= next_Nm1_raddr;
-                    u_up          <= (mem_N_raddr != `COLUMN_DEPTH-1) ? mem_N_rdata : 18'sd0;
+                    u_up          <= (mem_N_raddr != COLUMN_DEPTH-1) ? mem_N_rdata : 18'sd0;
                     u_center      <= u_up;
                     u_center_prev <= mem_Nm1_rdata;
                     u_down        <= u_center;
-                    if (node_count != `COLUMN_DEPTH-1) begin
+                    if (node_count != COLUMN_DEPTH-1) begin
                         node_count <= node_count + 1;
+                    end
+
+                    if (node_count == `CENTER_NODE) begin
+                        u_middle_node <= u_center;
                     end
                 end
 
