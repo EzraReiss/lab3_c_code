@@ -13,6 +13,9 @@ static constexpr int kSampleRate = 48000;
 static constexpr int kDefaultSamples = 96000;
 static constexpr int kMaxCyclesPerSample = 200;
 static constexpr int kDefaultGain = 16;
+static constexpr int32_t kRho0 = 32768;       // 0.25 in 1.17
+static constexpr int32_t kRhoEffMax = 64225;  // floor(0.49 * 2^17)
+static constexpr int32_t kGnl = 9175;         // 0.07 in 1.17
 
 static inline int32_t sign_extend_18(uint32_t v) {
     v &= 0x3FFFFu;
@@ -20,6 +23,21 @@ static inline int32_t sign_extend_18(uint32_t v) {
         v |= 0xFFFC0000u;
     }
     return static_cast<int32_t>(v);
+}
+
+static inline int32_t mult_1p17(int32_t a, int32_t b) {
+    int64_t product = static_cast<int64_t>(a) * static_cast<int64_t>(b);
+    return static_cast<int32_t>(product >> 17);
+}
+
+static inline int32_t compute_rho_eff_from_center(int32_t center_value) {
+    int32_t center_times_g = mult_1p17(center_value, kGnl);
+    int32_t nonlinear_term = mult_1p17(center_times_g, center_times_g);
+    int32_t rho = kRho0 + nonlinear_term;
+    if (rho > kRhoEffMax) {
+        rho = kRhoEffMax;
+    }
+    return rho;
 }
 
 static void tick(Vmulti_column_drum* top, vluint64_t& sim_time, VerilatedVcdC* tfp) {
@@ -71,9 +89,9 @@ int main(int argc, char** argv) {
     }
 #endif
 
-    // Linear test: fixed rho_eff, no nonlinear update from center displacement.
-    top->rho_eff = 32768;  // 0.25 in 1.17
-    top->G_tension = 0;    // disabled
+    // Nonlinear rho in TB: rho_eff is recomputed per finished sample from center displacement.
+    top->rho_eff = kRho0;
+    top->G_tension = 0;
     top->next_sample = 0;
     top->rst = 1;
 
@@ -108,6 +126,9 @@ int main(int argc, char** argv) {
         sample16 = std::clamp(sample16, -32768, 32767);
         int16_t out = static_cast<int16_t>(sample16);
         pcm_out.write(reinterpret_cast<const char*>(&out), sizeof(out));
+
+        // Update rho_eff for next sample using nonlinear center-node model.
+        top->rho_eff = compute_rho_eff_from_center(sample18);
 
         top->next_sample = 1;
         tick(top, sim_time, tfp);
