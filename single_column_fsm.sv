@@ -1,6 +1,5 @@
 `define DATA_WIDTH 18
 `define COLUMN_DEPTH 29
-`define CENTER_NODE 14 // 1/2 of COLUMN_DEPTH
 `define CENTER_NODE ((`COLUMN_DEPTH - 1) / 2) // center index for 0..COLUMN_DEPTH-1
 `define MAX_HEIGHT 3 // 1/8 to avoid overflow (1 << 3)
 `define STEP_INCREMENT ((18'sd1 <<< 17) / ((1 <<< `MAX_HEIGHT) * `CENTER_NODE))  //(MAX_HEIGHT) / CENTER_NODE
@@ -48,6 +47,7 @@ module single_column_wave_equation #(
 
     // node processing counter
     logic [$clog2(COLUMN_DEPTH)-1:0] node_count;
+    localparam int ADDR_W = $clog2(COLUMN_DEPTH);
 
     // triangle profile with peak = initial_value at CENTER_NODE
     wire signed [35:0] init_rise_mult = $signed(initial_value) * $signed({1'b0, init_addr});
@@ -58,11 +58,11 @@ module single_column_wave_equation #(
     wire signed [17:0] triangle_value = triangle_value_wide[17:0];
 
     // node_count-based address helpers (bounded at top boundary)
-    wire [$clog2(`COLUMN_DEPTH)-1:0] node_addr     = node_count;
-    wire [$clog2(`COLUMN_DEPTH)-1:0] node_addr_p1  = (node_count < `COLUMN_DEPTH-1) ? (node_count + 1'd1) : (`COLUMN_DEPTH-1);
-    wire [$clog2(`COLUMN_DEPTH)-1:0] node_addr_p2  = (node_count < `COLUMN_DEPTH-2) ? (node_count + 2'd2) : (`COLUMN_DEPTH-1);
-    wire [$clog2(`COLUMN_DEPTH)-1:0] node_addr_p3  = (node_count < `COLUMN_DEPTH-3) ? (node_count + 2'd3) : (`COLUMN_DEPTH-1);
-    wire [$clog2(`COLUMN_DEPTH)-1:0] node_addr_p4  = (node_count < `COLUMN_DEPTH-4) ? (node_count + 3'd4) : (`COLUMN_DEPTH-1);
+    wire [ADDR_W-1:0] node_addr     = node_count;
+    wire [ADDR_W-1:0] node_addr_p1  = (node_count < COLUMN_DEPTH-1) ? (node_count + ADDR_W'(1)) : (COLUMN_DEPTH-1);
+    wire [ADDR_W-1:0] node_addr_p2  = (node_count < COLUMN_DEPTH-2) ? (node_count + ADDR_W'(2)) : (COLUMN_DEPTH-1);
+    wire [ADDR_W-1:0] node_addr_p3  = (node_count < COLUMN_DEPTH-3) ? (node_count + ADDR_W'(3)) : (COLUMN_DEPTH-1);
+    wire [ADDR_W-1:0] node_addr_p4  = (node_count < COLUMN_DEPTH-4) ? (node_count + ADDR_W'(4)) : (COLUMN_DEPTH-1);
 
     // ---- Memory Instances ----
     M10K_COLUMN #(

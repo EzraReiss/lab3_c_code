@@ -50,6 +50,7 @@ module multi_column_drum #(
                 .next_sample(next_sample),
                 .wave_value(u_neighbor[i]),
                 .u_middle_node(u_middle_node[i]),
+                .center_node_14(),
                 .done(done_columns[i])
             );
         end
