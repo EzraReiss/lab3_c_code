@@ -26,8 +26,8 @@ module single_node_wave_equation #(
         end
     endfunction
 
-    // rho_eff * (neighbors - 2*u_curr)  (1-D: 2 neighbors)
-    wire signed [17:0] product = mult_1p17(rho_eff, u_up + u_down + u_right + u_left - (u_curr <<< 1));
+    // 2D Laplacian term: (up + down + left + right - 4*u_curr)
+    wire signed [17:0] product = mult_1p17(rho_eff, u_up + u_down + u_right + u_left - (u_curr <<< 2));
 
     // product + 2*u_curr - (1 - eta*dt/2)*u_prev
     wire signed [17:0] sum = product + (u_curr <<< 1) - u_prev + (u_prev >>> ETA_SHIFT);

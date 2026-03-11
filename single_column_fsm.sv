@@ -1,6 +1,7 @@
 `define DATA_WIDTH 18
 `define COLUMN_DEPTH 29
 `define CENTER_NODE 14 // 1/2 of COLUMN_DEPTH
+`define CENTER_NODE ((`COLUMN_DEPTH - 1) / 2) // center index for 0..COLUMN_DEPTH-1
 `define MAX_HEIGHT 3 // 1/8 to avoid overflow (1 << 3)
 `define STEP_INCREMENT ((18'sd1 <<< 17) / ((1 <<< `MAX_HEIGHT) * `CENTER_NODE))  //(MAX_HEIGHT) / CENTER_NODE
 
@@ -21,6 +22,7 @@ module single_column_wave_equation #(
     input logic next_sample,
     output logic signed [17:0] wave_value,
     output logic signed [17:0] u_middle_node,
+    output logic signed [17:0] center_node_14,
     output logic done
 );
 
@@ -55,11 +57,12 @@ module single_column_wave_equation #(
         (init_fall_mult / `CENTER_NODE);
     wire signed [17:0] triangle_value = triangle_value_wide[17:0];
 
-    // address increment helpers (continuous assignments)
-    wire [$clog2(COLUMN_DEPTH)-1:0] next_N_raddr   = (mem_N_raddr   == COLUMN_DEPTH-1) ? '0 : mem_N_raddr   + 1;
-    wire [$clog2(COLUMN_DEPTH)-1:0] next_Nm1_raddr = (mem_Nm1_raddr == COLUMN_DEPTH-1) ? '0 : mem_Nm1_raddr + 1;
-    wire [$clog2(COLUMN_DEPTH)-1:0] next_N_waddr   = (mem_N_waddr   == COLUMN_DEPTH-1) ? '0 : mem_N_waddr   + 1;
-    wire [$clog2(COLUMN_DEPTH)-1:0] next_Nm1_waddr = (mem_Nm1_waddr == COLUMN_DEPTH-1) ? '0 : mem_Nm1_waddr + 1;
+    // node_count-based address helpers (bounded at top boundary)
+    wire [$clog2(`COLUMN_DEPTH)-1:0] node_addr     = node_count;
+    wire [$clog2(`COLUMN_DEPTH)-1:0] node_addr_p1  = (node_count < `COLUMN_DEPTH-1) ? (node_count + 1'd1) : (`COLUMN_DEPTH-1);
+    wire [$clog2(`COLUMN_DEPTH)-1:0] node_addr_p2  = (node_count < `COLUMN_DEPTH-2) ? (node_count + 2'd2) : (`COLUMN_DEPTH-1);
+    wire [$clog2(`COLUMN_DEPTH)-1:0] node_addr_p3  = (node_count < `COLUMN_DEPTH-3) ? (node_count + 2'd3) : (`COLUMN_DEPTH-1);
+    wire [$clog2(`COLUMN_DEPTH)-1:0] node_addr_p4  = (node_count < `COLUMN_DEPTH-4) ? (node_count + 3'd4) : (`COLUMN_DEPTH-1);
 
     // ---- Memory Instances ----
     M10K_COLUMN #(
@@ -132,14 +135,23 @@ module single_column_wave_equation #(
     always_comb begin
         next_state = state; // default: hold current state
         case (state)
-            INIT:    next_state = (init_addr == COLUMN_DEPTH-1) ? STATE_0 : INIT;
+            INIT: begin
+                if (init_addr == `COLUMN_DEPTH-1) next_state = STATE_0;
+                else                              next_state = INIT;
+            end
             STATE_0: next_state = STATE_1;
             STATE_1: next_state = STATE_2;
             STATE_2: next_state = STATE_3;
             STATE_3: next_state = STATE_4;
-            STATE_4: next_state = (node_count == COLUMN_DEPTH-1) ? STATE_5 : STATE_4;
+            STATE_4: begin
+                if (node_count == `COLUMN_DEPTH-1) next_state = STATE_5;
+                else                               next_state = STATE_4;
+            end
             STATE_5: next_state = STATE_6;
-            STATE_6: next_state = (next_sample) ? STATE_0 : STATE_6; // hold in done state
+            STATE_6: begin
+                if (next_sample) next_state = STATE_0;
+                else             next_state = STATE_6;
+            end
             default: next_state = INIT;
         endcase
     end
@@ -161,11 +173,14 @@ module single_column_wave_equation #(
             u_down        <= 18'sd0;
             u_center      <= 18'sd0;
             u_center_prev <= 18'sd0;
+            center_node_14 <= 18'sd0;
             done          <= 0;
         end else begin
             case(state)
                 INIT: begin
                     // write initial triangle wave values to both memories
+                    mem_N_we      <= 1;
+                    mem_Nm1_we    <= 1;
                     mem_N_waddr   <= init_addr;
                     mem_Nm1_waddr <= init_addr;
                     mem_N_wdata   <= triangle_value;
@@ -175,43 +190,63 @@ module single_column_wave_equation #(
 
                 STATE_0: begin
                     // stop writes, start reading from bottom of column
+                    mem_N_we      <= 0;
+                    mem_Nm1_we    <= 0;
                     mem_N_raddr   <= 0;
                     mem_Nm1_raddr <= 0;
-                    mem_N_waddr   <= 0;
-                    mem_Nm1_waddr <= 0;
                     node_count    <= 0;
                     done          <= 0;
                 end
 
                 STATE_1: begin
                     // M10K latency cycle: data for addr 0 in flight
-                    mem_N_raddr   <= next_N_raddr;
-                    mem_Nm1_raddr <= 0;
+                    mem_N_we      <= 0;
+                    mem_Nm1_we    <= 0;
+                    mem_N_raddr   <= node_addr_p1;
+                    mem_Nm1_raddr <= node_addr;
                 end
 
                 STATE_2: begin
                     // N[0] and Nm1[0] now available on rdata
-                    mem_N_raddr   <= next_N_raddr;
-                    mem_Nm1_raddr <= next_Nm1_raddr;
+                    mem_N_we      <= 0;
+                    mem_Nm1_we    <= 0;
+                    mem_N_raddr   <= node_addr_p2;
+                    mem_Nm1_raddr <= node_addr_p1;
                     u_up <= mem_N_rdata;
                 end
 
                 STATE_3: begin
                     // N[j+1] now available — latch as u_up (boundary = 0 for top node)
-                    mem_N_raddr   <= next_N_raddr;
-                    mem_Nm1_raddr <= next_Nm1_raddr;
+                    mem_N_we      <= 0;
+                    mem_Nm1_we    <= 0;
+                    mem_N_raddr   <= node_addr_p3;
+                    mem_Nm1_raddr <= node_addr_p2;
                     u_up          <= mem_N_rdata;
+                    u_center      <= u_up;
+                    u_down        <= 18'sd0;
                     u_center_prev <= mem_Nm1_rdata;
+                    mem_N_waddr   <= `COLUMN_DEPTH-1;
+                    mem_Nm1_waddr <= `COLUMN_DEPTH-1;
                 end
 
                 STATE_4: begin
-                    mem_N_raddr   <= next_N_raddr;
-                    mem_Nm1_raddr <= next_Nm1_raddr;
-                    u_up          <= (mem_N_raddr != COLUMN_DEPTH-1) ? mem_N_rdata : 18'sd0;
+                    // stream through all nodes: compute and write back every cycle
+                    mem_N_we      <= 1;
+                    mem_Nm1_we    <= 1;
+                    mem_N_raddr   <= node_addr_p4;
+                    mem_Nm1_raddr <= node_addr_p3;
+                    mem_N_waddr   <= node_addr;
+                    mem_Nm1_waddr <= node_addr;
+                    mem_N_wdata   <= (node_count == 0) ? 18'sd0 : compute_out; // fixed bottom boundary
+                    mem_Nm1_wdata <= (node_count == 0) ? 18'sd0 : u_center;     // keep prev buffer boundary fixed
+                    u_up          <= (node_count == `COLUMN_DEPTH-1) ? 18'sd0 : mem_N_rdata;
                     u_center      <= u_up;
                     u_center_prev <= mem_Nm1_rdata;
                     u_down        <= u_center;
-                    if (node_count != COLUMN_DEPTH-1) begin
+                    if (node_count == 14) begin
+                        center_node_14 <= u_center;
+                    end
+                    if (node_count != `COLUMN_DEPTH-1) begin
                         node_count <= node_count + 1;
                     end
 
@@ -221,15 +256,29 @@ module single_column_wave_equation #(
                 end
 
                 STATE_5: begin
-                    // write compute result to mem_N, old u_center to mem_Nm1
-                    mem_N_waddr   <= node_count;
-                    mem_Nm1_waddr <= node_count;
-                    mem_N_wdata   <= compute_out;        // u_next  -> new N[j]
-                    mem_Nm1_wdata <= u_center;            // u_curr  -> new Nm1[j]
+                    mem_N_we  <= 1;
+                    mem_Nm1_we <= 1;
+                    mem_N_waddr   <= node_addr;
+                    mem_Nm1_waddr <= node_addr;
+
+                    mem_N_wdata   <= 18'sd0; // fixed top boundary
+                    mem_Nm1_wdata <= 18'sd0; // keep prev buffer boundary fixed
                 end
 
                 STATE_6: begin
-                    done      <= 1;
+                    u_up <= u_up;
+                    u_down <= u_down;
+                    u_center <= u_center;
+
+                    mem_N_we <= 0;
+                    mem_Nm1_we <= 0;
+                    mem_N_raddr <= mem_N_raddr;
+                    mem_Nm1_raddr <= mem_Nm1_raddr;
+                    mem_N_waddr <= mem_N_waddr;
+                    mem_Nm1_waddr <= mem_Nm1_waddr;
+                    mem_N_wdata <= mem_N_wdata;
+                    mem_Nm1_wdata <= mem_Nm1_wdata;
+                    done <= 1;
                 end
 
                 default: begin

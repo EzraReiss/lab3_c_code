@@ -18,10 +18,13 @@ cd "$SRC_DIR"
 
 verilator --cc --exe --build --top-module multi_column_drum \
   full_drum.sv single_column_fsm.sv single_node_fsm.sv full_drum_verilator_tb.cpp \
-  -CFLAGS "-std=c++17"
+  -CFLAGS "-std=c++17" \
+  --trace
 
 SAMPLES="${1:-96000}"
-./obj_dir/Vmulti_column_drum "$SAMPLES"
+GAIN="${2:-16}"
+VCD="${3:-0}"
+./obj_dir/Vmulti_column_drum "$SAMPLES" "$GAIN" "$VCD"
 
 # Copy outputs back to the repository folder.
 cp -f center_center_column.pcm "$SCRIPT_DIR/"
@@ -30,6 +33,9 @@ if [[ -f center_center_column.mp3 ]]; then
 fi
 if [[ -f ffmpeg.log ]]; then
   cp -f ffmpeg.log "$SCRIPT_DIR/"
+fi
+if [[ -f full_drum_trace.vcd ]]; then
+  cp -f full_drum_trace.vcd "$SCRIPT_DIR/"
 fi
 
 echo "Done. Outputs copied to: $SCRIPT_DIR"

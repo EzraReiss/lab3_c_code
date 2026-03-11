@@ -14,7 +14,7 @@ module single_column_wave_equation_tb;
     localparam integer NUM_SWEEPS   = 100;
 `endif
     localparam integer COLUMN_DEPTH = 29;
-    localparam integer CENTER_NODE  = 15;
+    localparam integer CENTER_NODE  = (COLUMN_DEPTH - 1) / 2;
     localparam signed [17:0] RHO0_VAL      = 18'sd32768; // 0.25 in 1.17
     localparam signed [17:0] RHO_EFF_MAX   = 18'sd64225; // floor(0.49 * 2^17)
     localparam signed [17:0] G_TENSION_VAL = 18'sd6144;  // 0.046875 in 1.17, between 2^-4 and 2^-5
@@ -109,10 +109,10 @@ module single_column_wave_equation_tb;
             $display("COLUMN SNAPSHOT cycle=%0d sweep=%0d state=%0d done=%0b init_addr=%0d node_count=%0d rho_eff=%0d",
                 sample_cycle, sweep_count, dut.state, done, dut.init_addr, dut.node_count, rho_eff);
             for (idx = 0; idx < COLUMN_DEPTH; idx = idx + 1) begin
-                $display("  node[%0d] N=%0d Nm1=%0d",
-                    idx,
-                    $signed(dut.mem_N.mem[idx]),
-                    $signed(dut.mem_Nm1.mem[idx]));
+                //$display("  node[%0d] N=%0d Nm1=%0d",
+                //    idx,
+                //    $signed(dut.mem_N.mem[idx]),
+                //    $signed(dut.mem_Nm1.mem[idx]));
                 $fwrite(snapshot_file, "%0d,%0d,%0d,%0d\n",
                     sample_cycle,
                     idx,
@@ -153,6 +153,10 @@ module single_column_wave_equation_tb;
     always #(CLK_PERIOD/2) clk = ~clk;
 
     initial begin
+        // VCD waveform dump (used by iverilog/vvp, viewable in GTKWave)
+        $dumpfile("single_column_wave.vcd");
+        $dumpvars(0, single_column_wave_equation_tb);
+
         trace_file = $fopen("single_column_trace.csv", "w");
         snapshot_file = $fopen("single_column_snapshots.csv", "w");
 
@@ -202,7 +206,7 @@ module single_column_wave_equation_tb;
                 init_dumped = 1'b1;
             end
 
-            if ((dut.state == dut.STATE_6) && (state_d != dut.STATE_6)) begin
+            if ((dut.state == dut.STATE_5) && (state_d != dut.STATE_5)) begin
                 update_rho_eff_from_column(cycle_count);
                 dump_column_snapshot(cycle_count);
                 sweep_count = sweep_count + 1;

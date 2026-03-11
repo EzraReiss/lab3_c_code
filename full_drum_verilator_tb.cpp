@@ -1,5 +1,6 @@
 #include "Vmulti_column_drum.h"
 #include "verilated.h"
+#include "verilated_vcd_c.h"
 
 #include <algorithm>
 #include <cstdint>
@@ -11,6 +12,7 @@
 static constexpr int kSampleRate = 48000;
 static constexpr int kDefaultSamples = 96000;
 static constexpr int kMaxCyclesPerSample = 200;
+static constexpr int kDefaultGain = 16;
 
 static inline int32_t sign_extend_18(uint32_t v) {
     v &= 0x3FFFFu;
@@ -20,13 +22,23 @@ static inline int32_t sign_extend_18(uint32_t v) {
     return static_cast<int32_t>(v);
 }
 
-static void tick(Vmulti_column_drum* top, vluint64_t& sim_time) {
+static void tick(Vmulti_column_drum* top, vluint64_t& sim_time, VerilatedVcdC* tfp) {
     top->clk = 0;
     top->eval();
+#if VM_TRACE
+    if (tfp != nullptr) {
+        tfp->dump(sim_time);
+    }
+#endif
     sim_time++;
 
     top->clk = 1;
     top->eval();
+#if VM_TRACE
+    if (tfp != nullptr) {
+        tfp->dump(sim_time);
+    }
+#endif
     sim_time++;
 }
 
@@ -34,12 +46,30 @@ int main(int argc, char** argv) {
     Verilated::commandArgs(argc, argv);
 
     int total_samples = kDefaultSamples;
+    int gain = kDefaultGain;
+    bool write_vcd = false;
     if (argc >= 2) {
         total_samples = std::max(1, std::atoi(argv[1]));
+    }
+    if (argc >= 3) {
+        gain = std::max(1, std::atoi(argv[2]));
+    }
+    if (argc >= 4) {
+        write_vcd = (std::string(argv[3]) == "1");
     }
 
     auto* top = new Vmulti_column_drum;
     vluint64_t sim_time = 0;
+
+    VerilatedVcdC* tfp = nullptr;
+#if VM_TRACE
+    if (write_vcd) {
+        Verilated::traceEverOn(true);
+        tfp = new VerilatedVcdC;
+        top->trace(tfp, 99);
+        tfp->open("full_drum_trace.vcd");
+    }
+#endif
 
     // Linear test: fixed rho_eff, no nonlinear update from center displacement.
     top->rho_eff = 32768;  // 0.25 in 1.17
@@ -48,7 +78,7 @@ int main(int argc, char** argv) {
     top->rst = 1;
 
     for (int i = 0; i < 6; ++i) {
-        tick(top, sim_time);
+        tick(top, sim_time, tfp);
     }
     top->rst = 0;
 
@@ -62,7 +92,7 @@ int main(int argc, char** argv) {
     for (int s = 0; s < total_samples; ++s) {
         int guard = 0;
         while (!top->done && guard < kMaxCyclesPerSample) {
-            tick(top, sim_time);
+            tick(top, sim_time, tfp);
             guard++;
         }
 
@@ -74,18 +104,26 @@ int main(int argc, char** argv) {
         }
 
         int32_t sample18 = sign_extend_18(top->center_center_node);
-        int32_t sample16 = sample18 >> 2;
+        int32_t sample16 = (sample18 * gain) >> 2;
         sample16 = std::clamp(sample16, -32768, 32767);
         int16_t out = static_cast<int16_t>(sample16);
         pcm_out.write(reinterpret_cast<const char*>(&out), sizeof(out));
 
         top->next_sample = 1;
-        tick(top, sim_time);
+        tick(top, sim_time, tfp);
         top->next_sample = 0;
-        tick(top, sim_time);
+        tick(top, sim_time, tfp);
     }
 
     pcm_out.close();
+
+#if VM_TRACE
+    if (tfp != nullptr) {
+        tfp->close();
+        delete tfp;
+        tfp = nullptr;
+    }
+#endif
 
     std::string ffmpeg_cmd =
         "ffmpeg -y -f s16le -ar " + std::to_string(kSampleRate) +
@@ -99,6 +137,8 @@ int main(int argc, char** argv) {
     } else {
         std::cout << "Wrote center_center_column.mp3\n";
     }
+
+    std::cout << "Used gain=" << gain << " (arg2), vcd=" << (write_vcd ? 1 : 0) << " (arg3).\n";
 
     delete top;
     return 0;
