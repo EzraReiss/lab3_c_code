@@ -1,7 +1,7 @@
 module multi_column_drum #(
     parameter integer DATA_WIDTH = 18,
-    parameter integer COLUMN_DEPTH = 29,
-    parameter integer NUM_COLUMNS = 10,
+    parameter integer COLUMN_DEPTH = 30,
+    parameter integer NUM_COLUMNS = 30,
     parameter integer PEAK_INIT = 16384
 )
 (
@@ -45,8 +45,8 @@ module multi_column_drum #(
                 .rho_eff(rho_eff),
                 .G_tension(G_tension),
                 .initial_value(initial_value[i]),
-                .u_right((i < NUM_COLUMNS - 1) ? u_neighbor[i + 1] : 18'sd0),
-                .u_left((i > 0) ? u_neighbor[i - 1] : 18'sd0),
+                .u_right((i < NUM_COLUMNS - 1) ? u_neighbor[i + 1] : '0),
+                .u_left((i > 0) ? u_neighbor[i - 1] : '0),
                 .next_sample(next_sample),
                 .wave_value(u_neighbor[i]),
                 .u_middle_node(u_middle_node[i]),

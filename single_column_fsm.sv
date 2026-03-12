@@ -1,8 +1,5 @@
 `define DATA_WIDTH 18
 `define COLUMN_DEPTH 29
-`define CENTER_NODE ((`COLUMN_DEPTH - 1) / 2) // center index for 0..COLUMN_DEPTH-1
-`define MAX_HEIGHT 3 // 1/8 to avoid overflow (1 << 3)
-`define STEP_INCREMENT ((18'sd1 <<< 17) / ((1 <<< `MAX_HEIGHT) * `CENTER_NODE))  //(MAX_HEIGHT) / CENTER_NODE
 
 
 
@@ -48,21 +45,31 @@ module single_column_wave_equation #(
     // node processing counter
     logic [$clog2(COLUMN_DEPTH)-1:0] node_count;
     localparam int ADDR_W = $clog2(COLUMN_DEPTH);
+    localparam int CENTER_NODE = (COLUMN_DEPTH - 1) / 2;
+    localparam int CENTER_NODE_SAFE = (CENTER_NODE == 0) ? 1 : CENTER_NODE;
+    localparam logic [ADDR_W-1:0] LAST_IDX = ADDR_W'(COLUMN_DEPTH - 1);
+    localparam logic [ADDR_W-1:0] MAX_FOR_P1 = (COLUMN_DEPTH > 1) ? ADDR_W'(COLUMN_DEPTH - 1) : '0;
+    localparam logic [ADDR_W-1:0] MAX_FOR_P2 = (COLUMN_DEPTH > 2) ? ADDR_W'(COLUMN_DEPTH - 2) : '0;
+    localparam logic [ADDR_W-1:0] MAX_FOR_P3 = (COLUMN_DEPTH > 3) ? ADDR_W'(COLUMN_DEPTH - 3) : '0;
+    localparam logic [ADDR_W-1:0] MAX_FOR_P4 = (COLUMN_DEPTH > 4) ? ADDR_W'(COLUMN_DEPTH - 4) : '0;
+    localparam logic [ADDR_W-1:0] CENTER_NODE_IDX = CENTER_NODE[ADDR_W-1:0];
+    localparam logic signed [35:0] CENTER_NODE_DIV = 36'(CENTER_NODE_SAFE);
 
     // triangle profile with peak = initial_value at CENTER_NODE
+    wire [ADDR_W-1:0] init_fall_idx = LAST_IDX - init_addr;
     wire signed [35:0] init_rise_mult = $signed(initial_value) * $signed({1'b0, init_addr});
-    wire signed [35:0] init_fall_mult = $signed(initial_value) * $signed(COLUMN_DEPTH - 1 - init_addr);
-    wire signed [35:0] triangle_value_wide = (init_addr <= `CENTER_NODE) ?
-        (init_rise_mult / `CENTER_NODE) :
-        (init_fall_mult / `CENTER_NODE);
+    wire signed [35:0] init_fall_mult = $signed(initial_value) * $signed({1'b0, init_fall_idx});
+    wire signed [35:0] triangle_value_wide = (init_addr <= CENTER_NODE_IDX) ?
+        (init_rise_mult / CENTER_NODE_DIV) :
+        (init_fall_mult / CENTER_NODE_DIV);
     wire signed [17:0] triangle_value = triangle_value_wide[17:0];
 
     // node_count-based address helpers (bounded at top boundary)
     wire [ADDR_W-1:0] node_addr     = node_count;
-    wire [ADDR_W-1:0] node_addr_p1  = (node_count < COLUMN_DEPTH-1) ? (node_count + ADDR_W'(1)) : (COLUMN_DEPTH-1);
-    wire [ADDR_W-1:0] node_addr_p2  = (node_count < COLUMN_DEPTH-2) ? (node_count + ADDR_W'(2)) : (COLUMN_DEPTH-1);
-    wire [ADDR_W-1:0] node_addr_p3  = (node_count < COLUMN_DEPTH-3) ? (node_count + ADDR_W'(3)) : (COLUMN_DEPTH-1);
-    wire [ADDR_W-1:0] node_addr_p4  = (node_count < COLUMN_DEPTH-4) ? (node_count + ADDR_W'(4)) : (COLUMN_DEPTH-1);
+    wire [ADDR_W-1:0] node_addr_p1  = (node_count < MAX_FOR_P1) ? (node_count + ADDR_W'(1)) : LAST_IDX;
+    wire [ADDR_W-1:0] node_addr_p2  = (node_count < MAX_FOR_P2) ? (node_count + ADDR_W'(2)) : LAST_IDX;
+    wire [ADDR_W-1:0] node_addr_p3  = (node_count < MAX_FOR_P3) ? (node_count + ADDR_W'(3)) : LAST_IDX;
+    wire [ADDR_W-1:0] node_addr_p4  = (node_count < MAX_FOR_P4) ? (node_count + ADDR_W'(4)) : LAST_IDX;
 
     // ---- Memory Instances ----
     M10K_COLUMN #(
@@ -136,7 +143,7 @@ module single_column_wave_equation #(
         next_state = state; // default: hold current state
         case (state)
             INIT: begin
-                if (init_addr == `COLUMN_DEPTH-1) next_state = STATE_0;
+                if (init_addr == LAST_IDX) next_state = STATE_0;
                 else                              next_state = INIT;
             end
             STATE_0: next_state = STATE_1;
@@ -144,7 +151,7 @@ module single_column_wave_equation #(
             STATE_2: next_state = STATE_3;
             STATE_3: next_state = STATE_4;
             STATE_4: begin
-                if (node_count == `COLUMN_DEPTH-1) next_state = STATE_5;
+                if (node_count == LAST_IDX) next_state = STATE_5;
                 else                               next_state = STATE_4;
             end
             STATE_5: next_state = STATE_6;
@@ -225,8 +232,8 @@ module single_column_wave_equation #(
                     u_center      <= u_up;
                     u_down        <= 18'sd0;
                     u_center_prev <= mem_Nm1_rdata;
-                    mem_N_waddr   <= `COLUMN_DEPTH-1;
-                    mem_Nm1_waddr <= `COLUMN_DEPTH-1;
+                    mem_N_waddr   <= LAST_IDX;
+                    mem_Nm1_waddr <= LAST_IDX;
                 end
 
                 STATE_4: begin
@@ -239,18 +246,18 @@ module single_column_wave_equation #(
                     mem_Nm1_waddr <= node_addr;
                     mem_N_wdata   <= (node_count == 0) ? 18'sd0 : compute_out; // fixed bottom boundary
                     mem_Nm1_wdata <= (node_count == 0) ? 18'sd0 : u_center;     // keep prev buffer boundary fixed
-                    u_up          <= (node_count == `COLUMN_DEPTH-1) ? 18'sd0 : mem_N_rdata;
+                    u_up          <= (node_count == LAST_IDX) ? 18'sd0 : mem_N_rdata;
                     u_center      <= u_up;
                     u_center_prev <= mem_Nm1_rdata;
                     u_down        <= u_center;
-                    if (node_count == 14) begin
+                    if (node_count == CENTER_NODE_IDX) begin
                         center_node_14 <= u_center;
                     end
-                    if (node_count != `COLUMN_DEPTH-1) begin
+                    if (node_count != LAST_IDX) begin
                         node_count <= node_count + 1;
                     end
 
-                    if (node_count == `CENTER_NODE) begin
+                    if (node_count == CENTER_NODE_IDX) begin
                         u_middle_node <= u_center;
                     end
                 end
