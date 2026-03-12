@@ -12,9 +12,9 @@ static constexpr int kSampleRate = 48000;
 static constexpr int kDefaultSamples = 96000;
 static constexpr int kDefaultMaxCyclesPerSample = 100000;
 static constexpr int kDefaultGain = 16;
-static constexpr int32_t kRho0 = 32768;       // 0.25 in 1.17
-static constexpr int32_t kRhoEffMax = 64225;  // floor(0.49 * 2^17)
-static constexpr int32_t kGnl = 9175;         // 0.07 in 1.17
+static constexpr int32_t kRho0 = 32768;           // 0.25 in 1.17
+static constexpr int32_t kRhoEffMax = 64225;       // floor(0.49 * 2^17)
+static constexpr int32_t kDefaultGTension = 8192;  // 2^-4 = 0.0625 in 1.17 (midpoint of [2^-5, 2^-3])
 
 // ---------------------------------------------------------------------------
 // Minimal VCD writer — only dumps the 6 top-level signals we care about.
@@ -117,8 +117,10 @@ static inline int32_t mult_1p17(int32_t a, int32_t b) {
     return static_cast<int32_t>((static_cast<int64_t>(a) * b) >> 17);
 }
 
-static inline int32_t compute_rho_eff_from_center(int32_t center_value) {
-    int32_t cg  = mult_1p17(center_value, kGnl);
+// rho_eff = 0.25 + (u_center * G_tension)^2
+// G_tension is the nonlinearity coefficient, expected in [2^-5, 2^-3] i.e. [4096, 16384] in 1.17
+static inline int32_t compute_rho_eff(int32_t center_value, int32_t g_tension) {
+    int32_t cg  = mult_1p17(center_value, g_tension);
     int32_t rho = kRho0 + mult_1p17(cg, cg);
     return (rho > kRhoEffMax) ? kRhoEffMax : rho;
 }
@@ -142,10 +144,11 @@ static void tick(Vmulti_column_drum* top, uint64_t& sim_time, MinimalVcdWriter* 
 int main(int argc, char** argv) {
     Verilated::commandArgs(argc, argv);
 
-    int  total_samples        = kDefaultSamples;
-    int  gain                 = kDefaultGain;
-    bool write_vcd            = false;
-    int  max_cycles_per_sample = kDefaultMaxCyclesPerSample;
+    int     total_samples         = kDefaultSamples;
+    int     gain                  = kDefaultGain;
+    bool    write_vcd             = false;
+    int     max_cycles_per_sample = kDefaultMaxCyclesPerSample;
+    int32_t g_tension             = kDefaultGTension;
 
     if (argc >= 2) total_samples         = std::max(1, std::atoi(argv[1]));
     if (argc >= 3) gain                  = std::max(1, std::atoi(argv[2]));
@@ -153,6 +156,7 @@ int main(int argc, char** argv) {
     if (argc >= 5) vcd_start_sample      = std::atoi(argv[4]);
     if (argc >= 6) vcd_end_sample        = std::atoi(argv[5]);
     if (argc >= 7) max_cycles_per_sample = std::max(1, std::atoi(argv[6]));
+    if (argc >= 8) g_tension             = static_cast<int32_t>(std::atoi(argv[7]));
 
     auto* top = new Vmulti_column_drum;
     uint64_t sim_time = 0;
@@ -168,7 +172,7 @@ int main(int argc, char** argv) {
     }
 
     top->rho_eff     = kRho0;
-    top->G_tension   = 0;
+    top->G_tension   = g_tension;
     top->next_sample = 0;
     top->rst         = 1;
     vcd_dumping_active = (vcd_start_sample < 0);
@@ -210,7 +214,7 @@ int main(int argc, char** argv) {
         int16_t out = static_cast<int16_t>(sample16);
         pcm_out.write(reinterpret_cast<const char*>(&out), sizeof(out));
 
-        top->rho_eff = compute_rho_eff_from_center(sample18);
+        top->rho_eff = compute_rho_eff(sample18, g_tension);
 
         top->next_sample = 1;
         tick(top, sim_time, vcd);
@@ -263,7 +267,8 @@ int main(int argc, char** argv) {
     std::cout << "Used gain=" << gain << " (arg2), vcd=" << (write_vcd ? 1 : 0)
               << " (arg3), vcd_start=" << vcd_start_sample
               << " (arg4), vcd_end=" << vcd_end_sample
-              << " (arg5), max_cycles=" << max_cycles_per_sample << " (arg6).\n";
+              << " (arg5), max_cycles=" << max_cycles_per_sample
+              << " (arg6), g_tension=" << g_tension << " (arg7).\n";
 
     delete top;
     return 0;

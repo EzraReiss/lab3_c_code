@@ -16,8 +16,8 @@ cp "$SCRIPT_DIR/full_drum_verilator_tb.cpp" "$SRC_DIR/"
 
 cd "$SRC_DIR"
 
-NUM_COLUMNS_OVERRIDE="${7:-}"
-COLUMN_DEPTH_OVERRIDE="${8:-}"
+NUM_COLUMNS_OVERRIDE="${8:-}"
+COLUMN_DEPTH_OVERRIDE="${9:-}"
 VERILATOR_G_ARGS=()
 if [[ -n "$NUM_COLUMNS_OVERRIDE" ]]; then
   VERILATOR_G_ARGS+=("-GNUM_COLUMNS=$NUM_COLUMNS_OVERRIDE")
@@ -37,7 +37,8 @@ VCD="${3:-0}"
 VCD_START="${4:--1}"
 VCD_END="${5:--1}"
 MAX_CYCLES="${6:-100000}"
-./obj_dir/Vmulti_column_drum "$SAMPLES" "$GAIN" "$VCD" "$VCD_START" "$VCD_END" "$MAX_CYCLES"
+G_TENSION="${7:-8192}"
+./obj_dir/Vmulti_column_drum "$SAMPLES" "$GAIN" "$VCD" "$VCD_START" "$VCD_END" "$MAX_CYCLES" "$G_TENSION"
 
 # Copy outputs back to the repository folder.
 cp -f center_center_column.pcm "$SCRIPT_DIR/"
