@@ -9,32 +9,21 @@ import subprocess
 import sys
 from pathlib import Path
 
-import matplotlib
-matplotlib.use("Agg")  # non-interactive backend (works in WSL without a display)
 import matplotlib.pyplot as plt
 
 
 WORKSPACE = Path(__file__).resolve().parent
+REPO_ROOT = WORKSPACE.parent
+FPGA_SRC_DIR = REPO_ROOT / "fpga_src"
 TB_TOP = "single_column_wave_equation_tb"
-SIM_OUT = WORKSPACE / "sim.vvp"
 TRACE_CSV = WORKSPACE / "single_column_trace.csv"
 DEFAULT_PNG = WORKSPACE / "single_column_wave_value.png"
 MAX_PLOT_POINTS = 200_000
-
-# Approximate clock cycles per column sweep:
-#   STATE_0(1) + STATE_1(1) + STATE_2(1) + STATE_3(1)
-#   + STATE_4(COLUMN_DEPTH) + STATE_5(1) + STATE_6(1) + next_sample latency(1)
-COLUMN_DEPTH = 29
-CYCLES_PER_SWEEP = COLUMN_DEPTH + 7   # ~36
-
-SV_SOURCES = [
-    "single_column_fsm.sv",
-    "single_column_wave_equation_tb.sv",
-]
+SV_FSM_SOURCE = FPGA_SRC_DIR / "single_column.sv"
+SV_TB_SOURCE = WORKSPACE / "single_column_wave_equation_tb.sv"
 
 
 def run_command(command: list[str], cwd: Path) -> None:
-    print(f"  > {' '.join(command)}")
     completed = subprocess.run(command, cwd=cwd, text=True, capture_output=True)
     if completed.stdout:
         print(completed.stdout, end="")
@@ -86,14 +75,14 @@ def maybe_open_png(png_path: Path, should_open: bool) -> None:
     if not should_open:
         return
     try:
-        os.startfile(str(png_path))  # type: ignore[attr-defined]
+        os.startfile(str(png_path))
     except AttributeError:
         pass
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Compile (iverilog), run (vvp), and plot the single-column wave simulation."
+        description="Compile, run, and plot the single-column wave simulation."
     )
     parser.add_argument(
         "--duration-seconds",
@@ -132,18 +121,8 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    total_clocks = compute_cycles(args.duration_seconds, args.clock_period_ns)
-
-    if args.num_sweeps is not None:
-        num_sweeps = args.num_sweeps
-    else:
-        # Each column sweep takes ~CYCLES_PER_SWEEP clocks;
-        # derive the number of sweeps from the requested duration.
-        num_sweeps = max(1, total_clocks // CYCLES_PER_SWEEP)
-
-    # MAX_CYCLES is a safety timeout — give enough headroom for INIT + all sweeps.
-    init_overhead = COLUMN_DEPTH + 10
-    max_cycles = init_overhead + num_sweeps * CYCLES_PER_SWEEP + 100
+    max_cycles = compute_cycles(args.duration_seconds, args.clock_period_ns)
+    num_sweeps = args.num_sweeps if args.num_sweeps is not None else max_cycles
 
     if max_cycles > 5_000_000:
         print(
@@ -151,41 +130,20 @@ def main() -> None:
             file=sys.stderr,
         )
         print(
-            "This may take a while. Consider a shorter duration for interactive use.",
+            "This is a very large ModelSim run and may take a long time."
+            " Consider a shorter duration for interactive use.",
             file=sys.stderr,
         )
 
-    # ---- Check for iverilog / vvp on PATH ----
-    iverilog = shutil.which("iverilog")
-    vvp = shutil.which("vvp")
-    if iverilog is None or vvp is None:
-        raise SystemExit(
-            "Icarus Verilog tools 'iverilog' and 'vvp' must be on PATH.\n"
-            "Install with:  apt install iverilog  (Linux)  /  brew install icarus-verilog  (macOS)\n"
-            "or download from https://bleyer.org/icarus/ (Windows)"
-        )
+    vlog = shutil.which("vlog")
+    vsim = shutil.which("vsim")
+    if vlog is None or vsim is None:
+        raise SystemExit("ModelSim tools 'vlog' and 'vsim' must be on PATH.")
 
-    # ---- Compile with iverilog ----
-    #   -g2012    : enable SystemVerilog (IEEE 1800-2012)
-    #   -D        : pass macro defines (same semantics as +define+ in commercial tools)
-    #   -o sim.vvp: output compiled simulation binary
-    compile_cmd = [
-        iverilog,
-        "-g2012",
-        f"-DTB_MAX_CYCLES={max_cycles}",
-        f"-DTB_NUM_SWEEPS={num_sweeps}",
-        "-o", str(SIM_OUT),
-        "-s", TB_TOP,
-        *SV_SOURCES,
-    ]
-    print("Compiling…")
-    run_command(compile_cmd, WORKSPACE)
+    defines = [f"+define+TB_MAX_CYCLES={max_cycles}", f"+define+TB_NUM_SWEEPS={num_sweeps}"]
+    run_command([vlog, *defines, str(SV_FSM_SOURCE), str(SV_TB_SOURCE)], WORKSPACE)
+    run_command([vsim, "-c", TB_TOP, "-do", "run -all; quit -f"], WORKSPACE)
 
-    # ---- Run with vvp ----
-    print("Running simulation…")
-    run_command([vvp, str(SIM_OUT)], WORKSPACE)
-
-    # ---- Load trace & plot ----
     times, wave_values = load_trace(args.trace, args.clock_period_ns)
     plot_trace(times, wave_values, args.png, args.duration_seconds)
     maybe_open_png(args.png, not args.no_open)
