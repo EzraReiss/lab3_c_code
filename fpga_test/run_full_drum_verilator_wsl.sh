@@ -4,14 +4,16 @@ set -euo pipefail
 # Build from a no-space temp directory because GNU Make (used by
 # verilator --build) rejects directories containing spaces.
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd -P)"
+FPGA_SRC_DIR="$REPO_ROOT/fpga_src"
 SRC_DIR="/tmp/lab3_c_code_src"
 
 rm -rf "$SRC_DIR"
 mkdir -p "$SRC_DIR"
 
-cp "$SCRIPT_DIR/full_drum.sv" "$SRC_DIR/"
-cp "$SCRIPT_DIR/single_column_fsm.sv" "$SRC_DIR/"
-cp "$SCRIPT_DIR/single_node_fsm.sv" "$SRC_DIR/"
+cp "$FPGA_SRC_DIR/full_drum.sv" "$SRC_DIR/"
+cp "$FPGA_SRC_DIR/single_column.sv" "$SRC_DIR/"
+cp "$FPGA_SRC_DIR/single_node.sv" "$SRC_DIR/"
 cp "$SCRIPT_DIR/full_drum_verilator_tb.cpp" "$SRC_DIR/"
 
 cd "$SRC_DIR"
@@ -27,7 +29,7 @@ if [[ -n "$COLUMN_DEPTH_OVERRIDE" ]]; then
 fi
 
 verilator --cc --exe --build --top-module multi_column_drum \
-  full_drum.sv single_column_fsm.sv single_node_fsm.sv full_drum_verilator_tb.cpp \
+  full_drum.sv single_column.sv single_node.sv full_drum_verilator_tb.cpp \
   -CFLAGS "-std=c++17" \
   --trace \
   "${VERILATOR_G_ARGS[@]}"
