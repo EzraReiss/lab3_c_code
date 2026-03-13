@@ -62,4 +62,8 @@ if [[ -f full_drum_trace.gtkw ]]; then
   cp -f full_drum_trace.gtkw "$SCRIPT_DIR/"
 fi
 
+for snap in drum_snapshot_*.bin; do
+  [ -f "$snap" ] && cp -f "$snap" "$SCRIPT_DIR/"
+done
+
 echo "Done. Outputs copied to: $SCRIPT_DIR"

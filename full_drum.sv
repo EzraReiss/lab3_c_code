@@ -1,9 +1,9 @@
 module multi_column_drum #(
     parameter integer DATA_WIDTH = 18,
-    parameter integer COLUMN_DEPTH = 101,
-    parameter integer NUM_COLUMNS = 101,
-    parameter integer PEAK_INIT = 16384,
-    parameter integer ETA_SHIFT = 10
+    parameter integer COLUMN_DEPTH = 100,
+    parameter integer NUM_COLUMNS = 100,
+    parameter integer PEAK_INIT = 131071,
+    parameter integer ETA_SHIFT = 13
 )
 (
     input logic clk,
@@ -13,7 +13,11 @@ module multi_column_drum #(
     input logic signed [DATA_WIDTH-1:0] G_tension,
     output logic signed [DATA_WIDTH-1:0] center_center_node,
     output logic done,
-    output logic [NUM_COLUMNS*DATA_WIDTH-1:0] all_middle_nodes
+    output logic [NUM_COLUMNS*DATA_WIDTH-1:0] all_middle_nodes,
+
+    // Scan interface: read any row from all columns while idle
+    input  logic [$clog2(COLUMN_DEPTH)-1:0] scan_addr,
+    output logic [NUM_COLUMNS*DATA_WIDTH-1:0] scan_data_all
 );
 
     localparam integer CENTER_COLUMN = (NUM_COLUMNS - 1) / 2;
@@ -26,31 +30,33 @@ module multi_column_drum #(
     logic                   init_done_r;
     logic signed [DATA_WIDTH-1:0] init_data [NUM_COLUMNS-1:0];
 
-    // For each column c at row r, pyramid value =
-    //   PEAK_INIT * min(dist_from_edge_col, dist_from_edge_row) / min(CENTER_COLUMN, CENTER_ROW)
-    // where dist_from_edge_col = min(c, NUM_COLUMNS-1-c)
-    //       dist_from_edge_row = min(r, COLUMN_DEPTH-1-r)
-    // This gives a proper cone/pyramid that's zero on all four boundaries.
-
-    localparam integer CENTER_MIN = (CENTER_COLUMN < CENTER_ROW) ? CENTER_COLUMN : CENTER_ROW;
-    localparam integer CENTER_MIN_SAFE = (CENTER_MIN == 0) ? 1 : CENTER_MIN;
+    // Manhattan-distance diamond initial condition (matches Python reference):
+    //   uHit[i,j] = max(0, PLUCK_RADIUS - (|x_mid - i| + |y_mid - j|)) / PLUCK_RADIUS
+    // Scaled by PEAK_INIT. Only nonzero within PLUCK_RADIUS of center.
+    localparam integer PLUCK_RADIUS = 30;
 
     genvar g;
     generate
         for (g = 0; g < NUM_COLUMNS; g++) begin : init_val_gen
-            localparam integer DIST_COL = (g < CENTER_COLUMN) ? g : (NUM_COLUMNS - 1 - g);
+            localparam integer DIST_COL_ABS = (g > CENTER_COLUMN) ? (g - CENTER_COLUMN) : (CENTER_COLUMN - g);
 
-            wire [COL_ADDR_W-1:0] dist_row_lo = init_row;
-            wire [COL_ADDR_W-1:0] dist_row_hi = COL_ADDR_W'(COLUMN_DEPTH - 1) - init_row;
-            wire [COL_ADDR_W-1:0] dist_row = (dist_row_lo < dist_row_hi) ? dist_row_lo : dist_row_hi;
+            wire [$clog2(COLUMN_DEPTH):0] dist_row_abs =
+                (init_row > CENTER_ROW[COL_ADDR_W-1:0]) ?
+                    ($clog2(COLUMN_DEPTH)+1)'(init_row - CENTER_ROW[COL_ADDR_W-1:0]) :
+                    ($clog2(COLUMN_DEPTH)+1)'(CENTER_ROW[COL_ADDR_W-1:0] - init_row);
 
-            wire [COL_ADDR_W-1:0] dist_min_val = (DIST_COL[COL_ADDR_W-1:0] < dist_row) ?
-                                                   DIST_COL[COL_ADDR_W-1:0] : dist_row;
+            wire [$clog2(COLUMN_DEPTH)+1:0] manhattan = ($clog2(COLUMN_DEPTH)+2)'(DIST_COL_ABS) + {1'b0, dist_row_abs};
 
-            wire signed [35:0] pyramid_wide = $signed(PEAK_INIT[DATA_WIDTH-1:0]) *
-                                              $signed({1'b0, dist_min_val});
-            wire signed [35:0] pyramid_div  = pyramid_wide / $signed(36'(CENTER_MIN_SAFE));
-            assign init_data[g] = pyramid_div[DATA_WIDTH-1:0];
+            wire signed [35:0] height = (32'(manhattan) < 32'(PLUCK_RADIUS)) ?
+                ($signed(PEAK_INIT[DATA_WIDTH-1:0]) * $signed({1'b0, (PLUCK_RADIUS[COL_ADDR_W:0] - manhattan[COL_ADDR_W:0])}))
+                    / $signed(36'(PLUCK_RADIUS)) :
+                36'sd0;
+
+            // Force boundaries to zero
+            wire is_boundary = (g == 0) || (g == NUM_COLUMNS - 1) ||
+                               (init_row == 0) || (init_row == COL_ADDR_W'(COLUMN_DEPTH - 1));
+
+            assign init_data[g] = is_boundary ? 18'sd0 : height[DATA_WIDTH-1:0];
         end
     endgenerate
 
@@ -75,9 +81,9 @@ module multi_column_drum #(
     // ---- Column instances ----
     logic signed [DATA_WIDTH-1:0] u_neighbor [NUM_COLUMNS-1:0];
     logic signed [DATA_WIDTH-1:0] u_middle_node [NUM_COLUMNS-1:0];
+    logic signed [DATA_WIDTH-1:0] scan_data_col [NUM_COLUMNS-1:0];
     logic [NUM_COLUMNS-1:0] done_columns;
 
-    // Gate next_sample until init is complete
     wire next_sample_gated = next_sample & init_done_r;
 
     genvar i;
@@ -94,6 +100,8 @@ module multi_column_drum #(
                 .init_data(init_data[i]),
                 .init_addr(init_row),
                 .init_we(init_we),
+                .scan_addr(scan_addr),
+                .scan_data(scan_data_col[i]),
                 .u_right((i < NUM_COLUMNS - 1) ? u_neighbor[i + 1] : '0),
                 .u_left((i > 0) ? u_neighbor[i - 1] : '0),
                 .next_sample(next_sample_gated),
@@ -112,6 +120,13 @@ module multi_column_drum #(
     generate
         for (m = 0; m < NUM_COLUMNS; m++) begin : pack_middle
             assign all_middle_nodes[m*DATA_WIDTH +: DATA_WIDTH] = u_middle_node[m];
+        end
+    endgenerate
+
+    genvar s;
+    generate
+        for (s = 0; s < NUM_COLUMNS; s++) begin : pack_scan
+            assign scan_data_all[s*DATA_WIDTH +: DATA_WIDTH] = scan_data_col[s];
         end
     endgenerate
 

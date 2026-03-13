@@ -16,6 +16,10 @@ module single_column_wave_equation #(
     input logic [$clog2(COLUMN_DEPTH)-1:0] init_addr,
     input logic init_we,
 
+    // Scan interface — read any node from mem_N while IDLE
+    input logic [$clog2(COLUMN_DEPTH)-1:0] scan_addr,
+    output logic signed [17:0] scan_data,
+
     input logic signed [17:0] u_right,
     input logic signed [17:0] u_left,
     input logic next_sample,
@@ -117,6 +121,7 @@ module single_column_wave_equation #(
     state_t state, next_state;
     
     assign wave_value = u_center;
+    assign scan_data  = mem_N_rdata;
 
     always_ff @(posedge clk) begin
         if (rst) begin
@@ -178,9 +183,10 @@ module single_column_wave_equation #(
         end else begin
             case(state)
                 IDLE: begin
-                    mem_N_we  <= 0;
-                    mem_Nm1_we <= 0;
-                    done <= 1;
+                    mem_N_we     <= 0;
+                    mem_Nm1_we   <= 0;
+                    mem_N_raddr  <= scan_addr;
+                    done         <= 1;
                 end
 
                 STATE_0: begin

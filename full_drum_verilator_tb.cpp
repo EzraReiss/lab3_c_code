@@ -173,6 +173,7 @@ static inline int32_t mult_1p17(int32_t a, int32_t b) {
 static inline int32_t compute_rho_eff(int32_t center_value, int32_t g_tension) {
     int32_t cg  = mult_1p17(center_value, g_tension);
     int32_t rho = kRho0 + mult_1p17(cg, cg);
+    return kRho0;
     return (rho > kRhoEffMax) ? kRhoEffMax : rho;
 }
 
@@ -210,6 +211,50 @@ static std::vector<uint32_t> extract_columns(const Vmulti_column_drum* top, int 
     return cols;
 }
 
+// Extract one row of scan data from the packed scan_data_all output (same layout as all_middle_nodes).
+static std::vector<int32_t> extract_scan_row(const Vmulti_column_drum* top, int num_columns) {
+    std::vector<int32_t> row(num_columns);
+    const auto* words = reinterpret_cast<const uint32_t*>(&top->scan_data_all);
+    for (int i = 0; i < num_columns; ++i) {
+        int bit_lo = i * 18;
+        int word_lo = bit_lo / 32;
+        int shift   = bit_lo % 32;
+        uint32_t v = words[word_lo] >> shift;
+        if (shift + 18 > 32 && word_lo + 1 < static_cast<int>((num_columns * 18 + 31) / 32))
+            v |= words[word_lo + 1] << (32 - shift);
+        row[i] = sign_extend_18(v);
+    }
+    return row;
+}
+
+// Scan the full drum state (all rows × all columns) and write to a binary file.
+// File format: [int32 num_columns] [int32 column_depth] [int32 sample_index]
+//              then column_depth rows of num_columns int32 values (row-major).
+static void scan_drum_state(Vmulti_column_drum* top, uint64_t& sim_time,
+                            int num_columns, int column_depth, int sample_idx,
+                            const std::string& filename) {
+    std::ofstream out(filename, std::ios::binary);
+    if (!out.is_open()) {
+        std::cerr << "Failed to open " << filename << " for writing.\n";
+        return;
+    }
+    int32_t hdr[3] = { num_columns, column_depth, sample_idx };
+    out.write(reinterpret_cast<const char*>(hdr), sizeof(hdr));
+
+    for (int r = 0; r < column_depth; ++r) {
+        top->scan_addr = r;
+        // Two ticks for M10K read latency
+        top->clk = 0; top->eval(); top->clk = 1; top->eval();
+        top->clk = 0; top->eval(); top->clk = 1; top->eval();
+        sim_time += 4;
+
+        auto row = extract_scan_row(top, num_columns);
+        out.write(reinterpret_cast<const char*>(row.data()), num_columns * sizeof(int32_t));
+    }
+    out.close();
+    std::cout << "Wrote drum snapshot: " << filename << " (sample " << sample_idx << ")\n";
+}
+
 int main(int argc, char** argv) {
     Verilated::commandArgs(argc, argv);
 
@@ -244,7 +289,22 @@ int main(int argc, char** argv) {
         while (((candidate + 1) * 18 + 31) / 32 <= total_words) candidate++;
         num_columns = candidate;
     }
-    std::cout << "Detected NUM_COLUMNS=" << num_columns << "\n";
+    // Derive COLUMN_DEPTH from scan_addr width: scan_addr is $clog2(COLUMN_DEPTH) bits.
+    // We know scan_data_all has the same size as all_middle_nodes, confirming num_columns.
+    // For COLUMN_DEPTH, use the Verilator-generated parameter if available, else accept as arg.
+    int column_depth = 0;
+    if (argc >= 9) {
+        // shell script passes NUM_COLUMNS as arg8, COLUMN_DEPTH as arg9 (to Verilator -G)
+        // but those are compile-time only. We pass column_depth as runtime arg too.
+        // Actually, scan_addr bit width = ceil(log2(COLUMN_DEPTH)).
+        // Verilator scan_addr is some unsigned type. Let's just use the arg.
+    }
+    // Fallback: brute-force detect by scanning until values stop changing.
+    // Simpler: require the user to pass it or default to num_columns (square drum).
+    if (column_depth == 0) column_depth = num_columns;
+
+    std::cout << "Detected NUM_COLUMNS=" << num_columns
+              << ", COLUMN_DEPTH=" << column_depth << "\n";
 
     uint64_t sim_time = 0;
 
@@ -283,6 +343,9 @@ int main(int argc, char** argv) {
         }
         std::cout << "Init completed in " << init_guard << " cycles.\n";
     }
+
+    // Snapshot after init (sample -1 = initial state)
+    scan_drum_state(top, sim_time, num_columns, column_depth, -1, "drum_snapshot_init.bin");
 
     std::ofstream pcm_out("center_center_column.pcm", std::ios::binary);
     if (!pcm_out.is_open()) {
@@ -324,6 +387,12 @@ int main(int argc, char** argv) {
         pcm_out.write(reinterpret_cast<const char*>(&out), sizeof(out));
 
         top->rho_eff = compute_rho_eff(sample18, g_tension);
+
+        // Dump snapshots at selected sample indices
+        if (s == 0 || s == 10 || s == 50 || s == 100 || s == 500 || s == 1000 || s == 5000) {
+            scan_drum_state(top, sim_time, num_columns, column_depth, s,
+                            "drum_snapshot_s" + std::to_string(s) + ".bin");
+        }
 
         top->next_sample = 1;
         tick(top, sim_time, vcd);

@@ -2,7 +2,7 @@
 // State (u_curr, u_prev) is supplied from external memory
 // so one instance can be time-shared across an entire column.
 module single_node_wave_equation #(
-    parameter integer ETA_SHIFT = 11  // eta*dt/2 = 2^{-ETA_SHIFT}  (default 2^-10)
+    parameter integer ETA_SHIFT = 11  // eta*dt/2 = 2^{-ETA_SHIFT}
 )
 (
     input logic signed [17:0] rho_eff, 
@@ -15,19 +15,16 @@ module single_node_wave_equation #(
     output logic signed [17:0] u_next    // result to write back to mem_N
 );
     
-    // 1.17 signed fixed-point multiply
-    function signed [17:0] mult_1p17;
-        input signed [17:0] a;
-        input signed [17:0] b;
-        logic signed [35:0] mult_out;
-        begin
-            mult_out = a * b;
-            mult_1p17 = {mult_out[35], mult_out[33:17]};
-        end
-    endfunction
+    // Widened multiply: 18-bit × 20-bit → 38-bit, extract 1.17 result.
+    // Avoids overflow when the Laplacian exceeds 18-bit range.
+    wire signed [19:0] laplacian = $signed({u_up[17], u_up[17], u_up})
+                                 + $signed({u_down[17], u_down[17], u_down})
+                                 + $signed({u_right[17], u_right[17], u_right})
+                                 + $signed({u_left[17], u_left[17], u_left})
+                                 - $signed({u_curr[17], u_curr[17], u_curr}) * 4;
 
-    // 2D Laplacian term: (up + down + left + right - 4*u_curr)
-    wire signed [17:0] product = mult_1p17(rho_eff, u_up + u_down + u_right + u_left - (u_curr <<< 2));
+    wire signed [37:0] product_wide = $signed(rho_eff) * laplacian;
+    wire signed [17:0] product = product_wide[34:17];
 
     // product + 2*u_curr - (1 - eta*dt/2)*u_prev
     wire signed [17:0] sum = product + (u_curr <<< 1) - u_prev + (u_prev >>> ETA_SHIFT);
