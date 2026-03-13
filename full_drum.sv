@@ -33,7 +33,7 @@ module multi_column_drum #(
     // Manhattan-distance diamond initial condition (matches Python reference):
     //   uHit[i,j] = max(0, PLUCK_RADIUS - (|x_mid - i| + |y_mid - j|)) / PLUCK_RADIUS
     // Scaled by PEAK_INIT. Only nonzero within PLUCK_RADIUS of center.
-    localparam integer PLUCK_RADIUS = 30;
+    localparam integer PLUCK_RADIUS = 64;
 
     genvar g;
     generate

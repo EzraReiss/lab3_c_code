@@ -2,10 +2,12 @@
 #include "verilated.h"
 
 #include <algorithm>
+#include <chrono>
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
 #include <fstream>
+#include <iomanip>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -173,7 +175,7 @@ static inline int32_t mult_1p17(int32_t a, int32_t b) {
 static inline int32_t compute_rho_eff(int32_t center_value, int32_t g_tension) {
     int32_t cg  = mult_1p17(center_value, g_tension);
     int32_t rho = kRho0 + mult_1p17(cg, cg);
-    return kRho0;
+    // return kRho0;
     return (rho > kRhoEffMax) ? kRhoEffMax : rho;
 }
 
@@ -354,7 +356,37 @@ int main(int argc, char** argv) {
         return 1;
     }
 
+    auto sim_wall_start = std::chrono::steady_clock::now();
+    int  progress_interval = std::max(1, total_samples / 200);  // update ~200 times
+
     for (int s = 0; s < total_samples; ++s) {
+        // Progress reporting
+        if (s % progress_interval == 0 || s == total_samples - 1) {
+            double pct = 100.0 * s / total_samples;
+            auto now = std::chrono::steady_clock::now();
+            double elapsed = std::chrono::duration<double>(now - sim_wall_start).count();
+            std::string eta_str = "---";
+            if (s > 0) {
+                double rate = s / elapsed;            // samples/sec
+                double remaining = (total_samples - s) / rate;
+                int h = static_cast<int>(remaining) / 3600;
+                int m = (static_cast<int>(remaining) % 3600) / 60;
+                int sc = static_cast<int>(remaining) % 60;
+                char buf[32];
+                if (h > 0)
+                    std::snprintf(buf, sizeof(buf), "%dh%02dm%02ds", h, m, sc);
+                else if (m > 0)
+                    std::snprintf(buf, sizeof(buf), "%dm%02ds", m, sc);
+                else
+                    std::snprintf(buf, sizeof(buf), "%ds", sc);
+                eta_str = buf;
+            }
+            std::cerr << "\r[" << std::fixed << std::setprecision(1) << std::setw(5) << pct
+                      << "%] sample " << s << "/" << total_samples
+                      << "  elapsed " << std::fixed << std::setprecision(1) << elapsed << "s"
+                      << "  ETA " << eta_str << "   " << std::flush;
+        }
+
         if (vcd) {
             bool in_window = (vcd_start_sample < 0) ||
                              (s >= vcd_start_sample && s < vcd_end_sample);
@@ -401,6 +433,14 @@ int main(int argc, char** argv) {
     }
 
     pcm_out.close();
+    {
+        double total_wall = std::chrono::duration<double>(
+            std::chrono::steady_clock::now() - sim_wall_start).count();
+        std::cerr << "\r[100.0%] Done. " << total_samples << " samples in "
+                  << std::fixed << std::setprecision(2) << total_wall << "s  ("
+                  << std::fixed << std::setprecision(1) << (total_samples / total_wall)
+                  << " samples/sec)        \n";
+    }
 
     if (vcd) {
         vcd->close();
