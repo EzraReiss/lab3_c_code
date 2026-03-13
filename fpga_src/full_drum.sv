@@ -1,4 +1,4 @@
-module multi_column_drum #(
+module full_drum #(
     parameter integer DATA_WIDTH = 18,
     parameter integer COLUMN_DEPTH = 100,
     parameter integer NUM_COLUMNS = 100,
