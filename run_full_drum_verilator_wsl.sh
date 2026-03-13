@@ -42,6 +42,9 @@ G_TENSION="${7:-8192}"
 
 # Copy outputs back to the repository folder.
 cp -f center_center_column.pcm "$SCRIPT_DIR/"
+if [[ -f center_center_column.wav ]]; then
+  cp -f center_center_column.wav "$SCRIPT_DIR/"
+fi
 if [[ -f center_center_column.mp3 ]]; then
   cp -f center_center_column.mp3 "$SCRIPT_DIR/"
 fi

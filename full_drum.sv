@@ -1,7 +1,7 @@
 module multi_column_drum #(
     parameter integer DATA_WIDTH = 18,
-    parameter integer COLUMN_DEPTH = 30,
-    parameter integer NUM_COLUMNS = 30,
+    parameter integer COLUMN_DEPTH = 101,
+    parameter integer NUM_COLUMNS = 101,
     parameter integer PEAK_INIT = 16384
 )
 (
@@ -11,7 +11,8 @@ module multi_column_drum #(
     input logic signed [DATA_WIDTH-1:0] rho_eff,
     input logic signed [DATA_WIDTH-1:0] G_tension,
     output logic signed [DATA_WIDTH-1:0] center_center_node,
-    output logic done
+    output logic done,
+    output logic [NUM_COLUMNS*DATA_WIDTH-1:0] all_middle_nodes
 );
 
     localparam integer CENTER_COLUMN = (NUM_COLUMNS - 1) / 2;
@@ -58,5 +59,12 @@ module multi_column_drum #(
 
     assign center_center_node = u_middle_node[CENTER_COLUMN];
     assign done = &done_columns;
+
+    genvar m;
+    generate
+        for (m = 0; m < NUM_COLUMNS; m++) begin : pack_middle
+            assign all_middle_nodes[m*DATA_WIDTH +: DATA_WIDTH] = u_middle_node[m];
+        end
+    endgenerate
 
 endmodule
