@@ -9,7 +9,6 @@ module single_column_wave_equation #(
     input logic clk,
     input logic rst,
     input logic signed [17:0] rho_eff, 
-    input logic signed [17:0] G_tension,
 
     // Initialization interface — top module drives these
     input logic signed [17:0] init_data,
@@ -18,14 +17,11 @@ module single_column_wave_equation #(
 
     // Scan interface — read any node from mem_N while IDLE
     input logic [$clog2(COLUMN_DEPTH)-1:0] scan_addr,
-    output logic signed [17:0] scan_data,
-
     input logic signed [17:0] u_right,
     input logic signed [17:0] u_left,
     input logic next_sample,
     output logic signed [17:0] wave_value,
-    output logic signed [17:0] u_middle_node,
-    output logic signed [17:0] center_node_14,
+    //output logic signed [17:0] u_middle_node,
     output logic done
 );
 
@@ -169,7 +165,6 @@ module single_column_wave_equation #(
             u_down        <= 18'sd0;
             u_center      <= 18'sd0;
             u_center_prev <= 18'sd0;
-            center_node_14 <= 18'sd0;
             done          <= 0;
         end else if (init_we) begin
             // Top module is writing initial values — pass through to both memories
@@ -239,10 +234,7 @@ module single_column_wave_equation #(
                     u_center      <= u_up;
                     u_center_prev <= mem_Nm1_rdata;
                     u_down        <= u_center;
-                    if (node_count == CENTER_NODE_IDX) begin
-                        center_node_14 <= u_center;
-                        u_middle_node  <= u_center;
-                    end
+
                     if (node_count != LAST_IDX) begin
                         node_count <= node_count + 1;
                     end

@@ -33,7 +33,7 @@ module multi_column_drum #(
     // Manhattan-distance diamond initial condition (matches Python reference):
     //   uHit[i,j] = max(0, PLUCK_RADIUS - (|x_mid - i| + |y_mid - j|)) / PLUCK_RADIUS
     // Scaled by PEAK_INIT. Only nonzero within PLUCK_RADIUS of center.
-    localparam integer PLUCK_RADIUS = 64;
+    localparam integer PLUCK_RADIUS = 16;
 
     genvar g;
     generate
@@ -96,7 +96,6 @@ module multi_column_drum #(
                 .clk(clk),
                 .rst(rst),
                 .rho_eff(rho_eff),
-                .G_tension(G_tension),
                 .init_data(init_data[i]),
                 .init_addr(init_row),
                 .init_we(init_we),
@@ -106,15 +105,31 @@ module multi_column_drum #(
                 .u_left((i > 0) ? u_neighbor[i - 1] : '0),
                 .next_sample(next_sample_gated),
                 .wave_value(u_neighbor[i]),
-                .u_middle_node(u_middle_node[i]),
-                .center_node_14(),
+                //u_middle_node(),
                 .done(done_columns[i])
             );
         end
     endgenerate
 
-    assign center_center_node = u_middle_node[CENTER_COLUMN];
+    
     assign done = &done_columns;
+
+    localparam int ADDR_W = $clog2(COLUMN_DEPTH);
+
+    localparam int CENTER_NODE = (COLUMN_DEPTH - 1) / 2;
+    localparam logic [ADDR_W-1:0] CENTER_NODE_IDX = CENTER_NODE[ADDR_W-1:0];
+
+    logic [$clog2(COLUMN_DEPTH):0] counter; 
+
+    always_ff @(posedge clk) begin
+        if (rst || next_sample_gated) begin
+            counter <= '0;
+        end else if (counter < CENTER_NODE_IDX) begin
+            counter <= counter + 1;
+        end else if ((counter + 3) == CENTER_NODE_IDX) begin
+            center_center_node <= u_neighbor[CENTER_COLUMN];
+        end
+    end
 
     genvar m;
     generate
