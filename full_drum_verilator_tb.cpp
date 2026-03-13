@@ -1,353 +1,108 @@
 #include "Vmulti_column_drum.h"
 #include "verilated.h"
+#include "verilated_vcd_c.h"
 
 #include <algorithm>
-#include <chrono>
 #include <cstdint>
 #include <cstdlib>
-#include <cstring>
 #include <fstream>
-#include <iomanip>
 #include <iostream>
 #include <string>
-#include <vector>
 
 static constexpr int kSampleRate = 48000;
 static constexpr int kDefaultSamples = 96000;
 static constexpr int kDefaultMaxCyclesPerSample = 100000;
 static constexpr int kDefaultGain = 16;
-static constexpr int32_t kRho0 = 32768;           // 0.25 in 1.17
-static constexpr int32_t kRhoEffMax = 64225;       // floor(0.49 * 2^17)
-static constexpr int32_t kDefaultGTension = 8192;  // 2^-4 = 0.0625 in 1.17
-
-// ---------------------------------------------------------------------------
-// Minimal VCD writer — dumps control signals every clock edge and all
-// per-column center-node values once per audio sample (when done fires).
-// ---------------------------------------------------------------------------
-class MinimalVcdWriter {
-    std::ofstream file_;
-    int  num_columns_;
-    bool initialized_ = false;
-
-    // Previous values for change detection
-    uint8_t  prev_clk_    = 0xFF;
-    uint8_t  prev_rst_    = 0xFF;
-    uint8_t  prev_ns_     = 0xFF;
-    uint8_t  prev_done_   = 0xFF;
-    uint32_t prev_rho_    = 0xFFFFFFFF;
-    std::vector<uint32_t> prev_col_;
-
-    // VCD identifier characters: '!' = 0x21, so column i gets char (0x30 + i)
-    // Control signals use '!' through ')', columns start at '0' (0x30).
-    static constexpr char ID_CLK  = '!';
-    static constexpr char ID_RST  = '"';
-    static constexpr char ID_NS   = '#';
-    static constexpr char ID_DONE = '$';
-    static constexpr char ID_RHO  = '%';
-    static char col_id(int i) {
-        // Two-char VCD identifiers: first char '0'-'~', second char '!'-'~'
-        // Supports up to 94*94 = 8836 columns.
-        if (i < 94) return static_cast<char>(0x30 + i);
-        return static_cast<char>(0x30 + (i % 94));  // fallback
-    }
-    static std::string col_id_str(int i) {
-        if (i < 47) {
-            // Single char, offset so we don't collide with control IDs (! through %)
-            return std::string(1, static_cast<char>(0x26 + i)); // '&' onwards
-        }
-        // Two-char IDs for i >= 47
-        int adjusted = i - 47;
-        char c1 = static_cast<char>('!' + (adjusted / 94));
-        char c2 = static_cast<char>('!' + (adjusted % 94));
-        return {c1, c2};
-    }
-
-    static std::string bin18(uint32_t v) {
-        v &= 0x3FFFFu;
-        std::string s(18, '0');
-        for (int i = 0; i < 18; ++i)
-            s[17 - i] = ((v >> i) & 1) ? '1' : '0';
-        return s;
-    }
-
-public:
-    MinimalVcdWriter(const std::string& path, int num_columns)
-        : num_columns_(num_columns), prev_col_(num_columns, 0xFFFFFFFF)
-    {
-        file_.open(path);
-        if (!file_.is_open()) return;
-
-        file_ << "$timescale 1ns $end\n";
-        file_ << "$scope module TOP $end\n";
-        file_ << "$var wire  1 " << ID_CLK  << " clk $end\n";
-        file_ << "$var wire  1 " << ID_RST  << " rst $end\n";
-        file_ << "$var wire  1 " << ID_NS   << " next_sample $end\n";
-        file_ << "$var wire  1 " << ID_DONE << " done $end\n";
-        file_ << "$var wire 18 " << ID_RHO  << " rho_eff [17:0] $end\n";
-        for (int i = 0; i < num_columns_; ++i) {
-            file_ << "$var wire 18 " << col_id_str(i)
-                   << " u_middle_" << i << " [17:0] $end\n";
-        }
-        file_ << "$upscope $end\n";
-        file_ << "$enddefinitions $end\n";
-    }
-
-    bool is_open() const { return file_.is_open(); }
-
-    // Dump control signals (called every clock edge)
-    void dump_ctrl(uint64_t time, uint8_t clk, uint8_t rst,
-                   uint8_t next_sample, uint8_t done, uint32_t rho) {
-        if (!file_.is_open()) return;
-        rho &= 0x3FFFFu;
-
-        if (!initialized_) {
-            file_ << "$dumpvars\n";
-            file_ << (clk         ? '1' : '0') << ID_CLK  << "\n";
-            file_ << (rst         ? '1' : '0') << ID_RST  << "\n";
-            file_ << (next_sample ? '1' : '0') << ID_NS   << "\n";
-            file_ << (done        ? '1' : '0') << ID_DONE << "\n";
-            file_ << "b" << bin18(rho) << " " << ID_RHO << "\n";
-            for (int i = 0; i < num_columns_; ++i)
-                file_ << "b" << bin18(0) << " " << col_id_str(i) << "\n";
-            file_ << "$end\n";
-            initialized_ = true;
-            prev_clk_ = clk; prev_rst_ = rst; prev_ns_ = next_sample;
-            prev_done_ = done; prev_rho_ = rho;
-            return;
-        }
-
-        bool any = (clk != prev_clk_) || (rst != prev_rst_) ||
-                   (next_sample != prev_ns_) || (done != prev_done_) ||
-                   (rho != prev_rho_);
-        if (!any) return;
-
-        file_ << "#" << time << "\n";
-        if (clk         != prev_clk_)  file_ << (clk         ? '1' : '0') << ID_CLK  << "\n";
-        if (rst         != prev_rst_)  file_ << (rst         ? '1' : '0') << ID_RST  << "\n";
-        if (next_sample != prev_ns_)   file_ << (next_sample ? '1' : '0') << ID_NS   << "\n";
-        if (done        != prev_done_) file_ << (done        ? '1' : '0') << ID_DONE << "\n";
-        if (rho         != prev_rho_)  file_ << "b" << bin18(rho) << " " << ID_RHO << "\n";
-
-        prev_clk_ = clk; prev_rst_ = rst; prev_ns_ = next_sample;
-        prev_done_ = done; prev_rho_ = rho;
-    }
-
-    // Dump all column center values (called once per sample when done)
-    void dump_columns(uint64_t time, const std::vector<uint32_t>& cols) {
-        if (!file_.is_open() || !initialized_) return;
-
-        bool any = false;
-        for (int i = 0; i < num_columns_; ++i) {
-            if ((cols[i] & 0x3FFFFu) != (prev_col_[i] & 0x3FFFFu)) { any = true; break; }
-        }
-        if (!any) return;
-
-        file_ << "#" << time << "\n";
-        for (int i = 0; i < num_columns_; ++i) {
-            uint32_t v = cols[i] & 0x3FFFFu;
-            if (v != (prev_col_[i] & 0x3FFFFu)) {
-                file_ << "b" << bin18(v) << " " << col_id_str(i) << "\n";
-                prev_col_[i] = v;
-            }
-        }
-    }
-
-    void close() { file_.close(); }
-};
-
-// ---------------------------------------------------------------------------
-
-static int  vcd_start_sample   = -1;
-static int  vcd_end_sample     = -1;
-static bool vcd_dumping_active = false;
+static constexpr int32_t kRho0 = 32768;       // 0.25 in 1.17
+static constexpr int32_t kRhoEffMax = 64225;  // floor(0.49 * 2^17)
+static constexpr int32_t kGnl = 9175;         // 0.07 in 1.17
 
 static inline int32_t sign_extend_18(uint32_t v) {
     v &= 0x3FFFFu;
-    if (v & 0x20000u) v |= 0xFFFC0000u;
+    if (v & 0x20000u) {
+        v |= 0xFFFC0000u;
+    }
     return static_cast<int32_t>(v);
 }
 
 static inline int32_t mult_1p17(int32_t a, int32_t b) {
-    return static_cast<int32_t>((static_cast<int64_t>(a) * b) >> 17);
+    int64_t product = static_cast<int64_t>(a) * static_cast<int64_t>(b);
+    return static_cast<int32_t>(product >> 17);
 }
 
-// rho_eff = 0.25 + (u_center * G_tension)^2
-static inline int32_t compute_rho_eff(int32_t center_value, int32_t g_tension) {
-    int32_t cg  = mult_1p17(center_value, g_tension);
-    int32_t rho = kRho0 + mult_1p17(cg, cg);
-    // return kRho0;
-    return (rho > kRhoEffMax) ? kRhoEffMax : rho;
+static inline int32_t compute_rho_eff_from_center(int32_t center_value) {
+    int32_t center_times_g = mult_1p17(center_value, kGnl);
+    int32_t nonlinear_term = mult_1p17(center_times_g, center_times_g);
+    int32_t rho = kRho0 + nonlinear_term;
+    if (rho > kRhoEffMax) {
+        rho = kRhoEffMax;
+    }
+    return rho;
 }
 
-static void tick(Vmulti_column_drum* top, uint64_t& sim_time, MinimalVcdWriter* vcd) {
+static void tick(Vmulti_column_drum* top, vluint64_t& sim_time, VerilatedVcdC* tfp) {
     top->clk = 0;
     top->eval();
-    if (vcd && vcd_dumping_active)
-        vcd->dump_ctrl(sim_time, top->clk, top->rst, top->next_sample,
-                       top->done, top->rho_eff);
+#if VM_TRACE
+    if (tfp != nullptr) {
+        tfp->dump(sim_time);
+    }
+#endif
     sim_time++;
 
     top->clk = 1;
     top->eval();
-    if (vcd && vcd_dumping_active)
-        vcd->dump_ctrl(sim_time, top->clk, top->rst, top->next_sample,
-                       top->done, top->rho_eff);
+#if VM_TRACE
+    if (tfp != nullptr) {
+        tfp->dump(sim_time);
+    }
+#endif
     sim_time++;
-}
-
-// Extract 18-bit column values from the packed all_middle_nodes output.
-// Verilator stores wide signals as arrays of uint32_t (VlWide).
-static std::vector<uint32_t> extract_columns(const Vmulti_column_drum* top, int num_columns) {
-    std::vector<uint32_t> cols(num_columns);
-    const auto* words = reinterpret_cast<const uint32_t*>(&top->all_middle_nodes);
-    for (int i = 0; i < num_columns; ++i) {
-        int bit_lo = i * 18;
-        int word_lo = bit_lo / 32;
-        int shift   = bit_lo % 32;
-        uint32_t v = words[word_lo] >> shift;
-        if (shift + 18 > 32 && word_lo + 1 < static_cast<int>((num_columns * 18 + 31) / 32)) {
-            v |= words[word_lo + 1] << (32 - shift);
-        }
-        cols[i] = v & 0x3FFFFu;
-    }
-    return cols;
-}
-
-// Extract one row of scan data from the packed scan_data_all output (same layout as all_middle_nodes).
-static std::vector<int32_t> extract_scan_row(const Vmulti_column_drum* top, int num_columns) {
-    std::vector<int32_t> row(num_columns);
-    const auto* words = reinterpret_cast<const uint32_t*>(&top->scan_data_all);
-    for (int i = 0; i < num_columns; ++i) {
-        int bit_lo = i * 18;
-        int word_lo = bit_lo / 32;
-        int shift   = bit_lo % 32;
-        uint32_t v = words[word_lo] >> shift;
-        if (shift + 18 > 32 && word_lo + 1 < static_cast<int>((num_columns * 18 + 31) / 32))
-            v |= words[word_lo + 1] << (32 - shift);
-        row[i] = sign_extend_18(v);
-    }
-    return row;
-}
-
-// Scan the full drum state (all rows × all columns) and write to a binary file.
-// File format: [int32 num_columns] [int32 column_depth] [int32 sample_index]
-//              then column_depth rows of num_columns int32 values (row-major).
-static void scan_drum_state(Vmulti_column_drum* top, uint64_t& sim_time,
-                            int num_columns, int column_depth, int sample_idx,
-                            const std::string& filename) {
-    std::ofstream out(filename, std::ios::binary);
-    if (!out.is_open()) {
-        std::cerr << "Failed to open " << filename << " for writing.\n";
-        return;
-    }
-    int32_t hdr[3] = { num_columns, column_depth, sample_idx };
-    out.write(reinterpret_cast<const char*>(hdr), sizeof(hdr));
-
-    for (int r = 0; r < column_depth; ++r) {
-        top->scan_addr = r;
-        // Two ticks for M10K read latency
-        top->clk = 0; top->eval(); top->clk = 1; top->eval();
-        top->clk = 0; top->eval(); top->clk = 1; top->eval();
-        sim_time += 4;
-
-        auto row = extract_scan_row(top, num_columns);
-        out.write(reinterpret_cast<const char*>(row.data()), num_columns * sizeof(int32_t));
-    }
-    out.close();
-    std::cout << "Wrote drum snapshot: " << filename << " (sample " << sample_idx << ")\n";
 }
 
 int main(int argc, char** argv) {
     Verilated::commandArgs(argc, argv);
 
-    int     total_samples         = kDefaultSamples;
-    int     gain                  = kDefaultGain;
-    bool    write_vcd             = false;
-    int     max_cycles_per_sample = kDefaultMaxCyclesPerSample;
-    int32_t g_tension             = kDefaultGTension;
-
-    if (argc >= 2) total_samples         = std::max(1, std::atoi(argv[1]));
-    if (argc >= 3) gain                  = std::max(1, std::atoi(argv[2]));
-    if (argc >= 4) write_vcd             = (std::string(argv[3]) == "1");
-    if (argc >= 5) vcd_start_sample      = std::atoi(argv[4]);
-    if (argc >= 6) vcd_end_sample        = std::atoi(argv[5]);
-    if (argc >= 7) max_cycles_per_sample = std::max(1, std::atoi(argv[6]));
-    if (argc >= 8) g_tension             = static_cast<int32_t>(std::atoi(argv[7]));
+    int total_samples = kDefaultSamples;
+    int gain = kDefaultGain;
+    bool write_vcd = false;
+    int max_cycles_per_sample = kDefaultMaxCyclesPerSample;
+    if (argc >= 2) {
+        total_samples = std::max(1, std::atoi(argv[1]));
+    }
+    if (argc >= 3) {
+        gain = std::max(1, std::atoi(argv[2]));
+    }
+    if (argc >= 4) {
+        write_vcd = (std::string(argv[3]) == "1");
+    }
+    if (argc >= 5) {
+        max_cycles_per_sample = std::max(1, std::atoi(argv[4]));
+    }
 
     auto* top = new Vmulti_column_drum;
+    vluint64_t sim_time = 0;
 
-    // Discover NUM_COLUMNS from the packed output width.
-    // all_middle_nodes is NUM_COLUMNS*18 bits. Verilator VlWide::Words gives word count.
-    // total bits = words * 32 (may include padding), but actual = NUM_COLUMNS * 18.
-    // We can get it from the Verilator-generated parameter constant.
-    // Use a compile-time approach: try to read the parameter via the model.
-    // Verilator exposes parameters as static constexpr in the class — but the
-    // easiest runtime approach is to figure it from the array size.
-    int num_columns = 0;
-    {
-        int total_words = sizeof(top->all_middle_nodes) / sizeof(uint32_t);
-        int candidate = (total_words * 32) / 18;
-        while (((candidate * 18) + 31) / 32 > total_words) candidate--;
-        while (((candidate + 1) * 18 + 31) / 32 <= total_words) candidate++;
-        num_columns = candidate;
-    }
-    // Derive COLUMN_DEPTH from scan_addr width: scan_addr is $clog2(COLUMN_DEPTH) bits.
-    // We know scan_data_all has the same size as all_middle_nodes, confirming num_columns.
-    // For COLUMN_DEPTH, use the Verilator-generated parameter if available, else accept as arg.
-    int column_depth = 0;
-    if (argc >= 9) {
-        // shell script passes NUM_COLUMNS as arg8, COLUMN_DEPTH as arg9 (to Verilator -G)
-        // but those are compile-time only. We pass column_depth as runtime arg too.
-        // Actually, scan_addr bit width = ceil(log2(COLUMN_DEPTH)).
-        // Verilator scan_addr is some unsigned type. Let's just use the arg.
-    }
-    // Fallback: brute-force detect by scanning until values stop changing.
-    // Simpler: require the user to pass it or default to num_columns (square drum).
-    if (column_depth == 0) column_depth = num_columns;
-
-    std::cout << "Detected NUM_COLUMNS=" << num_columns
-              << ", COLUMN_DEPTH=" << column_depth << "\n";
-
-    uint64_t sim_time = 0;
-
-    MinimalVcdWriter* vcd = nullptr;
+    VerilatedVcdC* tfp = nullptr;
+#if VM_TRACE
     if (write_vcd) {
-        vcd = new MinimalVcdWriter("full_drum_trace.vcd", num_columns);
-        if (!vcd->is_open()) {
-            std::cerr << "Failed to open full_drum_trace.vcd for writing.\n";
-            delete vcd;
-            vcd = nullptr;
-        }
+        Verilated::traceEverOn(true);
+        tfp = new VerilatedVcdC;
+        top->trace(tfp, 99);
+        tfp->open("full_drum_trace.vcd");
     }
+#endif
 
-    top->rho_eff     = kRho0;
-    top->G_tension   = g_tension;
+    // Nonlinear rho in TB: rho_eff is recomputed per finished sample from center displacement.
+    top->rho_eff = kRho0;
+    top->G_tension = 0;
     top->next_sample = 0;
-    top->rst         = 1;
-    vcd_dumping_active = (vcd_start_sample < 0);
+    top->rst = 1;
 
-    for (int i = 0; i < 6; ++i)
-        tick(top, sim_time, vcd);
-    top->rst = 0;
-
-    // Wait for the top-module init FSM to finish writing the 2D pyramid
-    // into all column M10K memories (takes COLUMN_DEPTH + a few cycles).
-    {
-        int init_guard = 0;
-        while (!top->done && init_guard < max_cycles_per_sample) {
-            tick(top, sim_time, vcd);
-            init_guard++;
-        }
-        if (!top->done) {
-            std::cerr << "Timeout waiting for init to complete.\n";
-            delete top;
-            return 2;
-        }
-        std::cout << "Init completed in " << init_guard << " cycles.\n";
+    for (int i = 0; i < 6; ++i) {
+        tick(top, sim_time, tfp);
     }
-
-    // Snapshot after init (sample -1 = initial state)
-    scan_drum_state(top, sim_time, num_columns, column_depth, -1, "drum_snapshot_init.bin");
+    top->rst = 0;
 
     std::ofstream pcm_out("center_center_column.pcm", std::ios::binary);
     if (!pcm_out.is_open()) {
@@ -356,46 +111,10 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    auto sim_wall_start = std::chrono::steady_clock::now();
-    int  progress_interval = std::max(1, total_samples / 200);  // update ~200 times
-
     for (int s = 0; s < total_samples; ++s) {
-        // Progress reporting
-        if (s % progress_interval == 0 || s == total_samples - 1) {
-            double pct = 100.0 * s / total_samples;
-            auto now = std::chrono::steady_clock::now();
-            double elapsed = std::chrono::duration<double>(now - sim_wall_start).count();
-            std::string eta_str = "---";
-            if (s > 0) {
-                double rate = s / elapsed;            // samples/sec
-                double remaining = (total_samples - s) / rate;
-                int h = static_cast<int>(remaining) / 3600;
-                int m = (static_cast<int>(remaining) % 3600) / 60;
-                int sc = static_cast<int>(remaining) % 60;
-                char buf[32];
-                if (h > 0)
-                    std::snprintf(buf, sizeof(buf), "%dh%02dm%02ds", h, m, sc);
-                else if (m > 0)
-                    std::snprintf(buf, sizeof(buf), "%dm%02ds", m, sc);
-                else
-                    std::snprintf(buf, sizeof(buf), "%ds", sc);
-                eta_str = buf;
-            }
-            std::cerr << "\r[" << std::fixed << std::setprecision(1) << std::setw(5) << pct
-                      << "%] sample " << s << "/" << total_samples
-                      << "  elapsed " << std::fixed << std::setprecision(1) << elapsed << "s"
-                      << "  ETA " << eta_str << "   " << std::flush;
-        }
-
-        if (vcd) {
-            bool in_window = (vcd_start_sample < 0) ||
-                             (s >= vcd_start_sample && s < vcd_end_sample);
-            vcd_dumping_active = in_window;
-        }
-
         int guard = 0;
         while (!top->done && guard < max_cycles_per_sample) {
-            tick(top, sim_time, vcd);
+            tick(top, sim_time, tfp);
             guard++;
         }
 
@@ -407,122 +126,46 @@ int main(int argc, char** argv) {
             return 2;
         }
 
-        // Dump all column center values once per completed sample
-        if (vcd && vcd_dumping_active) {
-            auto cols = extract_columns(top, num_columns);
-            vcd->dump_columns(sim_time, cols);
-        }
-
         int32_t sample18 = sign_extend_18(top->center_center_node);
-        int32_t sample16 = std::clamp((sample18 * gain) >> 2, -32768, 32767);
+        int32_t sample16 = (sample18 * gain) >> 2;
+        sample16 = std::clamp(sample16, -32768, 32767);
         int16_t out = static_cast<int16_t>(sample16);
         pcm_out.write(reinterpret_cast<const char*>(&out), sizeof(out));
 
-        top->rho_eff = compute_rho_eff(sample18, g_tension);
-
-        // Dump snapshots at selected sample indices
-        if (s == 0 || s == 10 || s == 50 || s == 100 || s == 500 || s == 1000 || s == 5000) {
-            scan_drum_state(top, sim_time, num_columns, column_depth, s,
-                            "drum_snapshot_s" + std::to_string(s) + ".bin");
-        }
+        // Update rho_eff for next sample using nonlinear center-node model.
+        top->rho_eff = compute_rho_eff_from_center(sample18);
 
         top->next_sample = 1;
-        tick(top, sim_time, vcd);
+        tick(top, sim_time, tfp);
         top->next_sample = 0;
-        tick(top, sim_time, vcd);
+        tick(top, sim_time, tfp);
     }
 
     pcm_out.close();
-    {
-        double total_wall = std::chrono::duration<double>(
-            std::chrono::steady_clock::now() - sim_wall_start).count();
-        std::cerr << "\r[100.0%] Done. " << total_samples << " samples in "
-                  << std::fixed << std::setprecision(2) << total_wall << "s  ("
-                  << std::fixed << std::setprecision(1) << (total_samples / total_wall)
-                  << " samples/sec)        \n";
+
+#if VM_TRACE
+    if (tfp != nullptr) {
+        tfp->close();
+        delete tfp;
+        tfp = nullptr;
     }
+#endif
 
-    if (vcd) {
-        vcd->close();
-        delete vcd;
-        vcd = nullptr;
-
-        std::ofstream gtkw("full_drum_trace.gtkw");
-        if (gtkw.is_open()) {
-            gtkw << "[dumpfile] \"full_drum_trace.vcd\"\n";
-            gtkw << "[timestart] 0\n";
-            gtkw << "[size] 1920 1080\n";
-            gtkw << "[pos] -1 -1\n";
-            gtkw << "*-23.000000 -1\n";
-            gtkw << "[signal_height] 24\n";
-            gtkw << "TOP.clk\n";
-            gtkw << "TOP.rst\n";
-            gtkw << "TOP.next_sample\n";
-            gtkw << "TOP.done\n";
-            gtkw << "TOP.rho_eff[17:0]\n";
-            int center = (num_columns - 1) / 2;
-            gtkw << "TOP.u_middle_" << center << "[17:0]\n";
-            gtkw.close();
-            std::cout << "Wrote full_drum_trace.gtkw\n";
-        }
-        std::cout << "Wrote full_drum_trace.vcd (with " << num_columns << " column signals)\n";
-    }
-
-    // Write WAV file directly (no ffmpeg needed)
-    {
-        std::ofstream wav("center_center_column.wav", std::ios::binary);
-        if (wav.is_open()) {
-            uint32_t data_size = total_samples * 2;
-            uint32_t file_size = 36 + data_size;
-            uint16_t audio_fmt = 1;
-            uint16_t num_chan  = 1;
-            uint32_t sr       = kSampleRate;
-            uint32_t byte_rate = sr * 2;
-            uint16_t block_align = 2;
-            uint16_t bits      = 16;
-
-            wav.write("RIFF", 4);
-            wav.write(reinterpret_cast<const char*>(&file_size), 4);
-            wav.write("WAVE", 4);
-            wav.write("fmt ", 4);
-            uint32_t fmt_size = 16;
-            wav.write(reinterpret_cast<const char*>(&fmt_size), 4);
-            wav.write(reinterpret_cast<const char*>(&audio_fmt), 2);
-            wav.write(reinterpret_cast<const char*>(&num_chan), 2);
-            wav.write(reinterpret_cast<const char*>(&sr), 4);
-            wav.write(reinterpret_cast<const char*>(&byte_rate), 4);
-            wav.write(reinterpret_cast<const char*>(&block_align), 2);
-            wav.write(reinterpret_cast<const char*>(&bits), 2);
-            wav.write("data", 4);
-            wav.write(reinterpret_cast<const char*>(&data_size), 4);
-
-            std::ifstream pcm_in("center_center_column.pcm", std::ios::binary);
-            if (pcm_in.is_open()) {
-                wav << pcm_in.rdbuf();
-                pcm_in.close();
-            }
-            wav.close();
-            std::cout << "Wrote center_center_column.wav\n";
-        }
-    }
-
-    // Also convert to MP3 if ffmpeg is available
     std::string ffmpeg_cmd =
         "ffmpeg -y -f s16le -ar " + std::to_string(kSampleRate) +
         " -ac 1 -i center_center_column.pcm center_center_column.mp3 > ffmpeg.log 2>&1";
 
     int ffmpeg_rc = std::system(ffmpeg_cmd.c_str());
     if (ffmpeg_rc != 0) {
-        std::cerr << "MP3 conversion skipped (ffmpeg not found or failed).\n";
+        std::cerr << "Simulation complete, but MP3 conversion failed.\n";
+        std::cerr << "Install ffmpeg and run:\n";
+        std::cerr << "ffmpeg -y -f s16le -ar 48000 -ac 1 -i center_center_column.pcm center_center_column.mp3\n";
     } else {
         std::cout << "Wrote center_center_column.mp3\n";
     }
 
     std::cout << "Used gain=" << gain << " (arg2), vcd=" << (write_vcd ? 1 : 0)
-              << " (arg3), vcd_start=" << vcd_start_sample
-              << " (arg4), vcd_end=" << vcd_end_sample
-              << " (arg5), max_cycles=" << max_cycles_per_sample
-              << " (arg6), g_tension=" << g_tension << " (arg7).\n";
+              << " (arg3), max_cycles=" << max_cycles_per_sample << " (arg4).\n";
 
     delete top;
     return 0;
