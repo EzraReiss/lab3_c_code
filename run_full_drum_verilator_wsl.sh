@@ -18,12 +18,16 @@ cd "$SRC_DIR"
 
 NUM_COLUMNS_OVERRIDE="${8:-}"
 COLUMN_DEPTH_OVERRIDE="${9:-}"
+ETA_SHIFT_OVERRIDE="${10:-}"
 VERILATOR_G_ARGS=()
 if [[ -n "$NUM_COLUMNS_OVERRIDE" ]]; then
   VERILATOR_G_ARGS+=("-GNUM_COLUMNS=$NUM_COLUMNS_OVERRIDE")
 fi
 if [[ -n "$COLUMN_DEPTH_OVERRIDE" ]]; then
   VERILATOR_G_ARGS+=("-GCOLUMN_DEPTH=$COLUMN_DEPTH_OVERRIDE")
+fi
+if [[ -n "$ETA_SHIFT_OVERRIDE" ]]; then
+  VERILATOR_G_ARGS+=("-GETA_SHIFT=$ETA_SHIFT_OVERRIDE")
 fi
 
 verilator --cc --exe --build --top-module multi_column_drum \

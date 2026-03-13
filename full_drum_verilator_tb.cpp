@@ -268,6 +268,22 @@ int main(int argc, char** argv) {
         tick(top, sim_time, vcd);
     top->rst = 0;
 
+    // Wait for the top-module init FSM to finish writing the 2D pyramid
+    // into all column M10K memories (takes COLUMN_DEPTH + a few cycles).
+    {
+        int init_guard = 0;
+        while (!top->done && init_guard < max_cycles_per_sample) {
+            tick(top, sim_time, vcd);
+            init_guard++;
+        }
+        if (!top->done) {
+            std::cerr << "Timeout waiting for init to complete.\n";
+            delete top;
+            return 2;
+        }
+        std::cout << "Init completed in " << init_guard << " cycles.\n";
+    }
+
     std::ofstream pcm_out("center_center_column.pcm", std::ios::binary);
     if (!pcm_out.is_open()) {
         std::cerr << "Failed to open center_center_column.pcm for writing.\n";
