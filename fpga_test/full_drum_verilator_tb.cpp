@@ -1,4 +1,4 @@
-#include "Vmulti_column_drum.h"
+#include "Vfull_drum.h"
 #include "verilated.h"
 #include "verilated_vcd_c.h"
 
@@ -40,7 +40,7 @@ static inline int32_t compute_rho_eff_from_center(int32_t center_value) {
     return rho;
 }
 
-static void tick(Vmulti_column_drum* top, vluint64_t& sim_time, VerilatedVcdC* tfp) {
+static void tick(Vfull_drum* top, vluint64_t& sim_time, VerilatedVcdC* tfp) {
     top->clk = 0;
     top->eval();
 #if VM_TRACE
@@ -80,7 +80,7 @@ int main(int argc, char** argv) {
         max_cycles_per_sample = std::max(1, std::atoi(argv[4]));
     }
 
-    auto* top = new Vmulti_column_drum;
+    auto* top = new Vfull_drum;
     vluint64_t sim_time = 0;
 
     VerilatedVcdC* tfp = nullptr;

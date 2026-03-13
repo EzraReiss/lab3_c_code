@@ -5,15 +5,15 @@ set -euo pipefail
 # verilator --build) rejects directories containing spaces.
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd -P)"
-FPGA_SRC_DIR="$REPO_ROOT/fpga_src"
+VERILOG_DIR="$REPO_ROOT/DE1-SoC_Computer_15_audio_only/DE1-SoC_Computer_15_audio_only/verilog"
 SRC_DIR="/tmp/lab3_c_code_src"
 
 rm -rf "$SRC_DIR"
 mkdir -p "$SRC_DIR"
 
-cp "$FPGA_SRC_DIR/full_drum.sv" "$SRC_DIR/"
-cp "$FPGA_SRC_DIR/single_column.sv" "$SRC_DIR/"
-cp "$FPGA_SRC_DIR/single_node.sv" "$SRC_DIR/"
+cp "$VERILOG_DIR/full_drum.sv" "$SRC_DIR/"
+cp "$VERILOG_DIR/single_column_fsm.sv" "$SRC_DIR/"
+cp "$VERILOG_DIR/single_node_fsm.sv" "$SRC_DIR/"
 cp "$SCRIPT_DIR/full_drum_verilator_tb.cpp" "$SRC_DIR/"
 
 cd "$SRC_DIR"
@@ -28,8 +28,8 @@ if [[ -n "$COLUMN_DEPTH_OVERRIDE" ]]; then
   VERILATOR_G_ARGS+=("-GCOLUMN_DEPTH=$COLUMN_DEPTH_OVERRIDE")
 fi
 
-verilator --cc --exe --build --top-module multi_column_drum \
-  full_drum.sv single_column.sv single_node.sv full_drum_verilator_tb.cpp \
+verilator --cc --exe --build --top-module full_drum \
+  full_drum.sv single_column_fsm.sv single_node_fsm.sv full_drum_verilator_tb.cpp \
   -CFLAGS "-std=c++17" \
   --trace \
   "${VERILATOR_G_ARGS[@]}"
@@ -38,7 +38,7 @@ SAMPLES="${1:-96000}"
 GAIN="${2:-16}"
 VCD="${3:-0}"
 MAX_CYCLES="${6:-100000}"
-./obj_dir/Vmulti_column_drum "$SAMPLES" "$GAIN" "$VCD" "$MAX_CYCLES"
+./obj_dir/Vfull_drum "$SAMPLES" "$GAIN" "$VCD" "$MAX_CYCLES"
 
 # Copy outputs back to the repository folder.
 cp -f center_center_column.pcm "$SCRIPT_DIR/"

@@ -2,25 +2,27 @@ $ErrorActionPreference = "Stop"
 
 ${scriptDir} = Split-Path -Parent $MyInvocation.MyCommand.Path
 ${repoRoot} = (Resolve-Path (Join-Path $scriptDir "..")).Path
-${fpgaSrcDir} = Join-Path $repoRoot "fpga_src"
+${verilogDir} = Join-Path $repoRoot "DE1-SoC_Computer_15_audio_only\DE1-SoC_Computer_15_audio_only\verilog"
 
 Push-Location $repoRoot
 try {
-    & verilator --cc --exe --build --top-module multi_column_drum `
-        (Join-Path $fpgaSrcDir "full_drum.sv") `
-        (Join-Path $fpgaSrcDir "single_column.sv") `
-        (Join-Path $fpgaSrcDir "single_node.sv") `
+    & verilator --cc --exe --build --top-module full_drum `
+        (Join-Path $verilogDir "full_drum.sv") `
+        (Join-Path $verilogDir "single_column_fsm.sv") `
+        (Join-Path $verilogDir "single_node_fsm.sv") `
         (Join-Path $scriptDir "full_drum_verilator_tb.cpp") `
-        -CFLAGS "-std=c++17"
+        -CFLAGS "-std=c++17" `
+        --trace
 
-    $exePath = Join-Path $repoRoot "obj_dir\Vmulti_column_drum.exe"
+    $exePath = Join-Path $repoRoot "obj_dir\Vfull_drum.exe"
     if (-not (Test-Path $exePath)) {
         throw "Expected executable '$exePath' was not generated."
     }
 
-    # Optional first argument: number of output samples
+    # Optional runtime args:
+    #   arg0 samples, arg1 gain, arg2 vcd(0/1), arg3 max_cycles
     if ($args.Count -gt 0) {
-        & $exePath $args[0]
+        & $exePath @args
     } else {
         & $exePath
     }

@@ -649,7 +649,7 @@ full_drum drum (
 defparam drum.DATA_WIDTH = 18;
 defparam drum.COLUMN_DEPTH = 30;
 defparam drum.NUM_COLUMNS = 30;
-defparam drum.PEAK_INIT = 131071;
+defparam drum.PEAK_INIT = 16384;
 defparam drum.ETA_SHIFT = 13;
 
 endmodule
