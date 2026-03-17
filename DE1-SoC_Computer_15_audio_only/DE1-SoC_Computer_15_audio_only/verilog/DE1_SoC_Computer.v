@@ -646,6 +646,7 @@ full_drum drum (
 	.center_center_node(drum_out)
 );
 
+defparam drum.PLUCK_RADIUS = 16;
 defparam drum.DATA_WIDTH = 18;
 defparam drum.COLUMN_DEPTH = 30;
 defparam drum.NUM_COLUMNS = 30;

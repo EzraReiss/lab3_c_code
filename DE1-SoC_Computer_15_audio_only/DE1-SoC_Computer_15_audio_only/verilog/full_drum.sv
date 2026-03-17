@@ -1,4 +1,5 @@
 module full_drum #(
+    parameter integer PLUCK_RADIUS = 16,
     parameter integer DATA_WIDTH = 18,
     parameter integer COLUMN_DEPTH = 100,
     parameter integer NUM_COLUMNS = 100,
@@ -28,7 +29,6 @@ module full_drum #(
     // Manhattan-distance diamond initial condition (matches Python reference):
     //   uHit[i,j] = max(0, PLUCK_RADIUS - (|x_mid - i| + |y_mid - j|)) / PLUCK_RADIUS
     // Scaled by PEAK_INIT. Only nonzero within PLUCK_RADIUS of center.
-    localparam integer PLUCK_RADIUS = 16;
 
     genvar g;
     generate
