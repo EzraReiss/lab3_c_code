@@ -13,3 +13,5 @@
 !**/*.cpp
 !**/*.sh
 !**/*.ps1
+
+!/DE1-SoC_Computer_15_audio_only/**

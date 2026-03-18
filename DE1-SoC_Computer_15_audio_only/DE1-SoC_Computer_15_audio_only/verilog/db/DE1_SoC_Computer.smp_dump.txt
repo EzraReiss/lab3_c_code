@@ -1,0 +1,1956 @@
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[173].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[172].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[171].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[170].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[169].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[168].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[167].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[166].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[165].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[164].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[163].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[162].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[161].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[160].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[159].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[158].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[157].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[156].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[155].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[154].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[153].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[152].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[151].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[150].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[149].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[148].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[147].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[146].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[145].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[144].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[143].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[142].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[141].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[140].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[139].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[138].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[137].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[136].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[135].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[134].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[133].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[132].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[131].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[130].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[129].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[128].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[127].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[126].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[125].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[124].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[123].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[122].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[121].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[120].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[119].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[118].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[117].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[116].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[115].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[114].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[113].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[112].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[111].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[110].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[109].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[108].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[107].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[106].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[105].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[104].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[103].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[102].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[101].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[100].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[99].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[98].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[97].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[96].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[95].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[94].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[93].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[92].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[91].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[90].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[89].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[88].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[87].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[86].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[85].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[84].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[83].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[82].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[81].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[80].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[79].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[78].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[77].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[76].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[75].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[74].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[73].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[72].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[71].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[70].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[69].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[68].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[67].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[66].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[65].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[64].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[63].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[62].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[61].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[60].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[59].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[58].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[57].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[56].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[55].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[54].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[53].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[52].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[51].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[50].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[49].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[48].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[47].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[46].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[45].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[44].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[43].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[42].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[41].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[40].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[39].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[38].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[37].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[36].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[35].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[34].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[33].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[32].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[31].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[30].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[29].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[28].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[27].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[26].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[25].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[24].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[23].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[22].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[21].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[20].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[19].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[18].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[17].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[16].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[15].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[14].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[13].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[12].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[11].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[10].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[9].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[8].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[7].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[6].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[5].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[4].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[3].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[2].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[1].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|full_drum:drum|single_column_wave_equation:column_gen[0].column_inst|state
+Name state.STATE_6 state.STATE_5 state.STATE_4 state.STATE_3 state.STATE_2 state.STATE_1 state.STATE_0 state.IDLE 
+state.IDLE 0 0 0 0 0 0 0 0 
+state.STATE_0 0 0 0 0 0 0 1 1 
+state.STATE_1 0 0 0 0 0 1 0 1 
+state.STATE_2 0 0 0 0 1 0 0 1 
+state.STATE_3 0 0 0 1 0 0 0 1 
+state.STATE_4 0 0 1 0 0 0 0 1 
+state.STATE_5 0 1 0 0 0 0 0 1 
+state.STATE_6 1 0 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|state
+Name state.0101 state.0100 state.0011 state.0010 state.0001 state.0000 
+state.0000 0 0 0 0 0 0 
+state.0001 0 0 0 0 1 1 
+state.0010 0 0 0 1 0 1 
+state.0011 0 0 1 0 0 1 
+state.0100 0 1 0 0 0 1 
+state.0101 1 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|Computer_System:The_System|Computer_System_mm_interconnect_0:mm_interconnect_0|altera_merlin_burst_adapter:av_config_avalon_av_config_slave_burst_adapter|altera_merlin_burst_adapter_13_1:altera_merlin_burst_adapter_13_1.burst_adapter|state
+Name state.ST_IDLE state.ST_UNCOMP_WR_SUBBURST state.ST_UNCOMP_TRANS state.ST_COMP_TRANS 
+state.ST_IDLE 0 0 0 0 
+state.ST_COMP_TRANS 1 0 0 1 
+state.ST_UNCOMP_TRANS 1 0 1 0 
+state.ST_UNCOMP_WR_SUBBURST 1 1 0 0 
+
+State Machine - |DE1_SoC_Computer|Computer_System:The_System|Computer_System_mm_interconnect_0:mm_interconnect_0|altera_merlin_burst_adapter:audio_subsystem_audio_slave_burst_adapter|altera_merlin_burst_adapter_13_1:altera_merlin_burst_adapter_13_1.burst_adapter|state
+Name state.ST_IDLE state.ST_UNCOMP_WR_SUBBURST state.ST_UNCOMP_TRANS state.ST_COMP_TRANS 
+state.ST_IDLE 0 0 0 0 
+state.ST_COMP_TRANS 1 0 0 1 
+state.ST_UNCOMP_TRANS 1 0 1 0 
+state.ST_UNCOMP_WR_SUBBURST 1 1 0 0 
+
+State Machine - |DE1_SoC_Computer|Computer_System:The_System|Computer_System_AV_Config:av_config|s_serial_transfer
+Name s_serial_transfer.STATE_6_POST_READ s_serial_transfer.STATE_5_READ_TRANSFER s_serial_transfer.STATE_4_PRE_READ s_serial_transfer.STATE_3_POST_WRITE s_serial_transfer.STATE_2_WRITE_TRANSFER s_serial_transfer.STATE_1_PRE_WRITE s_serial_transfer.STATE_0_IDLE 
+s_serial_transfer.STATE_0_IDLE 0 0 0 0 0 0 0 
+s_serial_transfer.STATE_1_PRE_WRITE 0 0 0 0 0 1 1 
+s_serial_transfer.STATE_2_WRITE_TRANSFER 0 0 0 0 1 0 1 
+s_serial_transfer.STATE_3_POST_WRITE 0 0 0 1 0 0 1 
+s_serial_transfer.STATE_4_PRE_READ 0 0 1 0 0 0 1 
+s_serial_transfer.STATE_5_READ_TRANSFER 0 1 0 0 0 0 1 
+s_serial_transfer.STATE_6_POST_READ 1 0 0 0 0 0 1 
+
+State Machine - |DE1_SoC_Computer|Computer_System:The_System|Computer_System_AV_Config:av_config|altera_up_av_config_serial_bus_controller:Serial_Bus_Controller|s_serial_protocol
+Name s_serial_protocol.STATE_5_STOP_BIT s_serial_protocol.STATE_4_TRANSFER s_serial_protocol.STATE_3_START_BIT s_serial_protocol.STATE_2_RESTART_BIT s_serial_protocol.STATE_1_INITIALIZE s_serial_protocol.STATE_0_IDLE 
+s_serial_protocol.STATE_0_IDLE 0 0 0 0 0 0 
+s_serial_protocol.STATE_1_INITIALIZE 0 0 0 0 1 1 
+s_serial_protocol.STATE_2_RESTART_BIT 0 0 0 1 0 1 
+s_serial_protocol.STATE_3_START_BIT 0 0 1 0 0 1 
+s_serial_protocol.STATE_4_TRANSFER 0 1 0 0 0 1 
+s_serial_protocol.STATE_5_STOP_BIT 1 0 0 0 0 1 
