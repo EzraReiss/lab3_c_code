@@ -11,6 +11,7 @@ module full_drum #(
     input logic next_sample,
     input logic signed [DATA_WIDTH-1:0] rho_eff,
     input logic signed [DATA_WIDTH-1:0] G_tension,
+    input logic [$clog2(COLUMN_DEPTH)-1:0] drum_length,
     output logic signed [DATA_WIDTH-1:0] center_center_node,
     output logic done,
     output logic [NUM_COLUMNS*DATA_WIDTH-1:0] all_middle_nodes,
@@ -40,7 +41,7 @@ module full_drum #(
     wire signed [DATA_WIDTH-1:0] center_node_sq = mult_1p17(center_center_node, center_center_node);
     wire signed [DATA_WIDTH-1:0] mult_term_sq =   mult_1p17(G_tension, G_tension);
     wire signed [DATA_WIDTH-1:0] rho_eff_term =   mult_1p17(mult_term_sq, center_node_sq) + 18'sd32768;
-    wire signed [DATA_WIDTH-1:0] min_rho_eff = (rho_eff_term < 18'sd64225) ? 18'sd64225 : rho_eff_term; // Clamp to avoid instability to 0.49
+    wire signed [DATA_WIDTH-1:0] max_rho_eff = (rho_eff_term > 18'sd64225) ? 18'sd64225 : rho_eff_term; // Clamp max to 0.49
 
     logic signed [DATA_WIDTH-1:0] nonlinear_rho_eff;
 
@@ -100,7 +101,7 @@ module full_drum #(
                 init_row <= init_row + 1;
             end
         end else begin
-            nonlinear_rho_eff <= (next_sample) ? min_rho_eff : nonlinear_rho_eff; // Update nonlinear rho_eff at each new of the entire column
+            nonlinear_rho_eff <= (next_sample) ? max_rho_eff : nonlinear_rho_eff; // Update nonlinear rho_eff at each new of the entire column
             init_we <= 1'b0;
         end
     end

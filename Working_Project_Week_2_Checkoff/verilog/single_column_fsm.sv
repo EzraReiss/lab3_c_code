@@ -8,8 +8,9 @@ module single_column_wave_equation #(
 (
     input logic clk,
     input logic rst,
-    input logic signed [17:0] rho_eff, 
-    input logic signed [17:0] G_tension,
+    input logic signed [17:0]              rho_eff, 
+    input logic signed [17:0]              G_tension,
+    input logic [$clog2(COLUMN_DEPTH)-1:0] drum_length,
 
     // Initialization interface — top module drives these
     input logic signed [17:0] init_data,
