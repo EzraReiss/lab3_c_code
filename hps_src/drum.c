@@ -204,7 +204,7 @@ int main(void) {
 
 	printf("Drum control started.\n");
 
-	while (keep_running) {
+	while (1) {
 		char line[64];
 		print_menu();
 		printf("Enter command: ");
