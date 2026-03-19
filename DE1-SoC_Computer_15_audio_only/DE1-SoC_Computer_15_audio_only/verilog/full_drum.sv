@@ -14,6 +14,7 @@ module full_drum #(
     input logic signed [$clog2(NUM_COLUMNS)-1:0] init_col,
     input logic signed [$clog2(COLUMN_DEPTH)-1:0] init_row,
     input logic                                    init_we,
+    input logic [3:0]                       G_tension_shift, 
     output logic signed [DATA_WIDTH-1:0] center_center_node,
     // output logic done,
     // output logic [NUM_COLUMNS*DATA_WIDTH-1:0] all_middle_nodes,
@@ -132,3 +133,4 @@ module full_drum #(
     // endgenerate
 
 endmodule
+
