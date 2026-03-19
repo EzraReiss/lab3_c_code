@@ -1,7 +1,7 @@
 // Purely combinational wave-equation node.
 // State (u_curr, u_prev) is supplied from external memory
 // so one instance can be time-shared across an entire column.
-module single_node_wave_equation #(
+module single_node_fsm #(
     parameter integer ETA_SHIFT = 11  // eta*dt/2 = 2^{-ETA_SHIFT}
 )
 (
