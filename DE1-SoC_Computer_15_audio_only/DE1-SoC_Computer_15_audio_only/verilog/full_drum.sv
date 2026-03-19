@@ -28,8 +28,8 @@ module full_drum #(
 
     // ---- Init FSM: compute 2D pyramid and write to columns serially ----
     localparam int COL_ADDR_W = $clog2(COLUMN_DEPTH);
-    logic [COL_ADDR_W-1:0] init_row;
-    logic                   init_we;
+//    logic [COL_ADDR_W-1:0] init_row;
+//    logic                   init_we;
     logic                   init_done_r;
     logic signed [DATA_WIDTH-1:0] init_data [NUM_COLUMNS-1:0];
 
@@ -92,7 +92,7 @@ module full_drum #(
     genvar i;
     generate
         for (i = 0; i < NUM_COLUMNS; i++) begin : column_gen
-            single_column_wave_equation #(
+            single_column_fsm #(
                 .ETA_SHIFT(ETA_SHIFT),
                 .COLUMN_DEPTH(COLUMN_DEPTH)
             ) column_inst (

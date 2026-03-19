@@ -6,7 +6,7 @@ JedecChain;
 	P ActionCode(Ign)
 		Device PartName(SOCVHPS) MfrSpec(OpMask(0));
 	P ActionCode(Cfg)
-		Device PartName(5CSEMA5F31) Path("C:/Users/deg273/Downloads/DE1-SoC_Computer_15_audio_18_1/DE1-SoC_Computer_15_audio_only/verilog/") File("DE1_SoC_Computer.sof") MfrSpec(OpMask(1));
+		Device PartName(5CSEMA5F31) Path("C:/Users/deg273/Downloads/up-to-date/lab3_c_code/DE1-SoC_Computer_15_audio_only/DE1-SoC_Computer_15_audio_only/verilog/") File("DE1_SoC_Computer.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 

@@ -1,7 +1,7 @@
 `define DATA_WIDTH 18
 `define COLUMN_DEPTH 29
 
-module single_column_wave_equation #(
+module single_column_fsm #(
     parameter integer ETA_SHIFT = 10,
     parameter COLUMN_DEPTH = `COLUMN_DEPTH
 )
@@ -90,7 +90,7 @@ module single_column_wave_equation #(
     );
 
     // combinational node compute   
-    single_node_wave_equation #(
+    single_node_fsm #(
         .ETA_SHIFT(ETA_SHIFT)
     )
     compute (
