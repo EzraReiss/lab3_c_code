@@ -260,7 +260,6 @@ int main(void) {
 				break;
 
 			case 'q':
-				keep_running = 0;
 				break;
 
 			case '\n':
