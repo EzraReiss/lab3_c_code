@@ -58,8 +58,22 @@ module full_drum #(
     logic [ROWS_W-1:0] active_rows;
     logic [COL_ADDR_W-1:0] last_active_row;
     logic [COL_ADDR_W-1:0] center_row_active;
+    logic [COL_ADDR_W-1:0] radius_shift;
     logic [ROWS_W-1:0] pluck_radius;
     logic signed [DATA_WIDTH-1:0] init_peak_abs;
+
+    function automatic [COL_ADDR_W-1:0] floor_log2_rows;
+        input [ROWS_W-1:0] value;
+        integer k;
+        begin
+            floor_log2_rows = '0;
+            for (k = 0; k < ROWS_W; k = k + 1) begin
+                if (value[k]) begin
+                    floor_log2_rows = COL_ADDR_W'(k);
+                end
+            end
+        end
+    endfunction
 
     always_comb begin
         if (num_rows < 8'd2) begin
@@ -72,7 +86,12 @@ module full_drum #(
 
         last_active_row = active_rows[COL_ADDR_W-1:0] - COL_ADDR_W'(1);
         center_row_active = last_active_row >> 1;
-        pluck_radius = (active_rows > ROWS_W'(2)) ? (active_rows >> 1) : ROWS_W'(1);
+        if ((active_rows >> 1) > ROWS_W'(1)) begin
+            radius_shift = floor_log2_rows(active_rows >> 1);
+        end else begin
+            radius_shift = '0;
+        end
+        pluck_radius = ROWS_W'(1) << radius_shift;
         init_peak_abs = pluck_max_val[DATA_WIDTH-1] ? -pluck_max_val : pluck_max_val;
     end
 
@@ -83,6 +102,7 @@ module full_drum #(
     integer row_limit;
     integer radius_i;
     integer height_i;
+    integer grad_shift;
     always_comb begin
         row_limit = active_rows;
         radius_i = pluck_radius;
@@ -92,7 +112,13 @@ module full_drum #(
             manhattan = dist_col_abs + dist_row_abs;
 
             if ((radius_i > 0) && (manhattan < radius_i)) begin
-                height_i = ($signed(init_peak_abs) * (radius_i - manhattan)) / radius_i;
+                // Shift-only profile: no divider/multiplier inference in init datapath.
+                grad_shift = (radius_shift == '0) ? manhattan : ((manhattan << 2) >> radius_shift);
+                if (grad_shift >= DATA_WIDTH) begin
+                    height_i = 0;
+                end else begin
+                    height_i = $signed(init_peak_abs) >>> grad_shift;
+                end
             end else begin
                 height_i = 0;
             end
