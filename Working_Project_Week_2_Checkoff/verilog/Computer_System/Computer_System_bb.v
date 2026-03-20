@@ -89,12 +89,14 @@ module Computer_System (
 	memory_mem_odt,
 	memory_mem_dm,
 	memory_oct_rzqin,
+	pio_ampl_export,
+	pio_done_export,
+	pio_rows_export,
 	sdram_clk_clk,
 	system_pll_ref_clk_clk,
 	system_pll_ref_reset_reset,
-	pio_ampl_export,
-	pio_done_export,
-	pio_rows_export);	
+	pio_rho_not_external_connection_export,
+	pio_g_tension_external_connection_export);	
 
 	input		audio_ADCDAT;
 	input		audio_ADCLRCK;
@@ -185,10 +187,12 @@ module Computer_System (
 	output		memory_mem_odt;
 	output	[3:0]	memory_mem_dm;
 	input		memory_oct_rzqin;
-	output		sdram_clk_clk;
-	input		system_pll_ref_clk_clk;
-	input		system_pll_ref_reset_reset;
 	output	[31:0]	pio_ampl_export;
 	input	[31:0]	pio_done_export;
 	output	[31:0]	pio_rows_export;
+	output		sdram_clk_clk;
+	input		system_pll_ref_clk_clk;
+	input		system_pll_ref_reset_reset;
+	output	[31:0]	pio_rho_not_external_connection_export;
+	output	[31:0]	pio_g_tension_external_connection_export;
 endmodule

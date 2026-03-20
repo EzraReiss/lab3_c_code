@@ -97,6 +97,38 @@
          type = "String";
       }
    }
+   element pio_g_tension
+   {
+      datum _sortIndex
+      {
+         value = "8";
+         type = "int";
+      }
+   }
+   element pio_g_tension.s1
+   {
+      datum baseAddress
+      {
+         value = "48";
+         type = "String";
+      }
+   }
+   element pio_rho_not
+   {
+      datum _sortIndex
+      {
+         value = "9";
+         type = "int";
+      }
+   }
+   element pio_rho_not.s1
+   {
+      datum baseAddress
+      {
+         value = "64";
+         type = "String";
+      }
+   }
    element pio_rows
    {
       datum _sortIndex
@@ -174,6 +206,16 @@
  <interface
    name="pio_done"
    internal="pio_done.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="pio_g_tension_external_connection"
+   internal="pio_g_tension.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="pio_rho_not_external_connection"
+   internal="pio_rho_not.external_connection"
    type="conduit"
    dir="end" />
  <interface
@@ -820,6 +862,42 @@
   <parameter name="simDrivenValue" value="0" />
   <parameter name="width" value="32" />
  </module>
+ <module
+   name="pio_g_tension"
+   kind="altera_avalon_pio"
+   version="18.1"
+   enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="100000000" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="32" />
+ </module>
+ <module
+   name="pio_rho_not"
+   kind="altera_avalon_pio"
+   version="18.1"
+   enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="100000000" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="32" />
+ </module>
  <module name="pio_rows" kind="altera_avalon_pio" version="18.1" enabled="1">
   <parameter name="bitClearingEdgeCapReg" value="false" />
   <parameter name="bitModifyingOutReg" value="false" />
@@ -873,6 +951,24 @@
  <connection
    kind="avalon"
    version="18.1"
+   start="ARM_A9_HPS.h2f_axi_master"
+   end="pio_g_tension.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0030" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="18.1"
+   start="ARM_A9_HPS.h2f_axi_master"
+   end="pio_rho_not.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x0040" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="18.1"
    start="ARM_A9_HPS.h2f_lw_axi_master"
    end="Audio_Subsystem.audio_slave">
   <parameter name="arbitrationPriority" value="1" />
@@ -913,6 +1009,16 @@
    version="18.1"
    start="System_PLL.sys_clk"
    end="pio_rows.clk" />
+ <connection
+   kind="clock"
+   version="18.1"
+   start="System_PLL.sys_clk"
+   end="pio_g_tension.clk" />
+ <connection
+   kind="clock"
+   version="18.1"
+   start="System_PLL.sys_clk"
+   end="pio_rho_not.clk" />
  <connection
    kind="clock"
    version="18.1"
@@ -965,6 +1071,16 @@
    version="18.1"
    start="ARM_A9_HPS.h2f_reset"
    end="pio_rows.reset" />
+ <connection
+   kind="reset"
+   version="18.1"
+   start="ARM_A9_HPS.h2f_reset"
+   end="pio_rho_not.reset" />
+ <connection
+   kind="reset"
+   version="18.1"
+   start="ARM_A9_HPS.h2f_reset"
+   end="pio_g_tension.reset" />
  <connection
    kind="reset"
    version="18.1"

@@ -95,13 +95,15 @@ module Computer_System (
 		input  wire        memory_oct_rzqin,                                //                                    .oct_rzqin
 		output wire [31:0] pio_ampl_export,                                 //                            pio_ampl.export
 		input  wire [31:0] pio_done_export,                                 //                            pio_done.export
+		output wire [31:0] pio_g_tension_external_connection_export,        //   pio_g_tension_external_connection.export
+		output wire [31:0] pio_rho_not_external_connection_export,          //     pio_rho_not_external_connection.export
 		output wire [31:0] pio_rows_export,                                 //                            pio_rows.export
 		output wire        sdram_clk_clk,                                   //                           sdram_clk.clk
 		input  wire        system_pll_ref_clk_clk,                          //                  system_pll_ref_clk.clk
 		input  wire        system_pll_ref_reset_reset                       //                system_pll_ref_reset.reset
 	);
 
-	wire          system_pll_sys_clk_clk;                                         // System_PLL:sys_clk_clk -> [ARM_A9_HPS:f2h_axi_clk, ARM_A9_HPS:h2f_axi_clk, ARM_A9_HPS:h2f_lw_axi_clk, AV_Config:clk, Audio_Subsystem:sys_clk_clk, Bus_master_audio:clk, mm_interconnect_0:System_PLL_sys_clk_clk, mm_interconnect_1:System_PLL_sys_clk_clk, pio_ampl:clk, pio_done:clk, pio_rows:clk, rst_controller:clk, rst_controller_002:clk]
+	wire          system_pll_sys_clk_clk;                                         // System_PLL:sys_clk_clk -> [ARM_A9_HPS:f2h_axi_clk, ARM_A9_HPS:h2f_axi_clk, ARM_A9_HPS:h2f_lw_axi_clk, AV_Config:clk, Audio_Subsystem:sys_clk_clk, Bus_master_audio:clk, mm_interconnect_0:System_PLL_sys_clk_clk, mm_interconnect_1:System_PLL_sys_clk_clk, pio_ampl:clk, pio_done:clk, pio_g_tension:clk, pio_rho_not:clk, pio_rows:clk, rst_controller:clk, rst_controller_002:clk]
 	wire   [31:0] bus_master_audio_avalon_master_readdata;                        // mm_interconnect_0:Bus_master_audio_avalon_master_readdata -> Bus_master_audio:avalon_readdata
 	wire          bus_master_audio_avalon_master_waitrequest;                     // mm_interconnect_0:Bus_master_audio_avalon_master_waitrequest -> Bus_master_audio:avalon_waitrequest
 	wire    [3:0] bus_master_audio_avalon_master_byteenable;                      // Bus_master_audio:avalon_byteenable -> mm_interconnect_0:Bus_master_audio_avalon_master_byteenable
@@ -206,6 +208,16 @@ module Computer_System (
 	wire    [1:0] mm_interconnect_1_pio_rows_s1_address;                          // mm_interconnect_1:pio_rows_s1_address -> pio_rows:address
 	wire          mm_interconnect_1_pio_rows_s1_write;                            // mm_interconnect_1:pio_rows_s1_write -> pio_rows:write_n
 	wire   [31:0] mm_interconnect_1_pio_rows_s1_writedata;                        // mm_interconnect_1:pio_rows_s1_writedata -> pio_rows:writedata
+	wire          mm_interconnect_1_pio_g_tension_s1_chipselect;                  // mm_interconnect_1:pio_g_tension_s1_chipselect -> pio_g_tension:chipselect
+	wire   [31:0] mm_interconnect_1_pio_g_tension_s1_readdata;                    // pio_g_tension:readdata -> mm_interconnect_1:pio_g_tension_s1_readdata
+	wire    [1:0] mm_interconnect_1_pio_g_tension_s1_address;                     // mm_interconnect_1:pio_g_tension_s1_address -> pio_g_tension:address
+	wire          mm_interconnect_1_pio_g_tension_s1_write;                       // mm_interconnect_1:pio_g_tension_s1_write -> pio_g_tension:write_n
+	wire   [31:0] mm_interconnect_1_pio_g_tension_s1_writedata;                   // mm_interconnect_1:pio_g_tension_s1_writedata -> pio_g_tension:writedata
+	wire          mm_interconnect_1_pio_rho_not_s1_chipselect;                    // mm_interconnect_1:pio_rho_not_s1_chipselect -> pio_rho_not:chipselect
+	wire   [31:0] mm_interconnect_1_pio_rho_not_s1_readdata;                      // pio_rho_not:readdata -> mm_interconnect_1:pio_rho_not_s1_readdata
+	wire    [1:0] mm_interconnect_1_pio_rho_not_s1_address;                       // mm_interconnect_1:pio_rho_not_s1_address -> pio_rho_not:address
+	wire          mm_interconnect_1_pio_rho_not_s1_write;                         // mm_interconnect_1:pio_rho_not_s1_write -> pio_rho_not:write_n
+	wire   [31:0] mm_interconnect_1_pio_rho_not_s1_writedata;                     // mm_interconnect_1:pio_rho_not_s1_writedata -> pio_rho_not:writedata
 	wire          irq_mapper_receiver0_irq;                                       // Audio_Subsystem:audio_irq_irq -> irq_mapper:receiver0_irq
 	wire   [31:0] arm_a9_hps_f2h_irq0_irq;                                        // irq_mapper:sender_irq -> ARM_A9_HPS:f2h_irq_p0
 	wire   [31:0] arm_a9_hps_f2h_irq1_irq;                                        // irq_mapper_001:sender_irq -> ARM_A9_HPS:f2h_irq_p1
@@ -213,7 +225,7 @@ module Computer_System (
 	wire          arm_a9_hps_h2f_reset_reset;                                     // ARM_A9_HPS:h2f_rst_n -> [rst_controller:reset_in0, rst_controller_001:reset_in0, rst_controller_002:reset_in0]
 	wire          system_pll_reset_source_reset;                                  // System_PLL:reset_source_reset -> [rst_controller:reset_in1, rst_controller_001:reset_in1]
 	wire          rst_controller_001_reset_out_reset;                             // rst_controller_001:reset_out -> Audio_Subsystem:sys_reset_reset_n
-	wire          rst_controller_002_reset_out_reset;                             // rst_controller_002:reset_out -> [mm_interconnect_0:ARM_A9_HPS_h2f_lw_axi_master_agent_clk_reset_reset_bridge_in_reset_reset, mm_interconnect_1:pio_ampl_reset_reset_bridge_in_reset_reset, pio_ampl:reset_n, pio_done:reset_n, pio_rows:reset_n]
+	wire          rst_controller_002_reset_out_reset;                             // rst_controller_002:reset_out -> [mm_interconnect_0:ARM_A9_HPS_h2f_lw_axi_master_agent_clk_reset_reset_bridge_in_reset_reset, mm_interconnect_1:pio_ampl_reset_reset_bridge_in_reset_reset, pio_ampl:reset_n, pio_done:reset_n, pio_g_tension:reset_n, pio_rho_not:reset_n, pio_rows:reset_n]
 
 	Computer_System_ARM_A9_HPS #(
 		.F2S_Width (2),
@@ -490,6 +502,28 @@ module Computer_System (
 		.in_port  (pio_done_export)                         // external_connection.export
 	);
 
+	Computer_System_pio_ampl pio_g_tension (
+		.clk        (system_pll_sys_clk_clk),                        //                 clk.clk
+		.reset_n    (~rst_controller_002_reset_out_reset),           //               reset.reset_n
+		.address    (mm_interconnect_1_pio_g_tension_s1_address),    //                  s1.address
+		.write_n    (~mm_interconnect_1_pio_g_tension_s1_write),     //                    .write_n
+		.writedata  (mm_interconnect_1_pio_g_tension_s1_writedata),  //                    .writedata
+		.chipselect (mm_interconnect_1_pio_g_tension_s1_chipselect), //                    .chipselect
+		.readdata   (mm_interconnect_1_pio_g_tension_s1_readdata),   //                    .readdata
+		.out_port   (pio_g_tension_external_connection_export)       // external_connection.export
+	);
+
+	Computer_System_pio_ampl pio_rho_not (
+		.clk        (system_pll_sys_clk_clk),                      //                 clk.clk
+		.reset_n    (~rst_controller_002_reset_out_reset),         //               reset.reset_n
+		.address    (mm_interconnect_1_pio_rho_not_s1_address),    //                  s1.address
+		.write_n    (~mm_interconnect_1_pio_rho_not_s1_write),     //                    .write_n
+		.writedata  (mm_interconnect_1_pio_rho_not_s1_writedata),  //                    .writedata
+		.chipselect (mm_interconnect_1_pio_rho_not_s1_chipselect), //                    .chipselect
+		.readdata   (mm_interconnect_1_pio_rho_not_s1_readdata),   //                    .readdata
+		.out_port   (pio_rho_not_external_connection_export)       // external_connection.export
+	);
+
 	Computer_System_pio_ampl pio_rows (
 		.clk        (system_pll_sys_clk_clk),                   //                 clk.clk
 		.reset_n    (~rst_controller_002_reset_out_reset),      //               reset.reset_n
@@ -565,56 +599,66 @@ module Computer_System (
 	);
 
 	Computer_System_mm_interconnect_1 mm_interconnect_1 (
-		.ARM_A9_HPS_h2f_axi_master_awid             (arm_a9_hps_h2f_axi_master_awid),           //            ARM_A9_HPS_h2f_axi_master.awid
-		.ARM_A9_HPS_h2f_axi_master_awaddr           (arm_a9_hps_h2f_axi_master_awaddr),         //                                     .awaddr
-		.ARM_A9_HPS_h2f_axi_master_awlen            (arm_a9_hps_h2f_axi_master_awlen),          //                                     .awlen
-		.ARM_A9_HPS_h2f_axi_master_awsize           (arm_a9_hps_h2f_axi_master_awsize),         //                                     .awsize
-		.ARM_A9_HPS_h2f_axi_master_awburst          (arm_a9_hps_h2f_axi_master_awburst),        //                                     .awburst
-		.ARM_A9_HPS_h2f_axi_master_awlock           (arm_a9_hps_h2f_axi_master_awlock),         //                                     .awlock
-		.ARM_A9_HPS_h2f_axi_master_awcache          (arm_a9_hps_h2f_axi_master_awcache),        //                                     .awcache
-		.ARM_A9_HPS_h2f_axi_master_awprot           (arm_a9_hps_h2f_axi_master_awprot),         //                                     .awprot
-		.ARM_A9_HPS_h2f_axi_master_awvalid          (arm_a9_hps_h2f_axi_master_awvalid),        //                                     .awvalid
-		.ARM_A9_HPS_h2f_axi_master_awready          (arm_a9_hps_h2f_axi_master_awready),        //                                     .awready
-		.ARM_A9_HPS_h2f_axi_master_wid              (arm_a9_hps_h2f_axi_master_wid),            //                                     .wid
-		.ARM_A9_HPS_h2f_axi_master_wdata            (arm_a9_hps_h2f_axi_master_wdata),          //                                     .wdata
-		.ARM_A9_HPS_h2f_axi_master_wstrb            (arm_a9_hps_h2f_axi_master_wstrb),          //                                     .wstrb
-		.ARM_A9_HPS_h2f_axi_master_wlast            (arm_a9_hps_h2f_axi_master_wlast),          //                                     .wlast
-		.ARM_A9_HPS_h2f_axi_master_wvalid           (arm_a9_hps_h2f_axi_master_wvalid),         //                                     .wvalid
-		.ARM_A9_HPS_h2f_axi_master_wready           (arm_a9_hps_h2f_axi_master_wready),         //                                     .wready
-		.ARM_A9_HPS_h2f_axi_master_bid              (arm_a9_hps_h2f_axi_master_bid),            //                                     .bid
-		.ARM_A9_HPS_h2f_axi_master_bresp            (arm_a9_hps_h2f_axi_master_bresp),          //                                     .bresp
-		.ARM_A9_HPS_h2f_axi_master_bvalid           (arm_a9_hps_h2f_axi_master_bvalid),         //                                     .bvalid
-		.ARM_A9_HPS_h2f_axi_master_bready           (arm_a9_hps_h2f_axi_master_bready),         //                                     .bready
-		.ARM_A9_HPS_h2f_axi_master_arid             (arm_a9_hps_h2f_axi_master_arid),           //                                     .arid
-		.ARM_A9_HPS_h2f_axi_master_araddr           (arm_a9_hps_h2f_axi_master_araddr),         //                                     .araddr
-		.ARM_A9_HPS_h2f_axi_master_arlen            (arm_a9_hps_h2f_axi_master_arlen),          //                                     .arlen
-		.ARM_A9_HPS_h2f_axi_master_arsize           (arm_a9_hps_h2f_axi_master_arsize),         //                                     .arsize
-		.ARM_A9_HPS_h2f_axi_master_arburst          (arm_a9_hps_h2f_axi_master_arburst),        //                                     .arburst
-		.ARM_A9_HPS_h2f_axi_master_arlock           (arm_a9_hps_h2f_axi_master_arlock),         //                                     .arlock
-		.ARM_A9_HPS_h2f_axi_master_arcache          (arm_a9_hps_h2f_axi_master_arcache),        //                                     .arcache
-		.ARM_A9_HPS_h2f_axi_master_arprot           (arm_a9_hps_h2f_axi_master_arprot),         //                                     .arprot
-		.ARM_A9_HPS_h2f_axi_master_arvalid          (arm_a9_hps_h2f_axi_master_arvalid),        //                                     .arvalid
-		.ARM_A9_HPS_h2f_axi_master_arready          (arm_a9_hps_h2f_axi_master_arready),        //                                     .arready
-		.ARM_A9_HPS_h2f_axi_master_rid              (arm_a9_hps_h2f_axi_master_rid),            //                                     .rid
-		.ARM_A9_HPS_h2f_axi_master_rdata            (arm_a9_hps_h2f_axi_master_rdata),          //                                     .rdata
-		.ARM_A9_HPS_h2f_axi_master_rresp            (arm_a9_hps_h2f_axi_master_rresp),          //                                     .rresp
-		.ARM_A9_HPS_h2f_axi_master_rlast            (arm_a9_hps_h2f_axi_master_rlast),          //                                     .rlast
-		.ARM_A9_HPS_h2f_axi_master_rvalid           (arm_a9_hps_h2f_axi_master_rvalid),         //                                     .rvalid
-		.ARM_A9_HPS_h2f_axi_master_rready           (arm_a9_hps_h2f_axi_master_rready),         //                                     .rready
-		.System_PLL_sys_clk_clk                     (system_pll_sys_clk_clk),                   //                   System_PLL_sys_clk.clk
-		.pio_ampl_reset_reset_bridge_in_reset_reset (rst_controller_002_reset_out_reset),       // pio_ampl_reset_reset_bridge_in_reset.reset
-		.pio_ampl_s1_address                        (mm_interconnect_1_pio_ampl_s1_address),    //                          pio_ampl_s1.address
-		.pio_ampl_s1_write                          (mm_interconnect_1_pio_ampl_s1_write),      //                                     .write
-		.pio_ampl_s1_readdata                       (mm_interconnect_1_pio_ampl_s1_readdata),   //                                     .readdata
-		.pio_ampl_s1_writedata                      (mm_interconnect_1_pio_ampl_s1_writedata),  //                                     .writedata
-		.pio_ampl_s1_chipselect                     (mm_interconnect_1_pio_ampl_s1_chipselect), //                                     .chipselect
-		.pio_done_s1_address                        (mm_interconnect_1_pio_done_s1_address),    //                          pio_done_s1.address
-		.pio_done_s1_readdata                       (mm_interconnect_1_pio_done_s1_readdata),   //                                     .readdata
-		.pio_rows_s1_address                        (mm_interconnect_1_pio_rows_s1_address),    //                          pio_rows_s1.address
-		.pio_rows_s1_write                          (mm_interconnect_1_pio_rows_s1_write),      //                                     .write
-		.pio_rows_s1_readdata                       (mm_interconnect_1_pio_rows_s1_readdata),   //                                     .readdata
-		.pio_rows_s1_writedata                      (mm_interconnect_1_pio_rows_s1_writedata),  //                                     .writedata
-		.pio_rows_s1_chipselect                     (mm_interconnect_1_pio_rows_s1_chipselect)  //                                     .chipselect
+		.ARM_A9_HPS_h2f_axi_master_awid             (arm_a9_hps_h2f_axi_master_awid),                //            ARM_A9_HPS_h2f_axi_master.awid
+		.ARM_A9_HPS_h2f_axi_master_awaddr           (arm_a9_hps_h2f_axi_master_awaddr),              //                                     .awaddr
+		.ARM_A9_HPS_h2f_axi_master_awlen            (arm_a9_hps_h2f_axi_master_awlen),               //                                     .awlen
+		.ARM_A9_HPS_h2f_axi_master_awsize           (arm_a9_hps_h2f_axi_master_awsize),              //                                     .awsize
+		.ARM_A9_HPS_h2f_axi_master_awburst          (arm_a9_hps_h2f_axi_master_awburst),             //                                     .awburst
+		.ARM_A9_HPS_h2f_axi_master_awlock           (arm_a9_hps_h2f_axi_master_awlock),              //                                     .awlock
+		.ARM_A9_HPS_h2f_axi_master_awcache          (arm_a9_hps_h2f_axi_master_awcache),             //                                     .awcache
+		.ARM_A9_HPS_h2f_axi_master_awprot           (arm_a9_hps_h2f_axi_master_awprot),              //                                     .awprot
+		.ARM_A9_HPS_h2f_axi_master_awvalid          (arm_a9_hps_h2f_axi_master_awvalid),             //                                     .awvalid
+		.ARM_A9_HPS_h2f_axi_master_awready          (arm_a9_hps_h2f_axi_master_awready),             //                                     .awready
+		.ARM_A9_HPS_h2f_axi_master_wid              (arm_a9_hps_h2f_axi_master_wid),                 //                                     .wid
+		.ARM_A9_HPS_h2f_axi_master_wdata            (arm_a9_hps_h2f_axi_master_wdata),               //                                     .wdata
+		.ARM_A9_HPS_h2f_axi_master_wstrb            (arm_a9_hps_h2f_axi_master_wstrb),               //                                     .wstrb
+		.ARM_A9_HPS_h2f_axi_master_wlast            (arm_a9_hps_h2f_axi_master_wlast),               //                                     .wlast
+		.ARM_A9_HPS_h2f_axi_master_wvalid           (arm_a9_hps_h2f_axi_master_wvalid),              //                                     .wvalid
+		.ARM_A9_HPS_h2f_axi_master_wready           (arm_a9_hps_h2f_axi_master_wready),              //                                     .wready
+		.ARM_A9_HPS_h2f_axi_master_bid              (arm_a9_hps_h2f_axi_master_bid),                 //                                     .bid
+		.ARM_A9_HPS_h2f_axi_master_bresp            (arm_a9_hps_h2f_axi_master_bresp),               //                                     .bresp
+		.ARM_A9_HPS_h2f_axi_master_bvalid           (arm_a9_hps_h2f_axi_master_bvalid),              //                                     .bvalid
+		.ARM_A9_HPS_h2f_axi_master_bready           (arm_a9_hps_h2f_axi_master_bready),              //                                     .bready
+		.ARM_A9_HPS_h2f_axi_master_arid             (arm_a9_hps_h2f_axi_master_arid),                //                                     .arid
+		.ARM_A9_HPS_h2f_axi_master_araddr           (arm_a9_hps_h2f_axi_master_araddr),              //                                     .araddr
+		.ARM_A9_HPS_h2f_axi_master_arlen            (arm_a9_hps_h2f_axi_master_arlen),               //                                     .arlen
+		.ARM_A9_HPS_h2f_axi_master_arsize           (arm_a9_hps_h2f_axi_master_arsize),              //                                     .arsize
+		.ARM_A9_HPS_h2f_axi_master_arburst          (arm_a9_hps_h2f_axi_master_arburst),             //                                     .arburst
+		.ARM_A9_HPS_h2f_axi_master_arlock           (arm_a9_hps_h2f_axi_master_arlock),              //                                     .arlock
+		.ARM_A9_HPS_h2f_axi_master_arcache          (arm_a9_hps_h2f_axi_master_arcache),             //                                     .arcache
+		.ARM_A9_HPS_h2f_axi_master_arprot           (arm_a9_hps_h2f_axi_master_arprot),              //                                     .arprot
+		.ARM_A9_HPS_h2f_axi_master_arvalid          (arm_a9_hps_h2f_axi_master_arvalid),             //                                     .arvalid
+		.ARM_A9_HPS_h2f_axi_master_arready          (arm_a9_hps_h2f_axi_master_arready),             //                                     .arready
+		.ARM_A9_HPS_h2f_axi_master_rid              (arm_a9_hps_h2f_axi_master_rid),                 //                                     .rid
+		.ARM_A9_HPS_h2f_axi_master_rdata            (arm_a9_hps_h2f_axi_master_rdata),               //                                     .rdata
+		.ARM_A9_HPS_h2f_axi_master_rresp            (arm_a9_hps_h2f_axi_master_rresp),               //                                     .rresp
+		.ARM_A9_HPS_h2f_axi_master_rlast            (arm_a9_hps_h2f_axi_master_rlast),               //                                     .rlast
+		.ARM_A9_HPS_h2f_axi_master_rvalid           (arm_a9_hps_h2f_axi_master_rvalid),              //                                     .rvalid
+		.ARM_A9_HPS_h2f_axi_master_rready           (arm_a9_hps_h2f_axi_master_rready),              //                                     .rready
+		.System_PLL_sys_clk_clk                     (system_pll_sys_clk_clk),                        //                   System_PLL_sys_clk.clk
+		.pio_ampl_reset_reset_bridge_in_reset_reset (rst_controller_002_reset_out_reset),            // pio_ampl_reset_reset_bridge_in_reset.reset
+		.pio_ampl_s1_address                        (mm_interconnect_1_pio_ampl_s1_address),         //                          pio_ampl_s1.address
+		.pio_ampl_s1_write                          (mm_interconnect_1_pio_ampl_s1_write),           //                                     .write
+		.pio_ampl_s1_readdata                       (mm_interconnect_1_pio_ampl_s1_readdata),        //                                     .readdata
+		.pio_ampl_s1_writedata                      (mm_interconnect_1_pio_ampl_s1_writedata),       //                                     .writedata
+		.pio_ampl_s1_chipselect                     (mm_interconnect_1_pio_ampl_s1_chipselect),      //                                     .chipselect
+		.pio_done_s1_address                        (mm_interconnect_1_pio_done_s1_address),         //                          pio_done_s1.address
+		.pio_done_s1_readdata                       (mm_interconnect_1_pio_done_s1_readdata),        //                                     .readdata
+		.pio_g_tension_s1_address                   (mm_interconnect_1_pio_g_tension_s1_address),    //                     pio_g_tension_s1.address
+		.pio_g_tension_s1_write                     (mm_interconnect_1_pio_g_tension_s1_write),      //                                     .write
+		.pio_g_tension_s1_readdata                  (mm_interconnect_1_pio_g_tension_s1_readdata),   //                                     .readdata
+		.pio_g_tension_s1_writedata                 (mm_interconnect_1_pio_g_tension_s1_writedata),  //                                     .writedata
+		.pio_g_tension_s1_chipselect                (mm_interconnect_1_pio_g_tension_s1_chipselect), //                                     .chipselect
+		.pio_rho_not_s1_address                     (mm_interconnect_1_pio_rho_not_s1_address),      //                       pio_rho_not_s1.address
+		.pio_rho_not_s1_write                       (mm_interconnect_1_pio_rho_not_s1_write),        //                                     .write
+		.pio_rho_not_s1_readdata                    (mm_interconnect_1_pio_rho_not_s1_readdata),     //                                     .readdata
+		.pio_rho_not_s1_writedata                   (mm_interconnect_1_pio_rho_not_s1_writedata),    //                                     .writedata
+		.pio_rho_not_s1_chipselect                  (mm_interconnect_1_pio_rho_not_s1_chipselect),   //                                     .chipselect
+		.pio_rows_s1_address                        (mm_interconnect_1_pio_rows_s1_address),         //                          pio_rows_s1.address
+		.pio_rows_s1_write                          (mm_interconnect_1_pio_rows_s1_write),           //                                     .write
+		.pio_rows_s1_readdata                       (mm_interconnect_1_pio_rows_s1_readdata),        //                                     .readdata
+		.pio_rows_s1_writedata                      (mm_interconnect_1_pio_rows_s1_writedata),       //                                     .writedata
+		.pio_rows_s1_chipselect                     (mm_interconnect_1_pio_rows_s1_chipselect)       //                                     .chipselect
 	);
 
 	Computer_System_irq_mapper irq_mapper (

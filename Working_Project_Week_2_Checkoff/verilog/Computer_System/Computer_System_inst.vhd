@@ -89,12 +89,14 @@
 			memory_mem_odt                                  : out   std_logic;                                        -- mem_odt
 			memory_mem_dm                                   : out   std_logic_vector(3 downto 0);                     -- mem_dm
 			memory_oct_rzqin                                : in    std_logic                     := 'X';             -- oct_rzqin
+			pio_ampl_export                                 : out   std_logic_vector(31 downto 0);                    -- export
+			pio_done_export                                 : in    std_logic_vector(31 downto 0) := (others => 'X'); -- export
+			pio_rows_export                                 : out   std_logic_vector(31 downto 0);                    -- export
 			sdram_clk_clk                                   : out   std_logic;                                        -- clk
 			system_pll_ref_clk_clk                          : in    std_logic                     := 'X';             -- clk
 			system_pll_ref_reset_reset                      : in    std_logic                     := 'X';             -- reset
-			pio_ampl_export                                 : out   std_logic_vector(31 downto 0);                    -- export
-			pio_done_export                                 : in    std_logic_vector(31 downto 0) := (others => 'X'); -- export
-			pio_rows_export                                 : out   std_logic_vector(31 downto 0)                     -- export
+			pio_rho_not_external_connection_export          : out   std_logic_vector(31 downto 0);                    -- export
+			pio_g_tension_external_connection_export        : out   std_logic_vector(31 downto 0)                     -- export
 		);
 	end component Computer_System;
 
@@ -189,11 +191,13 @@
 			memory_mem_odt                                  => CONNECTED_TO_memory_mem_odt,                                  --                                    .mem_odt
 			memory_mem_dm                                   => CONNECTED_TO_memory_mem_dm,                                   --                                    .mem_dm
 			memory_oct_rzqin                                => CONNECTED_TO_memory_oct_rzqin,                                --                                    .oct_rzqin
+			pio_ampl_export                                 => CONNECTED_TO_pio_ampl_export,                                 --                            pio_ampl.export
+			pio_done_export                                 => CONNECTED_TO_pio_done_export,                                 --                            pio_done.export
+			pio_rows_export                                 => CONNECTED_TO_pio_rows_export,                                 --                            pio_rows.export
 			sdram_clk_clk                                   => CONNECTED_TO_sdram_clk_clk,                                   --                           sdram_clk.clk
 			system_pll_ref_clk_clk                          => CONNECTED_TO_system_pll_ref_clk_clk,                          --                  system_pll_ref_clk.clk
 			system_pll_ref_reset_reset                      => CONNECTED_TO_system_pll_ref_reset_reset,                      --                system_pll_ref_reset.reset
-			pio_ampl_export                                 => CONNECTED_TO_pio_ampl_export,                                 --                            pio_ampl.export
-			pio_done_export                                 => CONNECTED_TO_pio_done_export,                                 --                            pio_done.export
-			pio_rows_export                                 => CONNECTED_TO_pio_rows_export                                  --                            pio_rows.export
+			pio_rho_not_external_connection_export          => CONNECTED_TO_pio_rho_not_external_connection_export,          --     pio_rho_not_external_connection.export
+			pio_g_tension_external_connection_export        => CONNECTED_TO_pio_g_tension_external_connection_export         --   pio_g_tension_external_connection.export
 		);
 

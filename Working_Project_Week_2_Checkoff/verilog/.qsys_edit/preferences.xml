@@ -8,7 +8,6 @@
    <inputclock preferredWidth="96" />
   </columns>
  </systemtable>
- <library
-   expandedCategories="Library/Interface Protocols,Library/Interface Protocols/PCI Express,Library,Library/Processors and Peripherals/Peripherals,Library/Interface Protocols/PCI Express/QSYS Example Designs,Library/Processors and Peripherals" />
+ <library expandedCategories="Project,Library" />
  <window width="1644" height="1097" x="103" y="51" />
 </preferences>

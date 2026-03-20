@@ -30,6 +30,10 @@ Progress: Adding pio_ampl [altera_avalon_pio 18.1]
 Progress: Parameterizing module pio_ampl
 Progress: Adding pio_done [altera_avalon_pio 18.1]
 Progress: Parameterizing module pio_done
+Progress: Adding pio_g_tension [altera_avalon_pio 18.1]
+Progress: Parameterizing module pio_g_tension
+Progress: Adding pio_rho_not [altera_avalon_pio 18.1]
+Progress: Parameterizing module pio_rho_not
 Progress: Adding pio_rows [altera_avalon_pio 18.1]
 Progress: Parameterizing module pio_rows
 Progress: Building connections
@@ -64,6 +68,10 @@ Progress: Adding pio_ampl [altera_avalon_pio 18.1]
 Progress: Parameterizing module pio_ampl
 Progress: Adding pio_done [altera_avalon_pio 18.1]
 Progress: Parameterizing module pio_done
+Progress: Adding pio_g_tension [altera_avalon_pio 18.1]
+Progress: Parameterizing module pio_g_tension
+Progress: Adding pio_rho_not [altera_avalon_pio 18.1]
+Progress: Parameterizing module pio_rho_not
 Progress: Adding pio_rows [altera_avalon_pio 18.1]
 Progress: Parameterizing module pio_rows
 Progress: Building connections
@@ -96,11 +104,11 @@ Info: Bus_master_audio: Starting Generation of External Bus to Avalon Bridge
 Info: Bus_master_audio: "Computer_System" instantiated altera_up_external_bus_to_avalon_bridge "Bus_master_audio"
 Info: System_PLL: "Computer_System" instantiated altera_up_avalon_sys_sdram_pll "System_PLL"
 Info: pio_ampl: Starting RTL generation for module 'Computer_System_pio_ampl'
-Info: pio_ampl:   Generation command is [exec C:/programs/intelfpga/18.1/quartus/bin64/perl/bin/perl.exe -I C:/programs/intelfpga/18.1/quartus/bin64/perl/lib -I C:/programs/intelfpga/18.1/quartus/sopc_builder/bin/europa -I C:/programs/intelfpga/18.1/quartus/sopc_builder/bin/perl_lib -I C:/programs/intelfpga/18.1/quartus/sopc_builder/bin -I C:/programs/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/programs/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/programs/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=Computer_System_pio_ampl --dir=C:/Users/deg273/AppData/Local/Temp/alt0532_3023615690707164057.dir/0004_pio_ampl_gen/ --quartus_dir=C:/programs/intelfpga/18.1/quartus --verilog --config=C:/Users/deg273/AppData/Local/Temp/alt0532_3023615690707164057.dir/0004_pio_ampl_gen//Computer_System_pio_ampl_component_configuration.pl  --do_build_sim=0  ]
+Info: pio_ampl:   Generation command is [exec C:/programs/intelfpga/18.1/quartus/bin64/perl/bin/perl.exe -I C:/programs/intelfpga/18.1/quartus/bin64/perl/lib -I C:/programs/intelfpga/18.1/quartus/sopc_builder/bin/europa -I C:/programs/intelfpga/18.1/quartus/sopc_builder/bin/perl_lib -I C:/programs/intelfpga/18.1/quartus/sopc_builder/bin -I C:/programs/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/programs/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/programs/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=Computer_System_pio_ampl --dir=C:/Users/deg273/AppData/Local/Temp/alt0532_8570671666784359440.dir/0004_pio_ampl_gen/ --quartus_dir=C:/programs/intelfpga/18.1/quartus --verilog --config=C:/Users/deg273/AppData/Local/Temp/alt0532_8570671666784359440.dir/0004_pio_ampl_gen//Computer_System_pio_ampl_component_configuration.pl  --do_build_sim=0  ]
 Info: pio_ampl: Done RTL generation for module 'Computer_System_pio_ampl'
 Info: pio_ampl: "Computer_System" instantiated altera_avalon_pio "pio_ampl"
 Info: pio_done: Starting RTL generation for module 'Computer_System_pio_done'
-Info: pio_done:   Generation command is [exec C:/programs/intelfpga/18.1/quartus/bin64/perl/bin/perl.exe -I C:/programs/intelfpga/18.1/quartus/bin64/perl/lib -I C:/programs/intelfpga/18.1/quartus/sopc_builder/bin/europa -I C:/programs/intelfpga/18.1/quartus/sopc_builder/bin/perl_lib -I C:/programs/intelfpga/18.1/quartus/sopc_builder/bin -I C:/programs/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/programs/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/programs/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=Computer_System_pio_done --dir=C:/Users/deg273/AppData/Local/Temp/alt0532_3023615690707164057.dir/0005_pio_done_gen/ --quartus_dir=C:/programs/intelfpga/18.1/quartus --verilog --config=C:/Users/deg273/AppData/Local/Temp/alt0532_3023615690707164057.dir/0005_pio_done_gen//Computer_System_pio_done_component_configuration.pl  --do_build_sim=0  ]
+Info: pio_done:   Generation command is [exec C:/programs/intelfpga/18.1/quartus/bin64/perl/bin/perl.exe -I C:/programs/intelfpga/18.1/quartus/bin64/perl/lib -I C:/programs/intelfpga/18.1/quartus/sopc_builder/bin/europa -I C:/programs/intelfpga/18.1/quartus/sopc_builder/bin/perl_lib -I C:/programs/intelfpga/18.1/quartus/sopc_builder/bin -I C:/programs/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/programs/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/programs/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=Computer_System_pio_done --dir=C:/Users/deg273/AppData/Local/Temp/alt0532_8570671666784359440.dir/0005_pio_done_gen/ --quartus_dir=C:/programs/intelfpga/18.1/quartus --verilog --config=C:/Users/deg273/AppData/Local/Temp/alt0532_8570671666784359440.dir/0005_pio_done_gen//Computer_System_pio_done_component_configuration.pl  --do_build_sim=0  ]
 Info: pio_done: Done RTL generation for module 'Computer_System_pio_done'
 Info: pio_done: "Computer_System" instantiated altera_avalon_pio "pio_done"
 Info: avalon_st_adapter: Inserting error_adapter: error_adapter_0
@@ -109,6 +117,8 @@ Info: mm_interconnect_0: "Computer_System" instantiated altera_mm_interconnect "
 Info: avalon_st_adapter: Inserting error_adapter: error_adapter_0
 Info: avalon_st_adapter_001: Inserting error_adapter: error_adapter_0
 Info: avalon_st_adapter_002: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_003: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_004: Inserting error_adapter: error_adapter_0
 Info: mm_interconnect_1: "Computer_System" instantiated altera_mm_interconnect "mm_interconnect_1"
 Info: irq_mapper: "Computer_System" instantiated altera_irq_mapper "irq_mapper"
 Info: irq_mapper_001: "Computer_System" instantiated altera_irq_mapper "irq_mapper_001"

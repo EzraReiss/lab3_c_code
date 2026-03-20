@@ -1,5 +1,5 @@
 Flow report for DE1_SoC_Computer
-Fri Mar 20 01:05:43 2026
+Fri Mar 20 16:01:40 2026
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -40,18 +40,18 @@ refer to the applicable agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Flow Summary                                                                  ;
 +---------------------------------+---------------------------------------------+
-; Flow Status                     ; Successful - Fri Mar 20 01:04:50 2026       ;
+; Flow Status                     ; Successful - Fri Mar 20 16:00:36 2026       ;
 ; Quartus Prime Version           ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                   ; DE1_SoC_Computer                            ;
 ; Top-level Entity Name           ; DE1_SoC_Computer                            ;
 ; Family                          ; Cyclone V                                   ;
 ; Device                          ; 5CSEMA5F31C6                                ;
 ; Timing Models                   ; Final                                       ;
-; Logic utilization (in ALMs)     ; 23,922 / 32,070 ( 75 % )                    ;
-; Total registers                 ; 16964                                       ;
+; Logic utilization (in ALMs)     ; 26,617 / 32,070 ( 83 % )                    ;
+; Total registers                 ; 18686                                       ;
 ; Total pins                      ; 368 / 457 ( 81 % )                          ;
 ; Total virtual pins              ; 0                                           ;
-; Total block memory bits         ; 376,384 / 4,065,280 ( 9 % )                 ;
+; Total block memory bits         ; 1,816,384 / 4,065,280 ( 45 % )              ;
 ; Total DSP Blocks                ; 87 / 87 ( 100 % )                           ;
 ; Total HSSI RX PCSs              ; 0                                           ;
 ; Total HSSI PMA RX Deserializers ; 0                                           ;
@@ -67,65 +67,69 @@ refer to the applicable agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 03/20/2026 00:49:16 ;
+; Start date & time ; 03/20/2026 15:45:03 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; DE1_SoC_Computer    ;
 +-------------------+---------------------+
 
 
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Flow Non-Default Global Settings                                                                                                                                                            ;
-+-------------------------------------+-------------------------------------------------------------------------------+---------------+------------------------------------------+------------+
-; Assignment Name                     ; Value                                                                         ; Default Value ; Entity Name                              ; Section Id ;
-+-------------------------------------+-------------------------------------------------------------------------------+---------------+------------------------------------------+------------+
-; COMPILER_SIGNATURE_ID               ; 198915911224415.177398215301104                                               ; --            ; --                                       ; --         ;
-; HPS_ISW_FILE                        ; Computer_System/synthesis/submodules/sequencer/alt_types.pre.h                ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
-; HPS_ISW_FILE                        ; Computer_System/synthesis/submodules/sequencer/emif.pre.xml                   ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
-; HPS_ISW_FILE                        ; Computer_System/synthesis/submodules/sequencer/sdram_io.pre.h                 ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
-; HPS_ISW_FILE                        ; Computer_System/synthesis/submodules/sequencer/sequencer.pre.c                ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
-; HPS_ISW_FILE                        ; Computer_System/synthesis/submodules/sequencer/sequencer.pre.h                ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
-; HPS_ISW_FILE                        ; Computer_System/synthesis/submodules/sequencer/sequencer_auto.pre.h           ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
-; HPS_ISW_FILE                        ; Computer_System/synthesis/submodules/sequencer/sequencer_auto_ac_init.pre.c   ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
-; HPS_ISW_FILE                        ; Computer_System/synthesis/submodules/sequencer/sequencer_auto_inst_init.pre.c ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
-; HPS_ISW_FILE                        ; Computer_System/synthesis/submodules/sequencer/sequencer_defines.pre.h        ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
-; HPS_ISW_FILE                        ; Computer_System/synthesis/submodules/sequencer/system.pre.h                   ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
-; HPS_ISW_FILE                        ; Computer_System/synthesis/submodules/sequencer/tclrpt.pre.c                   ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
-; HPS_ISW_FILE                        ; Computer_System/synthesis/submodules/sequencer/tclrpt.pre.h                   ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
-; HPS_ISW_FILE                        ; Computer_System/synthesis/submodules/hps.pre.xml                              ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
-; HPS_PARTITION                       ; On                                                                            ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
-; MAX_CORE_JUNCTION_TEMP              ; 85                                                                            ; --            ; --                                       ; --         ;
-; MIN_CORE_JUNCTION_TEMP              ; 0                                                                             ; --            ; --                                       ; --         ;
-; MISC_FILE                           ; Computer_System/synthesis/../Computer_System.cmp                              ; --            ; --                                       ; --         ;
-; MISC_FILE                           ; Computer_System/synthesis/../../C                                             ; --            ; --                                       ; --         ;
-; MISC_FILE                           ; Computer_System/synthesis/Computer_System_ARM_A9_HPS_hps.svd                  ; --            ; --                                       ; --         ;
-; MISC_FILE                           ; Computer_System/synthesis/../../Computer_System.qsys                          ; --            ; --                                       ; --         ;
-; MISC_FILE                           ; Computer_System/synthesis/submodules/sequencer/alt_types.pre.h                ; --            ; --                                       ; --         ;
-; MISC_FILE                           ; Computer_System/synthesis/submodules/sequencer/emif.pre.xml                   ; --            ; --                                       ; --         ;
-; MISC_FILE                           ; Computer_System/synthesis/submodules/sequencer/sdram_io.pre.h                 ; --            ; --                                       ; --         ;
-; MISC_FILE                           ; Computer_System/synthesis/submodules/sequencer/sequencer.pre.c                ; --            ; --                                       ; --         ;
-; MISC_FILE                           ; Computer_System/synthesis/submodules/sequencer/sequencer.pre.h                ; --            ; --                                       ; --         ;
-; MISC_FILE                           ; Computer_System/synthesis/submodules/sequencer/sequencer_auto.pre.h           ; --            ; --                                       ; --         ;
-; MISC_FILE                           ; Computer_System/synthesis/submodules/sequencer/sequencer_auto_ac_init.pre.c   ; --            ; --                                       ; --         ;
-; MISC_FILE                           ; Computer_System/synthesis/submodules/sequencer/sequencer_auto_inst_init.pre.c ; --            ; --                                       ; --         ;
-; MISC_FILE                           ; Computer_System/synthesis/submodules/sequencer/sequencer_defines.pre.h        ; --            ; --                                       ; --         ;
-; MISC_FILE                           ; Computer_System/synthesis/submodules/sequencer/system.pre.h                   ; --            ; --                                       ; --         ;
-; MISC_FILE                           ; Computer_System/synthesis/submodules/sequencer/tclrpt.pre.c                   ; --            ; --                                       ; --         ;
-; MISC_FILE                           ; Computer_System/synthesis/submodules/sequencer/tclrpt.pre.h                   ; --            ; --                                       ; --         ;
-; MISC_FILE                           ; Computer_System/synthesis/submodules/hps.pre.xml                              ; --            ; --                                       ; --         ;
-; NUM_PARALLEL_PROCESSORS             ; All                                                                           ; --            ; --                                       ; --         ;
-; PARTITION_COLOR                     ; -- (Not supported for targeted family)                                        ; --            ; --                                       ; Top        ;
-; PARTITION_FITTER_PRESERVATION_LEVEL ; -- (Not supported for targeted family)                                        ; --            ; --                                       ; Top        ;
-; PARTITION_NETLIST_TYPE              ; -- (Not supported for targeted family)                                        ; --            ; --                                       ; Top        ;
-; POWER_BOARD_THERMAL_MODEL           ; None (CONSERVATIVE)                                                           ; --            ; --                                       ; --         ;
-; POWER_PRESET_COOLING_SOLUTION       ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW                                         ; --            ; --                                       ; --         ;
-; SLD_FILE                            ; Computer_System/synthesis/Computer_System.regmap                              ; --            ; --                                       ; --         ;
-; SLD_FILE                            ; Computer_System/synthesis/Computer_System.debuginfo                           ; --            ; --                                       ; --         ;
-; SLD_INFO                            ; QSYS_NAME Computer_System HAS_SOPCINFO 1 GENERATION_ID 1773978259             ; --            ; Computer_System                          ; --         ;
-; SOPCINFO_FILE                       ; Computer_System/synthesis/../../Computer_System.sopcinfo                      ; --            ; --                                       ; --         ;
-; SYNTHESIS_ONLY_QIP                  ; On                                                                            ; --            ; --                                       ; --         ;
-; VERILOG_INPUT_VERSION               ; SystemVerilog_2005                                                            ; Verilog_2001  ; --                                       ; --         ;
-; VERILOG_SHOW_LMF_MAPPING_MESSAGES   ; Off                                                                           ; --            ; --                                       ; --         ;
-+-------------------------------------+-------------------------------------------------------------------------------+---------------+------------------------------------------+------------+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Flow Non-Default Global Settings                                                                                                                                                                ;
++-----------------------------------------+-------------------------------------------------------------------------------+---------------+------------------------------------------+------------+
+; Assignment Name                         ; Value                                                                         ; Default Value ; Entity Name                              ; Section Id ;
++-----------------------------------------+-------------------------------------------------------------------------------+---------------+------------------------------------------+------------+
+; ALM_REGISTER_PACKING_EFFORT             ; High                                                                          ; Medium        ; --                                       ; --         ;
+; COMPILER_SIGNATURE_ID                   ; 198915911224415.177403590036688                                               ; --            ; --                                       ; --         ;
+; HPS_ISW_FILE                            ; Computer_System/synthesis/submodules/sequencer/alt_types.pre.h                ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
+; HPS_ISW_FILE                            ; Computer_System/synthesis/submodules/sequencer/emif.pre.xml                   ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
+; HPS_ISW_FILE                            ; Computer_System/synthesis/submodules/sequencer/sdram_io.pre.h                 ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
+; HPS_ISW_FILE                            ; Computer_System/synthesis/submodules/sequencer/sequencer.pre.c                ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
+; HPS_ISW_FILE                            ; Computer_System/synthesis/submodules/sequencer/sequencer.pre.h                ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
+; HPS_ISW_FILE                            ; Computer_System/synthesis/submodules/sequencer/sequencer_auto.pre.h           ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
+; HPS_ISW_FILE                            ; Computer_System/synthesis/submodules/sequencer/sequencer_auto_ac_init.pre.c   ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
+; HPS_ISW_FILE                            ; Computer_System/synthesis/submodules/sequencer/sequencer_auto_inst_init.pre.c ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
+; HPS_ISW_FILE                            ; Computer_System/synthesis/submodules/sequencer/sequencer_defines.pre.h        ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
+; HPS_ISW_FILE                            ; Computer_System/synthesis/submodules/sequencer/system.pre.h                   ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
+; HPS_ISW_FILE                            ; Computer_System/synthesis/submodules/sequencer/tclrpt.pre.c                   ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
+; HPS_ISW_FILE                            ; Computer_System/synthesis/submodules/sequencer/tclrpt.pre.h                   ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
+; HPS_ISW_FILE                            ; Computer_System/synthesis/submodules/hps.pre.xml                              ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
+; HPS_PARTITION                           ; On                                                                            ; --            ; Computer_System_ARM_A9_HPS_hps_io_border ; --         ;
+; MAX_CORE_JUNCTION_TEMP                  ; 85                                                                            ; --            ; --                                       ; --         ;
+; MIN_CORE_JUNCTION_TEMP                  ; 0                                                                             ; --            ; --                                       ; --         ;
+; MISC_FILE                               ; Computer_System/synthesis/../Computer_System.cmp                              ; --            ; --                                       ; --         ;
+; MISC_FILE                               ; Computer_System/synthesis/../../C                                             ; --            ; --                                       ; --         ;
+; MISC_FILE                               ; Computer_System/synthesis/Computer_System_ARM_A9_HPS_hps.svd                  ; --            ; --                                       ; --         ;
+; MISC_FILE                               ; Computer_System/synthesis/../../Computer_System.qsys                          ; --            ; --                                       ; --         ;
+; MISC_FILE                               ; Computer_System/synthesis/submodules/sequencer/alt_types.pre.h                ; --            ; --                                       ; --         ;
+; MISC_FILE                               ; Computer_System/synthesis/submodules/sequencer/emif.pre.xml                   ; --            ; --                                       ; --         ;
+; MISC_FILE                               ; Computer_System/synthesis/submodules/sequencer/sdram_io.pre.h                 ; --            ; --                                       ; --         ;
+; MISC_FILE                               ; Computer_System/synthesis/submodules/sequencer/sequencer.pre.c                ; --            ; --                                       ; --         ;
+; MISC_FILE                               ; Computer_System/synthesis/submodules/sequencer/sequencer.pre.h                ; --            ; --                                       ; --         ;
+; MISC_FILE                               ; Computer_System/synthesis/submodules/sequencer/sequencer_auto.pre.h           ; --            ; --                                       ; --         ;
+; MISC_FILE                               ; Computer_System/synthesis/submodules/sequencer/sequencer_auto_ac_init.pre.c   ; --            ; --                                       ; --         ;
+; MISC_FILE                               ; Computer_System/synthesis/submodules/sequencer/sequencer_auto_inst_init.pre.c ; --            ; --                                       ; --         ;
+; MISC_FILE                               ; Computer_System/synthesis/submodules/sequencer/sequencer_defines.pre.h        ; --            ; --                                       ; --         ;
+; MISC_FILE                               ; Computer_System/synthesis/submodules/sequencer/system.pre.h                   ; --            ; --                                       ; --         ;
+; MISC_FILE                               ; Computer_System/synthesis/submodules/sequencer/tclrpt.pre.c                   ; --            ; --                                       ; --         ;
+; MISC_FILE                               ; Computer_System/synthesis/submodules/sequencer/tclrpt.pre.h                   ; --            ; --                                       ; --         ;
+; MISC_FILE                               ; Computer_System/synthesis/submodules/hps.pre.xml                              ; --            ; --                                       ; --         ;
+; NUM_PARALLEL_PROCESSORS                 ; All                                                                           ; --            ; --                                       ; --         ;
+; OPTIMIZATION_MODE                       ; Aggressive Area                                                               ; Balanced      ; --                                       ; --         ;
+; OPTIMIZATION_TECHNIQUE                  ; Area                                                                          ; Balanced      ; --                                       ; --         ;
+; PARTITION_COLOR                         ; -- (Not supported for targeted family)                                        ; --            ; --                                       ; Top        ;
+; PARTITION_FITTER_PRESERVATION_LEVEL     ; -- (Not supported for targeted family)                                        ; --            ; --                                       ; Top        ;
+; PARTITION_NETLIST_TYPE                  ; -- (Not supported for targeted family)                                        ; --            ; --                                       ; Top        ;
+; PHYSICAL_SYNTHESIS_COMBO_LOGIC_FOR_AREA ; On                                                                            ; Off           ; --                                       ; --         ;
+; POWER_BOARD_THERMAL_MODEL               ; None (CONSERVATIVE)                                                           ; --            ; --                                       ; --         ;
+; POWER_PRESET_COOLING_SOLUTION           ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW                                         ; --            ; --                                       ; --         ;
+; SLD_FILE                                ; Computer_System/synthesis/Computer_System.regmap                              ; --            ; --                                       ; --         ;
+; SLD_FILE                                ; Computer_System/synthesis/Computer_System.debuginfo                           ; --            ; --                                       ; --         ;
+; SLD_INFO                                ; QSYS_NAME Computer_System HAS_SOPCINFO 1 GENERATION_ID 1774033581             ; --            ; Computer_System                          ; --         ;
+; SOPCINFO_FILE                           ; Computer_System/synthesis/../../Computer_System.sopcinfo                      ; --            ; --                                       ; --         ;
+; SYNTHESIS_ONLY_QIP                      ; On                                                                            ; --            ; --                                       ; --         ;
+; VERILOG_INPUT_VERSION                   ; SystemVerilog_2005                                                            ; Verilog_2001  ; --                                       ; --         ;
+; VERILOG_SHOW_LMF_MAPPING_MESSAGES       ; Off                                                                           ; --            ; --                                       ; --         ;
++-----------------------------------------+-------------------------------------------------------------------------------+---------------+------------------------------------------+------------+
 
 
 +--------------------------------------------------------------------------------------------------------------------------+
@@ -133,11 +137,11 @@ refer to the applicable agreement for further details.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:03:06     ; 2.9                     ; 5685 MB             ; 00:06:18                           ;
-; Fitter               ; 00:11:59     ; 1.6                     ; 10202 MB            ; 01:03:34                           ;
-; Assembler            ; 00:00:14     ; 1.0                     ; 5322 MB             ; 00:00:14                           ;
-; Timing Analyzer      ; 00:00:50     ; 3.6                     ; 6639 MB             ; 00:02:28                           ;
-; Total                ; 00:16:09     ; --                      ; --                  ; 01:12:34                           ;
+; Analysis & Synthesis ; 00:02:28     ; 3.2                     ; 5794 MB             ; 00:05:44                           ;
+; Fitter               ; 00:12:35     ; 1.7                     ; 10275 MB            ; 01:20:35                           ;
+; Assembler            ; 00:00:16     ; 1.0                     ; 5364 MB             ; 00:00:15                           ;
+; Timing Analyzer      ; 00:01:02     ; 4.0                     ; 6724 MB             ; 00:03:02                           ;
+; Total                ; 00:16:21     ; --                      ; --                  ; 01:29:36                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

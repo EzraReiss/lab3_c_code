@@ -88,11 +88,13 @@
 		.memory_mem_odt                                  (<connected-to-memory_mem_odt>),                                  //                                    .mem_odt
 		.memory_mem_dm                                   (<connected-to-memory_mem_dm>),                                   //                                    .mem_dm
 		.memory_oct_rzqin                                (<connected-to-memory_oct_rzqin>),                                //                                    .oct_rzqin
+		.pio_ampl_export                                 (<connected-to-pio_ampl_export>),                                 //                            pio_ampl.export
+		.pio_done_export                                 (<connected-to-pio_done_export>),                                 //                            pio_done.export
+		.pio_rows_export                                 (<connected-to-pio_rows_export>),                                 //                            pio_rows.export
 		.sdram_clk_clk                                   (<connected-to-sdram_clk_clk>),                                   //                           sdram_clk.clk
 		.system_pll_ref_clk_clk                          (<connected-to-system_pll_ref_clk_clk>),                          //                  system_pll_ref_clk.clk
 		.system_pll_ref_reset_reset                      (<connected-to-system_pll_ref_reset_reset>),                      //                system_pll_ref_reset.reset
-		.pio_ampl_export                                 (<connected-to-pio_ampl_export>),                                 //                            pio_ampl.export
-		.pio_done_export                                 (<connected-to-pio_done_export>),                                 //                            pio_done.export
-		.pio_rows_export                                 (<connected-to-pio_rows_export>)                                  //                            pio_rows.export
+		.pio_rho_not_external_connection_export          (<connected-to-pio_rho_not_external_connection_export>),          //     pio_rho_not_external_connection.export
+		.pio_g_tension_external_connection_export        (<connected-to-pio_g_tension_external_connection_export>)         //   pio_g_tension_external_connection.export
 	);
 

@@ -48,8 +48,9 @@ static inline int32_t float_to_fixed(float x) {
 // Drum state structure 
 typedef struct {
 	int rows;
-	float rho_gain;
 	float init_amplitude;
+	float g_tension;
+	float rho_gain;
 } DrumParams;
 
 // Structure encapsulating FPGA interface
