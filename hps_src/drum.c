@@ -20,6 +20,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/mman.h>
+#include <sys/time.h>
 #include <math.h>
 
 // -----------------------------------------------------------------------------
@@ -107,6 +108,49 @@ static bool read_line(char *buf, size_t n) {
 	return true;
 }
 
+static inline uint32_t done_bit(const FpgaIf *fpga) {
+	return (*fpga->pio_done) & 0x1u;
+}
+
+static double elapsed_us(const struct timeval *start, const struct timeval *end) {
+	int64_t sec = (int64_t)end->tv_sec - (int64_t)start->tv_sec;
+	int64_t usec = (int64_t)end->tv_usec - (int64_t)start->tv_usec;
+	return (double)sec * 1000000.0 + (double)usec;
+}
+
+// Measure one full done period by timing between two rising edges.
+static bool measure_done_period_us(FpgaIf *fpga, double *period_us) {
+	struct timeval t0, t1;
+
+	if (!period_us) {
+		return false;
+	}
+
+	// Re-sync: if currently high, wait for deassert so next high is a fresh edge.
+	while (done_bit(fpga) != 0u) {
+	}
+
+	while (done_bit(fpga) == 0u) {
+	}
+	if (gettimeofday(&t0, NULL) != 0) {
+		perror("gettimeofday");
+		return false;
+	}
+
+	while (done_bit(fpga) != 0u) {
+	}
+
+	while (done_bit(fpga) == 0u) {
+	}
+	if (gettimeofday(&t1, NULL) != 0) {
+		perror("gettimeofday");
+		return false;
+	}
+
+	*period_us = elapsed_us(&t0, &t1);
+	return true;
+}
+
 
 // Read an int from stdin
 static bool prompt_int(const char *label, int *out_value) {
@@ -155,6 +199,7 @@ static void print_menu(void) {
 	printf("  n : set number of rows\n");
 	printf("  a : set initial amplitude\n");
 	printf("  u : update FPGA (write only)\n");
+	printf("  t : measure done period (us)\n");
 }
 
 
@@ -223,6 +268,16 @@ int main(void) {
 				write_params(&fpga, &params);
 				printf("Parameters written to FPGA.\n");
 				break;
+
+			case 't': {
+				double period_us = 0.0;
+				if (measure_done_period_us(&fpga, &period_us)) {
+					printf("Done period: %.3f us\n", period_us);
+				} else {
+					printf("Failed to measure done period.\n");
+				}
+				break;
+			}
 
 			case '\n':
 				break;
