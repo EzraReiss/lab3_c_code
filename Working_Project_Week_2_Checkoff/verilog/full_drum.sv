@@ -107,20 +107,21 @@ module full_drum #(
         row_limit = active_rows;
         radius_i = pluck_radius;
         for (g = 0; g < NUM_COLUMNS; g = g + 1) begin
+            // Defaults prevent latch inference for temporary combinational variables.
+            grad_shift = 0;
+            height_i = 0;
             dist_col_abs = (g > CENTER_COLUMN) ? (g - CENTER_COLUMN) : (CENTER_COLUMN - g);
             dist_row_abs = (init_row > center_row_active) ? (init_row - center_row_active) : (center_row_active - init_row);
             manhattan = dist_col_abs + dist_row_abs;
 
             if ((radius_i > 0) && (manhattan < radius_i)) begin
                 // Shift-only profile: no divider/multiplier inference in init datapath.
-                grad_shift = (radius_shift == '0) ? manhattan : ((manhattan << 2) >> radius_shift);
+                grad_shift = (radius_shift == '0) ? manhattan : ((manhattan << 2) >> $unsigned(radius_shift));
                 if (grad_shift >= DATA_WIDTH) begin
                     height_i = 0;
                 end else begin
-                    height_i = $signed(init_peak_abs) >>> grad_shift;
+                    height_i = $signed(init_peak_abs) >>> $unsigned(grad_shift);
                 end
-            end else begin
-                height_i = 0;
             end
 
             if ((g == 0) || (g == NUM_COLUMNS - 1) || (init_row == 0) || (init_row >= last_active_row) || (init_row >= row_limit[COL_ADDR_W-1:0])) begin
@@ -157,6 +158,9 @@ module full_drum #(
     logic signed [DATA_WIDTH-1:0] u_middle_node [NUM_COLUMNS-1:0];
     logic signed [DATA_WIDTH-1:0] scan_data_col [NUM_COLUMNS-1:0];
     logic [NUM_COLUMNS-1:0] done_columns;
+    logic [COL_ADDR_W-1:0] drum_length_cfg;
+
+    assign drum_length_cfg = last_active_row + COL_ADDR_W'(1);
 
     wire next_sample_gated = next_sample & init_done_r;
 
@@ -171,7 +175,7 @@ module full_drum #(
                 .rst(rst),
                 .rho_eff(nonlinear_rho_eff),
                 .G_tension(G_tension),
-                .drum_length(last_active_row + COL_ADDR_W'(1)),
+                .drum_length(drum_length_cfg),
                 .init_data(init_data[i]),
                 .init_addr(init_row),
                 .init_we(init_we),
