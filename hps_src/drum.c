@@ -58,6 +58,8 @@ typedef struct {
 	volatile uint32_t *pio_rows;
 	volatile int32_t *pio_done;
 	volatile int32_t *pio_amp;
+	volatile int32_t *pio_rho_gain;
+	volatile int32_t *pio_g_tension;
 } FpgaIf;
 
 
@@ -66,6 +68,8 @@ typedef struct {
 static void write_params(FpgaIf *fpga, const DrumParams *p) {
 	*fpga->pio_rows = (uint32_t)p->rows;
 	*fpga->pio_amp = float_to_fixed(p->init_amplitude);
+	*fpga->pio_rho_gain = float_to_fixed(p->rho_gain);
+	*fpga->pio_g_tension = float_to_fixed(p->g_tension);
 }
 
 static bool map_fpga(FpgaIf *fpga) {
@@ -96,6 +100,8 @@ static bool map_fpga(FpgaIf *fpga) {
 	fpga->pio_rows = (volatile uint32_t *)((char *)fpga->h2p_virtual_base + FPGA_PIO_NUM_ROWS);
 	fpga->pio_amp  = (volatile int32_t *)((char *)fpga->h2p_virtual_base + FPGA_PIO_INIT_AMP);
 	fpga->pio_done = (volatile uint32_t *)((char *)fpga->h2p_virtual_base + FPGA_PIO_DONE);
+	fpga->pio_rho_gain = (volatile int32_t *)((char *)fpga->h2p_virtual_base + FPGA_PIO_RHO_GAIN);
+	fpga->pio_g_tension = (volatile int32_t *)((char *)fpga->h2p_virtual_base + FPGA_PIO_G_TENSION);
 	return true;
 }
 
@@ -200,14 +206,18 @@ static void print_menu(void) {
 	printf("  a : set initial amplitude\n");
 	printf("  u : update FPGA (write only)\n");
 	printf("  t : measure done period (us)\n");
+	printf("  r : set rho gain\n");
+	printf("  g : set g tension\n");
 }
 
 
 // Print parameters to console
 static void print_params(const DrumParams *p) {
-	printf("rows=%d, init_amplitude=%f\n",
+	printf("rows=%d, init_amplitude=%f, rho_gain=%f, g_tension=%f\n",
 		   p->rows,
-		   p->init_amplitude);
+		   p->init_amplitude,
+		   p->rho_gain,
+		   p->g_tension);
 }
 
 int main(void) {
@@ -215,6 +225,8 @@ int main(void) {
 	DrumParams params = {
 		.rows = 30,
 		.init_amplitude = 0.5f,
+		.rho_gain = 0.5f,
+		.g_tension = 0.5f,
 	};
 
 	FpgaIf fpga;
@@ -279,8 +291,27 @@ int main(void) {
 				break;
 			}
 
+			case 'r': {
+				float rho_gain = params.rho_gain;
+				if (prompt_float("Enter rho gain: ", &rho_gain)) {
+					params.rho_gain = rho_gain;
+					printf("Updated rho gain to %f (not written yet).\n", params.rho_gain);
+				}
+				break;
+			}
+
+			case 'g': {
+				float g_tension = params.g_tension;
+				if (prompt_float("Enter g tension: ", &g_tension)) {
+					params.g_tension = g_tension;
+					printf("Updated g tension to %f (not written yet).\n", params.g_tension);
+				}
+				break;
+			}
+
 			case '\n':
 				break;
+			
 
 			default:
 				printf("Unknown command.\n");
