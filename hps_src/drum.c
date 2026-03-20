@@ -23,16 +23,14 @@
 #include <math.h>
 
 // -----------------------------------------------------------------------------
-// Address map placeholders (TODO: REPLACE PLACEHOLDERS)
+// Address map placeholders 
 // -----------------------------------------------------------------------------
 #define FPGA_AXI_BASE          0xC4000000
 #define FPGA_AXI_SPAN          0x00001000
 
-#define FPGA_PIO_NUM_ROWS      0x00000000
-#define FPGA_PIO_RHO_GAIN      0x00000010
-#define FPGA_PIO_INIT_AMP      0x00000020
-#define FPGA_PIO_RESET         0x00000030
-#define FPGA_PIO_CLK           0x00000040
+#define FPGA_PIO_INIT_AMP      0x00000000
+#define FPGA_PIO_DONE          0x00000010
+#define FPGA_PIO_NUM_ROWS      0x00000020
 
 // signed 1.17 format (18-bit total, 17 fractional bits).
 static inline int32_t float_to_fixed(float x) {
@@ -57,30 +55,16 @@ typedef struct {
 	void *h2p_virtual_base;
 
 	volatile uint32_t *pio_rows;
-	volatile int32_t *pio_rho;
+	volatile int32_t *pio_done;
 	volatile int32_t *pio_amp;
-	volatile uint32_t *pio_reset;
 } FpgaIf;
 
 
-// Drive the reset signal to the FPGA 
-static void pulse_reset(FpgaIf *fpga) {
-	*fpga->pio_reset = 1;
-	usleep(10);
-	*fpga->pio_reset = 0;
-}
 
 // Write parameters to the FPGA
 static void write_params(FpgaIf *fpga, const DrumParams *p) {
 	*fpga->pio_rows = (uint32_t)p->rows;
-	*fpga->pio_rho = float_to_fixed(p->rho_gain);
 	*fpga->pio_amp = float_to_fixed(p->init_amplitude);
-}
-
-// Write parameters and reset the FPGA 
-static void apply_params_with_reset(FpgaIf *fpga, const DrumParams *p) {
-	write_params(fpga, p);
-	pulse_reset(fpga);
 }
 
 static bool map_fpga(FpgaIf *fpga) {
@@ -109,10 +93,8 @@ static bool map_fpga(FpgaIf *fpga) {
 	}
 
 	fpga->pio_rows = (volatile uint32_t *)((char *)fpga->h2p_virtual_base + FPGA_PIO_NUM_ROWS);
-	fpga->pio_rho = (volatile int32_t *)((char *)fpga->h2p_virtual_base + FPGA_PIO_RHO_GAIN);
-	fpga->pio_amp = (volatile int32_t *)((char *)fpga->h2p_virtual_base + FPGA_PIO_INIT_AMP);
-	fpga->pio_reset = (volatile uint32_t *)((char *)fpga->h2p_virtual_base + FPGA_PIO_RESET);
-
+	fpga->pio_amp  = (volatile int32_t *)((char *)fpga->h2p_virtual_base + FPGA_PIO_INIT_AMP);
+	fpga->pio_done = (volatile uint32_t *)((char *)fpga->h2p_virtual_base + FPGA_PIO_DONE);
 	return true;
 }
 
@@ -171,19 +153,15 @@ static void print_menu(void) {
 	printf("\n=== Drum Control Menu ===\n");
 	printf("  p : print current parameters\n");
 	printf("  n : set number of rows\n");
-	printf("  r : set rho gain\n");
 	printf("  a : set initial amplitude\n");
 	printf("  u : update FPGA (write only)\n");
-	printf("  x : update + reset drum state\n");
-	printf("  q : quit\n");
 }
 
 
 // Print parameters to console
 static void print_params(const DrumParams *p) {
-	printf("rows=%d, rho_gain=%f, init_amplitude=%f\n",
+	printf("rows=%d, init_amplitude=%f\n",
 		   p->rows,
-		   p->rho_gain,
 		   p->init_amplitude);
 }
 
@@ -191,7 +169,6 @@ int main(void) {
     // initialize DrumParams with default values, this should sound like a wood block
 	DrumParams params = {
 		.rows = 30,
-		.rho_gain = 0.995f,
 		.init_amplitude = 0.5f,
 	};
 
@@ -210,7 +187,9 @@ int main(void) {
 		printf("Enter command: ");
 
 		if (!read_line(line, sizeof(line))) {
-			break;
+			clearerr(stdin);
+			sleep(1);
+			continue;
 		}
 
 		switch (line[0]) {
@@ -231,15 +210,6 @@ int main(void) {
 				break;
 			}
 
-			case 'r': {
-				float rho = params.rho_gain;
-				if (prompt_float("Enter rho gain: ", &rho)) {
-					params.rho_gain = rho;
-					printf("Updated rho gain to %f (not written yet).\n", params.rho_gain);
-				}
-				break;
-			}
-
 			case 'a': {
 				float amp = params.init_amplitude;
 				if (prompt_float("Enter initial amplitude: ", &amp)) {
@@ -254,14 +224,6 @@ int main(void) {
 				printf("Parameters written to FPGA.\n");
 				break;
 
-			case 'x':
-				apply_params_with_reset(&fpga, &params);
-				printf("Parameters written and reset pulse sent.\n");
-				break;
-
-			case 'q':
-				break;
-
 			case '\n':
 				break;
 
@@ -269,6 +231,13 @@ int main(void) {
 				printf("Unknown command.\n");
 				break;
 		}
+	}
+
+	if (fpga.h2p_virtual_base && fpga.h2p_virtual_base != MAP_FAILED) {
+		munmap(fpga.h2p_virtual_base, FPGA_AXI_SPAN);
+	}
+	if (fpga.fd >= 0) {
+		close(fpga.fd);
 	}
 
 	return 0;

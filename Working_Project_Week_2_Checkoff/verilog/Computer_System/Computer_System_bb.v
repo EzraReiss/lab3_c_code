@@ -91,7 +91,10 @@ module Computer_System (
 	memory_oct_rzqin,
 	sdram_clk_clk,
 	system_pll_ref_clk_clk,
-	system_pll_ref_reset_reset);	
+	system_pll_ref_reset_reset,
+	pio_ampl_export,
+	pio_done_export,
+	pio_rows_export);	
 
 	input		audio_ADCDAT;
 	input		audio_ADCLRCK;
@@ -185,4 +188,7 @@ module Computer_System (
 	output		sdram_clk_clk;
 	input		system_pll_ref_clk_clk;
 	input		system_pll_ref_reset_reset;
+	output	[31:0]	pio_ampl_export;
+	input	[31:0]	pio_done_export;
+	output	[31:0]	pio_rows_export;
 endmodule

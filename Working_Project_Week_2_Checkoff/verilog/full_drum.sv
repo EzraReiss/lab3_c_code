@@ -11,7 +11,8 @@ module full_drum #(
     input logic next_sample,
     input logic signed [DATA_WIDTH-1:0] rho_eff,
     input logic signed [DATA_WIDTH-1:0] G_tension,
-    input logic [$clog2(COLUMN_DEPTH)-1:0] drum_length,
+    input logic [7:0] num_rows,
+    input logic signed [DATA_WIDTH-1:0] pluck_max_val,
     output logic signed [DATA_WIDTH-1:0] center_center_node,
     output logic done,
     output logic [NUM_COLUMNS*DATA_WIDTH-1:0] all_middle_nodes,
@@ -22,7 +23,6 @@ module full_drum #(
 );
 
     localparam integer CENTER_COLUMN = (NUM_COLUMNS - 1) / 2;
-    localparam integer CENTER_ROW    = (COLUMN_DEPTH - 1) / 2;
 	 
 	 //Rho effective calculation:
 
@@ -50,40 +50,60 @@ module full_drum #(
 
     // ---- Init FSM: compute 2D pyramid and write to columns serially ----
     localparam int COL_ADDR_W = $clog2(COLUMN_DEPTH);
+    localparam int ROWS_W = COL_ADDR_W + 1;
     logic [COL_ADDR_W-1:0] init_row;
     logic                   init_we;
     logic                   init_done_r;
     logic signed [DATA_WIDTH-1:0] init_data [NUM_COLUMNS-1:0];
+    logic [ROWS_W-1:0] active_rows;
+    logic [COL_ADDR_W-1:0] last_active_row;
+    logic [COL_ADDR_W-1:0] center_row_active;
+    logic [ROWS_W-1:0] pluck_radius;
+    logic signed [DATA_WIDTH-1:0] init_peak_abs;
 
-    // Manhattan-distance diamond initial condition (matches Python reference):
-    //   uHit[i,j] = max(0, PLUCK_RADIUS - (|x_mid - i| + |y_mid - j|)) / PLUCK_RADIUS
-    // Scaled by PEAK_INIT. Only nonzero within PLUCK_RADIUS of center.
-    localparam integer PLUCK_RADIUS = 64;
-
-    genvar g;
-    generate
-        for (g = 0; g < NUM_COLUMNS; g++) begin : init_val_gen
-            localparam integer DIST_COL_ABS = (g > CENTER_COLUMN) ? (g - CENTER_COLUMN) : (CENTER_COLUMN - g);
-
-            wire [$clog2(COLUMN_DEPTH):0] dist_row_abs =
-                (init_row > CENTER_ROW[COL_ADDR_W-1:0]) ?
-                    ($clog2(COLUMN_DEPTH)+1)'(init_row - CENTER_ROW[COL_ADDR_W-1:0]) :
-                    ($clog2(COLUMN_DEPTH)+1)'(CENTER_ROW[COL_ADDR_W-1:0] - init_row);
-
-            wire [$clog2(COLUMN_DEPTH)+1:0] manhattan = ($clog2(COLUMN_DEPTH)+2)'(DIST_COL_ABS) + {1'b0, dist_row_abs};
-
-            wire signed [35:0] height = (32'(manhattan) < 32'(PLUCK_RADIUS)) ?
-                ($signed(PEAK_INIT[DATA_WIDTH-1:0]) * $signed({1'b0, (PLUCK_RADIUS[COL_ADDR_W:0] - manhattan[COL_ADDR_W:0])}))
-                    / $signed(36'(PLUCK_RADIUS)) :
-                36'sd0;
-
-            // Force boundaries to zero
-            wire is_boundary = (g == 0) || (g == NUM_COLUMNS - 1) ||
-                               (init_row == 0) || (init_row == COL_ADDR_W'(COLUMN_DEPTH - 1));
-
-            assign init_data[g] = is_boundary ? 18'sd0 : height[DATA_WIDTH-1:0];
+    always_comb begin
+        if (num_rows < 8'd2) begin
+            active_rows = ROWS_W'(2);
+        end else if (num_rows > 8'(COLUMN_DEPTH)) begin
+            active_rows = ROWS_W'(COLUMN_DEPTH);
+        end else begin
+            active_rows = ROWS_W'(num_rows);
         end
-    endgenerate
+
+        last_active_row = active_rows[COL_ADDR_W-1:0] - COL_ADDR_W'(1);
+        center_row_active = last_active_row >> 1;
+        pluck_radius = (active_rows > ROWS_W'(2)) ? (active_rows >> 1) : ROWS_W'(1);
+        init_peak_abs = pluck_max_val[DATA_WIDTH-1] ? -pluck_max_val : pluck_max_val;
+    end
+
+    integer g;
+    integer dist_col_abs;
+    integer dist_row_abs;
+    integer manhattan;
+    integer row_limit;
+    integer radius_i;
+    integer height_i;
+    always_comb begin
+        row_limit = active_rows;
+        radius_i = pluck_radius;
+        for (g = 0; g < NUM_COLUMNS; g = g + 1) begin
+            dist_col_abs = (g > CENTER_COLUMN) ? (g - CENTER_COLUMN) : (CENTER_COLUMN - g);
+            dist_row_abs = (init_row > center_row_active) ? (init_row - center_row_active) : (center_row_active - init_row);
+            manhattan = dist_col_abs + dist_row_abs;
+
+            if ((radius_i > 0) && (manhattan < radius_i)) begin
+                height_i = ($signed(init_peak_abs) * (radius_i - manhattan)) / radius_i;
+            end else begin
+                height_i = 0;
+            end
+
+            if ((g == 0) || (g == NUM_COLUMNS - 1) || (init_row == 0) || (init_row >= last_active_row) || (init_row >= row_limit[COL_ADDR_W-1:0])) begin
+                init_data[g] = '0;
+            end else begin
+                init_data[g] = $signed(height_i[DATA_WIDTH-1:0]);
+            end
+        end
+    end
 
     // Init FSM: iterate through all rows
     always_ff @(posedge clk) begin
@@ -93,7 +113,7 @@ module full_drum #(
             init_done_r <= 1'b0;
             nonlinear_rho_eff <= 18'sd32768; // Start with linear rho_eff for first sample
         end else if (!init_done_r) begin
-            if (init_row == COL_ADDR_W'(COLUMN_DEPTH - 1)) begin
+            if (init_row == last_active_row) begin
                 init_we     <= 1'b0;
                 init_done_r <= 1'b1;
             end else begin
@@ -101,7 +121,7 @@ module full_drum #(
                 init_row <= init_row + 1;
             end
         end else begin
-            nonlinear_rho_eff <= (next_sample) ? max_rho_eff : nonlinear_rho_eff; // Update nonlinear rho_eff at each new of the entire column
+            nonlinear_rho_eff <= max_rho_eff; // Update nonlinear rho_eff at each new of the entire column
             init_we <= 1'b0;
         end
     end
@@ -125,6 +145,7 @@ module full_drum #(
                 .rst(rst),
                 .rho_eff(nonlinear_rho_eff),
                 .G_tension(G_tension),
+                .drum_length(last_active_row + COL_ADDR_W'(1)),
                 .init_data(init_data[i]),
                 .init_addr(init_row),
                 .init_we(init_we),

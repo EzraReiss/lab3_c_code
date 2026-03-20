@@ -90,6 +90,9 @@
 		.memory_oct_rzqin                                (<connected-to-memory_oct_rzqin>),                                //                                    .oct_rzqin
 		.sdram_clk_clk                                   (<connected-to-sdram_clk_clk>),                                   //                           sdram_clk.clk
 		.system_pll_ref_clk_clk                          (<connected-to-system_pll_ref_clk_clk>),                          //                  system_pll_ref_clk.clk
-		.system_pll_ref_reset_reset                      (<connected-to-system_pll_ref_reset_reset>)                       //                system_pll_ref_reset.reset
+		.system_pll_ref_reset_reset                      (<connected-to-system_pll_ref_reset_reset>),                      //                system_pll_ref_reset.reset
+		.pio_ampl_export                                 (<connected-to-pio_ampl_export>),                                 //                            pio_ampl.export
+		.pio_done_export                                 (<connected-to-pio_done_export>),                                 //                            pio_done.export
+		.pio_rows_export                                 (<connected-to-pio_rows_export>)                                  //                            pio_rows.export
 	);
 

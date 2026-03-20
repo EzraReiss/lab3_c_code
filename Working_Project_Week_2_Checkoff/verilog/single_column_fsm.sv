@@ -50,20 +50,31 @@ module single_column_wave_equation #(
     // node processing counter
     logic [$clog2(COLUMN_DEPTH)-1:0] node_count;
     localparam int ADDR_W = $clog2(COLUMN_DEPTH);
-    localparam int CENTER_NODE = (COLUMN_DEPTH - 1) / 2;
-    localparam logic [ADDR_W-1:0] LAST_IDX = ADDR_W'(COLUMN_DEPTH - 1);
-    localparam logic [ADDR_W-1:0] MAX_FOR_P1 = (COLUMN_DEPTH > 1) ? ADDR_W'(COLUMN_DEPTH - 1) : '0;
-    localparam logic [ADDR_W-1:0] MAX_FOR_P2 = (COLUMN_DEPTH > 2) ? ADDR_W'(COLUMN_DEPTH - 2) : '0;
-    localparam logic [ADDR_W-1:0] MAX_FOR_P3 = (COLUMN_DEPTH > 3) ? ADDR_W'(COLUMN_DEPTH - 3) : '0;
-    localparam logic [ADDR_W-1:0] MAX_FOR_P4 = (COLUMN_DEPTH > 4) ? ADDR_W'(COLUMN_DEPTH - 4) : '0;
-    localparam logic [ADDR_W-1:0] CENTER_NODE_IDX = CENTER_NODE[ADDR_W-1:0];
+    localparam int ROWS_W = ADDR_W + 1;
+
+    logic [ROWS_W-1:0] active_rows;
+    logic [ADDR_W-1:0] last_idx_dyn;
+    logic [ADDR_W-1:0] center_node_idx_dyn;
+
+    always_comb begin
+        if (drum_length < ADDR_W'(2)) begin
+            active_rows = ROWS_W'(2);
+        end else if (drum_length > ADDR_W'(COLUMN_DEPTH)) begin
+            active_rows = ROWS_W'(COLUMN_DEPTH);
+        end else begin
+            active_rows = ROWS_W'(drum_length);
+        end
+
+        last_idx_dyn = active_rows[ADDR_W-1:0] - ADDR_W'(1);
+        center_node_idx_dyn = last_idx_dyn >> 1;
+    end
 
     // node_count-based address helpers (bounded at top boundary)
     wire [ADDR_W-1:0] node_addr     = node_count;
-    wire [ADDR_W-1:0] node_addr_p1  = (node_count < MAX_FOR_P1) ? (node_count + ADDR_W'(1)) : LAST_IDX;
-    wire [ADDR_W-1:0] node_addr_p2  = (node_count < MAX_FOR_P2) ? (node_count + ADDR_W'(2)) : LAST_IDX;
-    wire [ADDR_W-1:0] node_addr_p3  = (node_count < MAX_FOR_P3) ? (node_count + ADDR_W'(3)) : LAST_IDX;
-    wire [ADDR_W-1:0] node_addr_p4  = (node_count < MAX_FOR_P4) ? (node_count + ADDR_W'(4)) : LAST_IDX;
+    wire [ADDR_W-1:0] node_addr_p1  = (node_count + ADDR_W'(1) <= last_idx_dyn) ? (node_count + ADDR_W'(1)) : last_idx_dyn;
+    wire [ADDR_W-1:0] node_addr_p2  = (node_count + ADDR_W'(2) <= last_idx_dyn) ? (node_count + ADDR_W'(2)) : last_idx_dyn;
+    wire [ADDR_W-1:0] node_addr_p3  = (node_count + ADDR_W'(3) <= last_idx_dyn) ? (node_count + ADDR_W'(3)) : last_idx_dyn;
+    wire [ADDR_W-1:0] node_addr_p4  = (node_count + ADDR_W'(4) <= last_idx_dyn) ? (node_count + ADDR_W'(4)) : last_idx_dyn;
 
     // ---- Memory Instances ----
     M10K_COLUMN #(
@@ -145,7 +156,7 @@ module single_column_wave_equation #(
             STATE_2: next_state = STATE_3;
             STATE_3: next_state = STATE_4;
             STATE_4: begin
-                if (node_count == LAST_IDX) next_state = STATE_5;
+                if (node_count == last_idx_dyn) next_state = STATE_5;
                 else                        next_state = STATE_4;
             end
             STATE_5: next_state = STATE_6;
@@ -223,8 +234,8 @@ module single_column_wave_equation #(
                     u_center      <= u_up;
                     u_down        <= 18'sd0;
                     u_center_prev <= mem_Nm1_rdata;
-                    mem_N_waddr   <= LAST_IDX;
-                    mem_Nm1_waddr <= LAST_IDX;
+                    mem_N_waddr   <= last_idx_dyn;
+                    mem_Nm1_waddr <= last_idx_dyn;
                 end
 
                 STATE_4: begin
@@ -236,15 +247,15 @@ module single_column_wave_equation #(
                     mem_Nm1_waddr <= node_addr;
                     mem_N_wdata   <= (node_count == 0) ? 18'sd0 : compute_out;
                     mem_Nm1_wdata <= (node_count == 0) ? 18'sd0 : u_center;
-                    u_up          <= (node_count == LAST_IDX) ? 18'sd0 : mem_N_rdata;
+                    u_up          <= (node_count == last_idx_dyn) ? 18'sd0 : mem_N_rdata;
                     u_center      <= u_up;
                     u_center_prev <= mem_Nm1_rdata;
                     u_down        <= u_center;
-                    if (node_count == CENTER_NODE_IDX) begin
+                    if (node_count == center_node_idx_dyn) begin
                         center_node_14 <= u_center;
                         u_middle_node  <= u_center;
                     end
-                    if (node_count != LAST_IDX) begin
+                    if (node_count != last_idx_dyn) begin
                         node_count <= node_count + 1;
                     end
                 end

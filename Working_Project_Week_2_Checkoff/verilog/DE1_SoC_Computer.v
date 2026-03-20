@@ -360,17 +360,6 @@ output					HPS_USB_STP;
 wire			[15: 0]	hex3_hex0;
 //wire			[15: 0]	hex5_hex4;
 
-//assign HEX0 = ~hex3_hex0[ 6: 0]; // hex3_hex0[ 6: 0]; 
-//assign HEX1 = ~hex3_hex0[14: 8];
-//assign HEX2 = ~hex3_hex0[22:16];
-//assign HEX3 = ~hex3_hex0[30:24];
-assign HEX4 = 7'b1111111;
-assign HEX5 = 7'b1111111;
-assign HEX3 = 7'b1111111;
-assign HEX2 = 7'b1111111;
-assign HEX1 = 7'b1111111;
-assign HEX0 = 7'b1111111;
-
 //=======================================================
 // Bus controller for AVALON bus-master
 //=======================================================
@@ -485,6 +474,11 @@ always @(posedge CLOCK_50) begin //CLOCK_50
 	
 end // always @(posedge state_clock)
 
+//PIO Wires
+wire [31:0] pio_read_max_init_val;
+wire [31:0] pio_read_num_rows;
+wire [31:0] pio_write_done;
+
 
 //=======================================================
 //  Structural coding
@@ -494,6 +488,10 @@ Computer_System The_System (
 	////////////////////////////////////
 	// FPGA Side
 	////////////////////////////////////
+
+	.pio_ampl_export(pio_read_max_init_val),
+	.pio_rows_export(pio_read_num_rows),
+	.pio_done_export(pio_write_done),
 
 	// Global signals
 	.system_pll_ref_clk_clk					(CLOCK_50),
@@ -636,20 +634,29 @@ wire [6:0] drum_scan_addr;
 assign drum_scan_addr = 7'd0;
 
 // Q1.17 fixed-point constants
-localparam [17:0] RHO_EFF_Q1_17     = 18'd32768; // 1/4
+localparam [17:0] RHO_EFF_Q1_17     = 18'sd32768; // 1/4
 
 // Switch-controlled G_tension in Q1.17:
 // SW encodes a binary percentage (0..100), where each count is ~1%.
 // 0%  -> 2^-5 (0.03125, Q1.17=4096)
 // 100%-> 2^-3 (0.12500, Q1.17=16384)
 // Values above 100 are saturated to 100.
-localparam [17:0] G_TENSION_MIN_Q1_17 = 18'd4096;
-localparam [17:0] G_TENSION_MAX_Q1_17 = 18'd16384;
+localparam [17:0] G_TENSION_MIN_Q1_17 = 18'sd4096;
+localparam [17:0] G_TENSION_MAX_Q1_17 = 18'sd65536;
 localparam [17:0] G_TENSION_RANGE_Q1_17 = G_TENSION_MAX_Q1_17 - G_TENSION_MIN_Q1_17;
 wire [6:0] g_tension_pct = (SW > 10'd100) ? 7'd100 : SW[6:0];
 wire signed [17:0] g_tension_q1_17 =
 	$signed(G_TENSION_MIN_Q1_17)
 	+ $signed((G_TENSION_RANGE_Q1_17 * g_tension_pct) / 7'd100);
+
+// Display g_tension_q1_17 as hexadecimal on HEX4..HEX0 (LS digit on HEX0).
+HexDigit hex0_disp (.segs(HEX0), .num(g_tension_q1_17[3:0]));
+HexDigit hex1_disp (.segs(HEX1), .num(g_tension_q1_17[7:4]));
+HexDigit hex2_disp (.segs(HEX2), .num(g_tension_q1_17[11:8]));
+HexDigit hex3_disp (.segs(HEX3), .num(g_tension_q1_17[15:12]));
+HexDigit hex4_disp (.segs(HEX4), .num({2'b00, g_tension_q1_17[17:16]}));
+assign HEX5 = 7'b1111111;
+
 
 full_drum drum (
     .clk(CLOCK_50),
@@ -657,8 +664,10 @@ full_drum drum (
     .next_sample(next_sample),
     .rho_eff(RHO_EFF_Q1_17),
 	.G_tension(g_tension_q1_17),
+	.pluck_max_val(pio_read_max_init_val[17:0]),
+	.num_rows(pio_read_num_rows[7:0]),
     .center_center_node(drum_out),
-    .done( /*not used*/ ),
+    .done(pio_write_done[0]),
     .all_middle_nodes(/*not used*/),
 	.scan_addr(drum_scan_addr),
     .scan_data_all( /*not used*/ )
@@ -667,7 +676,7 @@ full_drum drum (
 defparam drum.DATA_WIDTH = 18;
 defparam drum.COLUMN_DEPTH = 100;
 defparam drum.NUM_COLUMNS = 100;
-defparam drum.PEAK_INIT = 131071;
+defparam drum.PEAK_INIT = 32768;
 defparam drum.ETA_SHIFT = 13;
 
 endmodule
