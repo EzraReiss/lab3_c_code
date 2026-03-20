@@ -32,6 +32,8 @@
 #define FPGA_PIO_INIT_AMP      0x00000000
 #define FPGA_PIO_DONE          0x00000010
 #define FPGA_PIO_NUM_ROWS      0x00000020
+#define FPGA_PIO_G_TENSION     0x00000030
+#define FPGA_PIO_RHO_GAIN      0x00000040
 
 // signed 1.17 format (18-bit total, 17 fractional bits).
 static inline int32_t float_to_fixed(float x) {
